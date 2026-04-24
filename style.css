@@ -39,7 +39,10 @@ body {
     position: relative;
     width: min(960px, 100% - 1.8rem);
     margin: 0 auto;
-    padding: clamp(1rem, 4vw, 2.2rem) 0 2rem;
+    padding: clamp(1rem, 4vw, 2.2rem) 0 1rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 .speed-lines {
@@ -152,8 +155,8 @@ h1 {
     list-style: none;
     margin: 0;
     padding: 0;
-    max-height: 66vh;
-    overflow: auto;
+    max-height: 80vh;
+    overflow-y: auto;
 }
 
 .results li {
@@ -195,6 +198,21 @@ h1 {
     text-align: center;
     color: var(--ink-soft);
     padding: 1.2rem;
+}
+
+.site-footer {
+    text-align: center;
+    padding: 1rem 0 0.5rem;
+}
+
+.site-footer a {
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    text-decoration: none;
+}
+
+.site-footer a:hover {
+    color: var(--hw-red);
 }
 
 .sr-only {
@@ -261,7 +279,7 @@ h1 {
     }
 
     .results {
-        max-height: 62vh;
+        max-height: 80vh;
     }
 
     .results li {
