@@ -1,14 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" href="images/favicon.png" type="image/png"/>
-    <title>Tiny Web</title>
+    <link rel="icon" href="images/favicon.png" type="image/png" />
+    <title>Hot Wheels Collection</title>
   </head>
   <body>
-    <h1>Tiny Web</h1>
+    <main class="page">
+      <header class="hero">
+        <h1>Hot Wheels Collection</h1>
+        <p class="subtitle">
+          Quickly check if a car is already in the collection with fuzzy search.
+        </p>
+      </header>
+
+      <section class="search-panel" aria-label="Car search">
+        <label for="search" class="sr-only">Search car name</label>
+        <div class="input-wrap">
+          <input
+            id="search"
+            type="search"
+            placeholder="Try: mustang, batmobile, mazda..."
+            autocomplete="off"
+            spellcheck="false"
+          />
+          <button id="clearSearch" type="button" aria-label="Clear search">
+            Clear
+          </button>
+        </div>
+        <p id="stats" class="stats" aria-live="polite">Loading collection...</p>
+      </section>
+
+      <section class="results-panel" aria-label="Search results">
+        <ul id="results" class="results"></ul>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
     <script src="script.js"></script>
   </body>
 </html>
