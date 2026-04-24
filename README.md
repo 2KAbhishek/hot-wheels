@@ -20,7 +20,7 @@
 <a href="https://github.com/2KAbhishek/hot-wheels/pulse">
 <img alt="Last Updated" src="https://img.shields.io/github/last-commit/2kabhishek/hot-wheels?style=flat&color=e06c75&label="> </a>
 
-<h3>Short sweet headline with 🎇🎉</h3>
+<h3>Find your cars fast with fuzzy search</h3>
 
 <figure>
   <img src= "images/screenshot.png" alt="hot-wheels screenshot" style="width:100%">
@@ -30,27 +30,27 @@
 
 </div>
 
-hot-wheels is a web app that allows `<insert_target_audience>` to `<action/task_it_does>`.
+hot-wheels is a web app that allows collectors to quickly check whether a car is already in their collection.
 
-Tired of the hundreds of tools for building a website?
+Tired of scrolling through long lists just to check if you already own one model?
 
-Want to build good ol web pages with `HTML` `CSS` & `JavaScript`?
+Want a quick, typo-friendly finder built with good ol web pages?
 
-You can of course do that, hot-wheels just makes it quicker, let your digital paintbrush loose and make something tiny.
+You can of course do that, hot-wheels just makes it quicker, with a searchable list powered by `HTML` `CSS` & `JavaScript`.
 
 ## ✨ Features
 
-- Build with Good ol' `HTML` `CSS`&`JavaScript`
-- No boilerplate needed
-- Ready made docs
-- Works with [mkrepo](https://github.com/2kabhishek/mkrepo)
+- Fuzzy search with [Fuse.js](https://fusejs.io/) for typo-tolerant matching
+- Reads your collection from `hot-wheels.md`
+- Shows all cars by default for quick browsing
+- Ready for GitHub Pages deployment
 
 ## ⚡ Setup
 
 ### ⚙️ Requirements
 
-- foo >= bar
-- bazz
+- Modern browser
+- Optional local static server (`python3 -m http.server`)
 
 ### 💻 Installation
 
@@ -63,30 +63,36 @@ cd hot-wheels
 
 ## 🚀 Usage
 
-Open `index.html` in your favorite browser or visit [2kabhishek.github.io/hot-wheels](https://2kabhishek.github.io/hot-wheels).
+Run a local static server from the project root and open the app in your browser.
+
+```bash
+python3 -m http.server 8080
+```
+
+Then visit `http://localhost:8080` or use the hosted version at [2kabhishek.github.io/hot-wheels](https://2kabhishek.github.io/hot-wheels).
 
 ## 🏗️ What's Next
 
-Planning to add `<feature/module>`.
+Planning to add quick tags and duplicate-detection helpers.
 
 ### ✅ To-Do
 
 - [x] Setup repo
-- [ ] Think real hard
-- [ ] Start typing
+- [x] Build fuzzy finder UI
+- [ ] Add filters by brand/type
 
 ## 🧑‍💻 Behind The Code
 
 ### 🌈 Inspiration
 
-hot-wheels was inspired by `<reason/idea>`.
+hot-wheels was inspired by maintaining a growing physical collection and needing a fast way to avoid accidental duplicate buys.
 
 hot-wheels was built using `HTML` `CSS` & `JavaScript`.
 
 ### 💡 Challenges/Learnings
 
-- The main challenges were `<issue/difficulty>`
-- I learned about `<learning/accomplishment>`
+- The main challenge was balancing strict matching with typo-friendly fuzzy search.
+- I learned how to keep a GitHub Pages app data-driven by reading a Markdown list directly.
 
 ### 🧰 Tooling
 
