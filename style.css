@@ -70,8 +70,9 @@ body {
 }
 
 .hero {
-    margin-bottom: 1rem;
-    padding: 0.8rem 1rem;
+    margin-bottom: 0.5rem;
+    padding: 0.3rem 0;
+    text-align: center;
     color: #ffffff;
     animation: lift 650ms ease-out;
 }
