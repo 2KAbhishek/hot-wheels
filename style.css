@@ -18,9 +18,11 @@
 
 body {
     margin: 0;
-    min-height: 100vh;
     color: var(--ink);
     font-family: 'Sora', sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background:
         radial-gradient(
             circle at 8% 12%,
@@ -39,7 +41,7 @@ body {
     position: relative;
     width: min(960px, 100% - 1.8rem);
     margin: 0 auto;
-    padding: clamp(1rem, 4vw, 2.2rem) 0 1rem;
+    padding: clamp(0.8rem, 3vw, 1.5rem) 0 0;
     display: flex;
     flex-direction: column;
     min-height: 100vh;
@@ -97,7 +99,7 @@ h1 {
 }
 
 .search-panel {
-    padding: 0.9rem;
+    padding: 0.7rem;
 }
 
 .input-wrap {
@@ -203,7 +205,8 @@ h1 {
 
 .site-footer {
     text-align: center;
-    padding: 1rem 0 0.5rem;
+    padding: 0.6rem 0 0.4rem;
+    margin-top: auto;
 }
 
 .site-footer a {
@@ -263,12 +266,16 @@ h1 {
 }
 
 @media (max-width: 640px) {
+    html {
+        font-size: 14px;
+    }
+
     .page {
         width: min(960px, 100% - 1rem);
     }
 
     h1 {
-        font-size: clamp(1.85rem, 11vw, 2.5rem);
+        font-size: clamp(1.6rem, 10vw, 2.2rem);
     }
 
     .input-wrap {
@@ -280,12 +287,23 @@ h1 {
     }
 
     .results {
-        max-height: 80vh;
+        max-height: 60vh;
     }
 
     .results li {
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.35rem;
+        gap: 0.3rem;
+        padding: 0.6rem 0.7rem;
+    }
+
+    .stats,
+    .score,
+    .site-footer a {
+        font-size: 0.85rem;
+    }
+
+    .search-panel {
+        padding: 0.6rem;
     }
 }
