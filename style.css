@@ -68,23 +68,9 @@ body {
 
 .hero {
     margin-bottom: 1rem;
-    border-radius: 22px;
-    padding: 1rem 1.2rem;
+    padding: 0.8rem 1rem;
     color: #ffffff;
-    background:
-        linear-gradient(110deg, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.12)),
-        linear-gradient(95deg, rgba(255, 209, 0, 0.2), rgba(255, 209, 0, 0));
-    box-shadow: var(--shadow);
     animation: lift 650ms ease-out;
-}
-
-.eyebrow {
-    margin: 0;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    font-size: 0.78rem;
-    color: var(--hw-yellow);
-    font-weight: 700;
 }
 
 h1 {
@@ -95,12 +81,6 @@ h1 {
     font-family: 'Bangers', cursive;
     text-shadow: 0 5px 12px rgba(0, 0, 0, 0.33);
     color: var(--hw-yellow);
-}
-
-.subtitle {
-    margin: 0.7rem 0 0;
-    max-width: 62ch;
-    color: #f5f8ff;
 }
 
 .search-panel,
