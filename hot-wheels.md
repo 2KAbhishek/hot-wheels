@@ -6,12 +6,14 @@
 - 2020 Ford Mustang Shelby GT500
 - 21 Ford Bronco
 - 33 Ford Lo Boy
+- 41 Willys
 - 59 Chevy Impala
 - 62 Corvette Gasser
 - 67 Austin Mini Van
 - 67 Camaro
 - 67 Lotus Type 49
 - 67 Shelby GT500
+- 69 Chevelle
 - 69 Dodge Charger Daytona
 - 70 Chevelle SS Wagon
 - 70 Plymouth Superbird
@@ -41,6 +43,7 @@
 - Chevy Blazer 4X4
 - Chevy Super Volt
 - Classic 55 Nomad
+- Classic TV Series Batmobile
 - Combat Medic
 - Cool-One
 - Count Muscula
@@ -76,6 +79,7 @@
 - Hi-Roller II
 - High-Tail Chaser
 - Honda CB750 Cafe
+- Honda Odyssey
 - Honda VFR750 RC30
 - Hot Wheengs (Black)
 - Hot Wheengs (Green)
@@ -93,7 +97,8 @@
 - Lotus Cortina
 - MadFast
 - Mazda 787B
-- Mazda Autozam
+- Mazda Autozam (Green)
+- Mazda Autozam (Purple)
 - McLaren Speedtail
 - McLaren W1
 - Mercedes Benz Unimog 1300L
@@ -110,6 +115,7 @@
 - Polestar TRX (Grey)
 - Polestar TRX (Yellow)
 - Pontiac Aztec Custom
+- Porsche 911 Carrera T
 - Porsche 911 Turbo Cabriolet
 - Power Rocket
 - Punk Rod
@@ -131,6 +137,7 @@
 - Solar Reflex
 - Speed Dozer
 - Speed Driver
+- Standard Kart
 - Street Shrieker
 - Street Wiener
 - Super Twin Mill
@@ -142,6 +149,7 @@
 - The Dark Knight Batmobile
 - Turbine Sublime
 - Twin Dorado
+- Twin Tags
 - Vairstrike
 - Volkswagen T3 Custom (Brown)
 - Volkswagen T3 Custom (Yellow)
