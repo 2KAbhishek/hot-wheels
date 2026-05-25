@@ -86,7 +86,8 @@
 - Hoto Roto
 - Hover Storm
 - Instant Boost
-- Kei Swap
+- Kei Swap (Pink)
+- Kei Swap (Red)
 - Kick Kart
 - King Kuda
 - Kowloon’D Hypervan
@@ -97,7 +98,7 @@
 - Lotus Cortina
 - MadFast
 - Mazda 787B
-- Mazda Autozam (Green)
+- Mazda Autozam (Brown)
 - Mazda Autozam (Purple)
 - McLaren Speedtail
 - McLaren W1
@@ -108,6 +109,7 @@
 - Mod Speeder
 - Monster Dairy Delivery
 - Nerve Hammer
+- Nissan Skyline GT-R
 - Pagani Utopia
 - Pass’N Gasser
 - Peugeot 9X8 Hypercar
@@ -123,6 +125,7 @@
 - RD-06 (Black)
 - RD-06 (Green)
 - RRRoadster
+- Raijin Express
 - Rally Speciale
 - Rapid Pulse (Black)
 - Rapid Pulse (Blue)
