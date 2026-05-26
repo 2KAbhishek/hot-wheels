@@ -207,7 +207,9 @@ function createCarHtml(item, query) {
     return `
         <li data-id="${item.id}" tabindex="0">
             <div class="car-info">
+                <div class="car-name-container">
                 <span class="car-name">${displayName}</span>
+                </div>
                 <div class="badges">${badgesHtml}</div>
             </div>
             ${scoreTag}
@@ -253,6 +255,18 @@ function renderCars(items, query = '') {
     results.innerHTML = items.map(item => createCarHtml(item, query)).join('');
     updateStats(items.length, allCars.length, query);
     attachCopyListeners();
+
+    // Enable horizontal scroll/ticker animation on overflow
+    results.querySelectorAll('.car-name').forEach(el => {
+        const container = el.parentElement;
+        const overflowVal = el.scrollWidth - container.clientWidth;
+        if (overflowVal > 0) {
+            container.classList.add('has-ticker');
+            container.style.setProperty('--scroll-dist', `-${overflowVal + 10}px`);
+            const duration = Math.max(3, Math.round(overflowVal / 35));
+            container.style.setProperty('--ticker-duration', `${duration}s`);
+        }
+    });
 }
 
 function triggerSpeedLines() {

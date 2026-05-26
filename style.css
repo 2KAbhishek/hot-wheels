@@ -355,11 +355,39 @@ h1 {
     min-width: 0;
 }
 
-.car-name {
+.car-name-container {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    flex-grow: 1;
+    min-width: 0;
+    position: relative;
+}
+
+.car-name {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    max-width: 100%;
     font-size: 0.95rem;
+}
+
+.has-ticker .car-name {
+    text-overflow: clip;
+}
+
+/* Ticker Animation on Hover/Focus */
+.results li:hover .has-ticker .car-name,
+.results li:focus .has-ticker .car-name,
+.results li:focus-within .has-ticker .car-name {
+    animation: ticker var(--ticker-duration, 4s) linear infinite alternate;
+}
+
+@keyframes ticker {
+    0% { transform: translateX(0); }
+    15% { transform: translateX(0); } /* Pause at start */
+    85% { transform: translateX(var(--scroll-dist)); } /* Scroll to end */
+    100% { transform: translateX(var(--scroll-dist)); }
 }
 
 .badges {
@@ -518,20 +546,7 @@ mark.highlight {
 
     .results { max-height: 55vh; }
 
-    .results li {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 0.5rem;
-        padding: 0.65rem 0.75rem;
-    }
 
-    .car-info {
-        width: 100%;
-    }
-
-    .car-actions {
-        align-self: flex-end;
-    }
 
     .stats-dashboard {
         grid-template-columns: 1fr 1fr;
