@@ -177,65 +177,53 @@ function highlightQuery(name, query) {
     }).join('');
 }
 
-function renderCars(items, query = '') {
-    if (!items.length) {
-        renderEmpty('No matching car found. Try a different spelling.');
-        updateStats(0, allCars.length, query);
-        return;
+function getWikiUrl(carName) {
+    let wikiName = carName;
+    if (/^\d{2}\s/.test(wikiName)) {
+        wikiName = "'" + wikiName;
+    }
+    return `https://hotwheels.fandom.com/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
+}
+
+function createCarHtml(item, query) {
+    const score = typeof item.score === 'number'
+        ? Math.round((1 - item.score) * 100)
+        : null;
+    const scoreTag = score !== null
+        ? `<span class="score">${score}% match</span>`
+        : '';
+
+    let badgesHtml = '';
+    if (item.isDuplicate) {
+        badgesHtml += `<span class="badge badge-duplicate">Dup</span>`;
+    }
+    if (item.isVariant) {
+        badgesHtml += `<span class="badge badge-variant">Variant</span>`;
     }
 
-    const html = items
-        .map((item) => {
-            const score =
-                typeof item.score === 'number'
-                    ? Math.round((1 - item.score) * 100)
-                    : null;
-            const scoreTag =
-                score !== null
-                    ? `<span class="score">${score}% match</span>`
-                    : '';
+    const displayName = highlightQuery(item.name, query);
+    const wikiUrl = getWikiUrl(item.name);
 
-            let badgesHtml = '';
-            if (item.isDuplicate) {
-                badgesHtml += `<span class="badge badge-duplicate">Dup</span>`;
-            }
-            if (item.isVariant) {
-                badgesHtml += `<span class="badge badge-variant">Variant</span>`;
-            }
+    return `
+        <li data-id="${item.id}">
+            <div class="car-info">
+                <span class="car-name">${displayName}</span>
+                <div class="badges">${badgesHtml}</div>
+            </div>
+            ${scoreTag}
+            <div class="car-actions">
+                <button class="action-btn copy-btn" title="Copy name" aria-label="Copy name">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                </button>
+                <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" class="action-btn wiki-btn" title="View Fandom Wiki Page" aria-label="View Wiki Page">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                </a>
+            </div>
+        </li>
+    `;
+}
 
-            const displayName = highlightQuery(item.name, query);
-            
-            // Format name for Hot Wheels Wiki (prepend single quote for 2-digit years)
-            let wikiName = item.name;
-            if (/^\d{2}\s/.test(wikiName)) {
-                wikiName = "'" + wikiName;
-            }
-            const wikiUrl = `https://hotwheels.fandom.com/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
-
-            return `
-                <li data-id="${item.id}">
-                    <div class="car-info">
-                        <span class="car-name">${displayName}</span>
-                        <div class="badges">${badgesHtml}</div>
-                    </div>
-                    ${scoreTag}
-                    <div class="car-actions">
-                        <button class="action-btn copy-btn" title="Copy name" aria-label="Copy name">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
-                        </button>
-                        <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" class="action-btn wiki-btn" title="View Fandom Wiki Page" aria-label="View Wiki Page">
-                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
-                        </a>
-                    </div>
-                </li>
-            `;
-        })
-        .join('');
-
-    results.innerHTML = html;
-    updateStats(items.length, allCars.length, query);
-
-    // Attach copy clipboard event handlers
+function attachCopyListeners() {
     results.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const li = btn.closest('li');
@@ -253,6 +241,18 @@ function renderCars(items, query = '') {
             }
         });
     });
+}
+
+function renderCars(items, query = '') {
+    if (!items.length) {
+        renderEmpty('No matching car found. Try a different spelling.');
+        updateStats(0, allCars.length, query);
+        return;
+    }
+
+    results.innerHTML = items.map(item => createCarHtml(item, query)).join('');
+    updateStats(items.length, allCars.length, query);
+    attachCopyListeners();
 }
 
 function triggerSpeedLines() {
@@ -306,10 +306,7 @@ function runSearch() {
     renderCars(matches, query);
 }
 
-function renderBrandChips() {
-    const brandChipsContainer = document.getElementById('brandChips');
-    if (!brandChipsContainer) return;
-
+function getTopBrands() {
     const brandCounts = {};
     allCars.forEach(car => {
         const brand = getBrand(car.name);
@@ -320,30 +317,14 @@ function renderBrandChips() {
         .filter(([brand]) => brand && brand.length > 0)
         .sort((a, b) => b[1] - a[1]);
 
-    const topBrands = sortedBrands
-        .filter(([_, count]) => count > 1)
-        .slice(0, 10)
-        .map(([brand]) => brand);
+    return {
+        topBrands: sortedBrands.filter(([_, count]) => count > 1).slice(0, 10).map(([brand]) => brand),
+        brandCounts
+    };
+}
 
-    const totalDuplicates = allCars.filter(c => c.isDuplicate).length;
-    const totalVariants = allCars.filter(c => c.isVariant).length;
-
-    let html = `<button class="chip active" data-filter="all">All</button>`;
-
-    if (totalDuplicates > 0) {
-        html += `<button class="chip" data-filter="duplicates">Duplicates (${totalDuplicates})</button>`;
-    }
-    if (totalVariants > 0) {
-        html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
-    }
-
-    topBrands.forEach(brand => {
-        html += `<button class="chip" data-filter="brand" data-val="${escapeHtml(brand)}">${escapeHtml(brand)} (${brandCounts[brand]})</button>`;
-    });
-
-    brandChipsContainer.innerHTML = html;
-
-    const chips = brandChipsContainer.querySelectorAll('.chip');
+function attachChipListeners(container) {
+    const chips = container.querySelectorAll('.chip');
     chips.forEach(chip => {
         chip.addEventListener('click', () => {
             chips.forEach(c => c.classList.remove('active'));
@@ -364,6 +345,31 @@ function renderBrandChips() {
             runSearch();
         });
     });
+}
+
+function renderBrandChips() {
+    const container = document.getElementById('brandChips');
+    if (!container) return;
+
+    const { topBrands, brandCounts } = getTopBrands();
+    const totalDuplicates = allCars.filter(c => c.isDuplicate).length;
+    const totalVariants = allCars.filter(c => c.isVariant).length;
+
+    let html = `<button class="chip active" data-filter="all">All</button>`;
+
+    if (totalDuplicates > 0) {
+        html += `<button class="chip" data-filter="duplicates">Duplicates (${totalDuplicates})</button>`;
+    }
+    if (totalVariants > 0) {
+        html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
+    }
+
+    topBrands.forEach(brand => {
+        html += `<button class="chip" data-filter="brand" data-val="${escapeHtml(brand)}">${escapeHtml(brand)} (${brandCounts[brand]})</button>`;
+    });
+
+    container.innerHTML = html;
+    attachChipListeners(container);
 }
 
 function debounce(fn, delay) {
