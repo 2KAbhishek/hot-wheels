@@ -1,4 +1,5 @@
 const CAR_LIST_PATH = './hot-wheels.md';
+const TOP_BRANDS_COUNT = 50;
 
 const BRAND_MAPPING = {
     special: [
@@ -91,14 +92,14 @@ function getBrand(carName) {
     // Strip leading year (2-4 digits followed by space)
     let name = carName.replace(/^\d{2,4}\s+/, '').trim();
     const lower = name.toLowerCase();
-    
+
     const specialMatch = BRAND_MAPPING.special.find(item => item.test(lower));
     if (specialMatch) return specialMatch.value;
-    
+
     const firstWord = lower.split(/\s+/)[0];
     const mapped = BRAND_MAPPING.aliases[firstWord];
     if (mapped) return mapped;
-    
+
     return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 }
 
@@ -334,7 +335,7 @@ function getTopBrands() {
         .filter(([brand]) => {
             return knownBrands.has(brand);
         })
-        .slice(0, 18)
+        .slice(0, TOP_BRANDS_COUNT)
         .map(([brand]) => brand);
 
     return {
@@ -454,7 +455,7 @@ clearButton.addEventListener('click', () => {
 
 window.addEventListener('keydown', (e) => {
     const isSearchFocused = document.activeElement === searchInput;
-    
+
     // 1. Focus search on '/' or 's' (if not already focused)
     if ((e.key === '/' || e.key.toLowerCase() === 's') && !isSearchFocused) {
         e.preventDefault();
@@ -462,7 +463,7 @@ window.addEventListener('keydown', (e) => {
         triggerSpeedLines();
         return;
     }
-    
+
     // 2. Clear search on Escape (when input is focused)
     if (e.key === 'Escape' && isSearchFocused) {
         searchInput.value = '';
@@ -471,7 +472,7 @@ window.addEventListener('keydown', (e) => {
         searchInput.blur();
         return;
     }
-    
+
     // 3. Navigation from search input to list
     if (isSearchFocused && e.key === 'ArrowDown') {
         const firstItem = results.querySelector('li[tabindex="0"]');
@@ -481,14 +482,14 @@ window.addEventListener('keydown', (e) => {
         }
         return;
     }
-    
+
     // 4. Navigation inside list items
     const focusedLi = document.activeElement ? document.activeElement.closest('li[data-id]') : null;
     if (focusedLi) {
         const listItems = Array.from(results.querySelectorAll('li[tabindex="0"]'));
         const index = listItems.indexOf(focusedLi);
         const key = e.key.toLowerCase();
-        
+
         if (e.key === 'ArrowDown' || key === 'j') {
             e.preventDefault();
             const nextItem = listItems[index + 1];
