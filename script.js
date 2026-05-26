@@ -205,7 +205,7 @@ function createCarHtml(item, query) {
     const wikiUrl = getWikiUrl(item.name);
 
     return `
-        <li data-id="${item.id}">
+        <li data-id="${item.id}" tabindex="0">
             <div class="car-info">
                 <span class="car-name">${displayName}</span>
                 <div class="badges">${badgesHtml}</div>
@@ -419,18 +419,72 @@ clearButton.addEventListener('click', () => {
     searchInput.focus();
 });
 
-// Keyboard Shortcuts
+// Keyboard Shortcuts & List Navigation
 window.addEventListener('keydown', (e) => {
-    if (e.key === '/' && document.activeElement !== searchInput) {
+    const isSearchFocused = document.activeElement === searchInput;
+    
+    // 1. Focus search on '/' or 's' (if not already focused)
+    if ((e.key === '/' || e.key.toLowerCase() === 's') && !isSearchFocused) {
         e.preventDefault();
         searchInput.focus();
         triggerSpeedLines();
+        return;
     }
-    if (e.key === 'Escape') {
+    
+    // 2. Clear search on Escape (when input is focused)
+    if (e.key === 'Escape' && isSearchFocused) {
         searchInput.value = '';
         triggerSpeedLines();
         runSearch();
         searchInput.blur();
+        return;
+    }
+    
+    // 3. Navigation from search input to list
+    if (isSearchFocused && e.key === 'ArrowDown') {
+        const firstItem = results.querySelector('li[tabindex="0"]');
+        if (firstItem) {
+            e.preventDefault();
+            firstItem.focus();
+        }
+        return;
+    }
+    
+    // 4. Navigation inside list items
+    const focusedLi = document.activeElement ? document.activeElement.closest('li[data-id]') : null;
+    if (focusedLi) {
+        const listItems = Array.from(results.querySelectorAll('li[tabindex="0"]'));
+        const index = listItems.indexOf(focusedLi);
+        const key = e.key.toLowerCase();
+        
+        if (e.key === 'ArrowDown' || key === 'j') {
+            e.preventDefault();
+            const nextItem = listItems[index + 1];
+            if (nextItem) nextItem.focus();
+        } else if (e.key === 'ArrowUp' || key === 'k') {
+            e.preventDefault();
+            const prevItem = listItems[index - 1];
+            if (prevItem) {
+                prevItem.focus();
+            } else {
+                searchInput.focus();
+            }
+        } else if (e.key === 'Escape') {
+            e.preventDefault();
+            searchInput.focus();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            const wikiLink = focusedLi.querySelector('.wiki-btn');
+            if (wikiLink) {
+                window.open(wikiLink.href, '_blank');
+            }
+        } else if (key === 'c') {
+            e.preventDefault();
+            const copyBtn = focusedLi.querySelector('.copy-btn');
+            if (copyBtn) {
+                copyBtn.click();
+            }
+        }
     }
 });
 

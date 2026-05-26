@@ -331,11 +331,20 @@ h1 {
     align-items: center;
     gap: 0.75rem;
     animation: fade-in 240ms ease-out;
-    transition: background 0.2s ease;
+    transition: all 0.2s ease;
 }
 
-.results li:hover {
+.results li:hover,
+.results li:focus {
     background: rgba(225, 6, 0, 0.07);
+    outline: none;
+    cursor: pointer;
+}
+
+.results li:focus-visible {
+    background: rgba(225, 6, 0, 0.12);
+    outline: 2px solid var(--hw-red);
+    outline-offset: -2px;
 }
 
 .car-info {
