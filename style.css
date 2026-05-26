@@ -114,6 +114,15 @@ h1 {
     background: rgba(7, 12, 22, 0.9);
 }
 
+/* Hide native browser search clear button */
+#search::-webkit-search-cancel-button,
+#search::-webkit-search-decoration,
+#search::-webkit-search-results-button,
+#search::-webkit-search-results-decoration {
+    display: none;
+    -webkit-appearance: none;
+}
+
 #clearSearch {
     position: absolute;
     right: 8px;
