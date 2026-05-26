@@ -1,17 +1,20 @@
 const CAR_LIST_PATH = './hot-wheels.md';
 
 const BRAND_MAPPING = {
-    // Sub-string or prefix matching rules for special cases
     special: [
         { test: (n) => n.startsWith('land rover'), value: 'Land Rover' },
         { test: (n) => n.startsWith('aston martin'), value: 'Aston Martin' },
         { test: (n) => n.startsWith('alfa romeo'), value: 'Alfa Romeo' },
+        { test: (n) => n.startsWith('gordon murray'), value: 'Gordon Murray' },
         { test: (n) => n.includes('batman') || n.includes('batmobile') || n.includes('batcopter'), value: 'Batmobile' }
     ],
-    // First-word lookup for aliases, abbreviations, and standardized capitalization
     aliases: {
         'chevrolet': 'Chevy',
         'chevy': 'Chevy',
+        'camaro': 'Chevy',
+        'corvette': 'Chevy',
+        'chevelle': 'Chevy',
+        'silverado': 'Chevy',
         'bugatti': 'Bugatti',
         'volkswagen': 'VW',
         'vw': 'VW',
@@ -27,6 +30,14 @@ const BRAND_MAPPING = {
         'dodge': 'Dodge',
         'mclaren': 'McLaren',
         'ferrari': 'Ferrari',
+        'lamborghini': 'Lamborghini',
+        'mercedes': 'Mercedes',
+        'pagani': 'Pagani',
+        'czinger': 'Czinger',
+        'austin': 'Austin',
+        'willys': 'Willys',
+        'datzun': 'Datsun',
+        'datsun': 'Datsun',
         'audi': 'Audi',
         'lotus': 'Lotus',
         'acura': 'Acura',
@@ -34,7 +45,6 @@ const BRAND_MAPPING = {
         'subaru': 'Subaru',
         'jaguar': 'Jaguar',
         'lexus': 'Lexus',
-        'lamborghini': 'Lamborghini',
         'pontiac': 'Pontiac',
         'kia': 'Kia',
         'jeep': 'Jeep',
@@ -82,16 +92,13 @@ function getBrand(carName) {
     let name = carName.replace(/^\d{2,4}\s+/, '').trim();
     const lower = name.toLowerCase();
     
-    // 1. Check special multi-word/contains cases
     const specialMatch = BRAND_MAPPING.special.find(item => item.test(lower));
     if (specialMatch) return specialMatch.value;
     
-    // 2. Check first-word lookup (handles aliases & common capitalization)
     const firstWord = lower.split(/\s+/)[0];
     const mapped = BRAND_MAPPING.aliases[firstWord];
     if (mapped) return mapped;
     
-    // Fallback: capitalize the first letter
     return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 }
 
@@ -208,7 +215,7 @@ function createCarHtml(item, query) {
         <li data-id="${item.id}" tabindex="0">
             <div class="car-info">
                 <div class="car-name-container">
-                <span class="car-name">${displayName}</span>
+                    <span class="car-name">${displayName}</span>
                 </div>
                 <div class="badges">${badgesHtml}</div>
             </div>
@@ -313,12 +320,25 @@ function getTopBrands() {
         brandCounts[brand] = (brandCounts[brand] || 0) + 1;
     });
 
+    // Derive recognized brands dynamically from our global mapping
+    const knownBrands = new Set([
+        ...Object.values(BRAND_MAPPING.aliases),
+        ...BRAND_MAPPING.special.map(s => s.value)
+    ]);
+
     const sortedBrands = Object.entries(brandCounts)
         .filter(([brand]) => brand && brand.length > 0)
         .sort((a, b) => b[1] - a[1]);
 
+    const topBrands = sortedBrands
+        .filter(([brand]) => {
+            return knownBrands.has(brand);
+        })
+        .slice(0, 18)
+        .map(([brand]) => brand);
+
     return {
-        topBrands: sortedBrands.filter(([_, count]) => count > 1).slice(0, 10).map(([brand]) => brand),
+        topBrands,
         brandCounts
     };
 }
@@ -420,7 +440,6 @@ async function init() {
     }
 }
 
-// Event Listeners
 searchInput.addEventListener('input', debounce((e) => {
     triggerSpeedLines();
     runSearch();
@@ -433,7 +452,6 @@ clearButton.addEventListener('click', () => {
     searchInput.focus();
 });
 
-// Keyboard Shortcuts & List Navigation
 window.addEventListener('keydown', (e) => {
     const isSearchFocused = document.activeElement === searchInput;
     
