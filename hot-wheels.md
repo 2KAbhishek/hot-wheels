@@ -18,7 +18,7 @@
 - 70 Chevelle SS Wagon
 - 70 Plymouth Superbird
 - 90 Acura NSX
-- 94 Buggati EB110 SS
+- 94 Bugatti EB110 SS
 - 95 Mazda RX-7 Drift!
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning

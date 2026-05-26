@@ -17,18 +17,38 @@
       <section class="search-panel" aria-label="Car search">
         <label for="search" class="sr-only">Search car name</label>
         <div class="input-wrap">
-          <input
-            id="search"
-            type="search"
-            placeholder="Try: mustang, batmobile, mazda..."
-            autocomplete="off"
-            spellcheck="false"
-          />
-          <button id="clearSearch" type="button" aria-label="Clear search">
-            Clear
-          </button>
+          <div class="search-input-container">
+            <input
+              id="search"
+              type="search"
+              placeholder="Try: mustang, batmobile, mazda..."
+              autocomplete="off"
+              spellcheck="false"
+            />
+            <button id="clearSearch" type="button" aria-label="Clear search" disabled>
+              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </button>
+          </div>
         </div>
-        <p id="stats" class="stats" aria-live="polite">Loading collection...</p>
+
+        <div id="brandChips" class="brand-chips" aria-label="Filter by brand">
+          <!-- Dynamic Chips will be rendered here -->
+        </div>
+
+        <div id="statsDashboard" class="stats-dashboard">
+          <div class="stats-card">
+            <span class="stats-label">Total Collection</span>
+            <span id="statTotal" class="stats-value">0</span>
+          </div>
+          <div class="stats-card">
+            <span class="stats-label">Unique Castings</span>
+            <span id="statUnique" class="stats-value">0</span>
+          </div>
+          <div class="stats-card status-card">
+            <span class="stats-label">Status</span>
+            <span id="stats" class="stats-value stats-msg" aria-live="polite">Loading collection...</span>
+          </div>
+        </div>
       </section>
 
       <section class="results-panel" aria-label="Search results">

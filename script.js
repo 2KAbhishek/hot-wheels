@@ -1,5 +1,51 @@
 const CAR_LIST_PATH = './hot-wheels.md';
 
+const BRAND_MAPPING = {
+    // Sub-string or prefix matching rules for special cases
+    special: [
+        { test: (n) => n.startsWith('land rover'), value: 'Land Rover' },
+        { test: (n) => n.startsWith('aston martin'), value: 'Aston Martin' },
+        { test: (n) => n.startsWith('alfa romeo'), value: 'Alfa Romeo' },
+        { test: (n) => n.includes('batman') || n.includes('batmobile') || n.includes('batcopter'), value: 'Batmobile' }
+    ],
+    // First-word lookup for aliases, abbreviations, and standardized capitalization
+    aliases: {
+        'chevrolet': 'Chevy',
+        'chevy': 'Chevy',
+        'bugatti': 'Bugatti',
+        'volkswagen': 'VW',
+        'vw': 'VW',
+        'bmw': 'BMW',
+        'honda': 'Honda',
+        'ford': 'Ford',
+        'nissan': 'Nissan',
+        'mazda': 'Mazda',
+        'porsche': 'Porsche',
+        'tesla': 'Tesla',
+        'volvo': 'Volvo',
+        'cadillac': 'Cadillac',
+        'dodge': 'Dodge',
+        'mclaren': 'McLaren',
+        'ferrari': 'Ferrari',
+        'audi': 'Audi',
+        'lotus': 'Lotus',
+        'acura': 'Acura',
+        'toyota': 'Toyota',
+        'subaru': 'Subaru',
+        'jaguar': 'Jaguar',
+        'lexus': 'Lexus',
+        'lamborghini': 'Lamborghini',
+        'pontiac': 'Pontiac',
+        'kia': 'Kia',
+        'jeep': 'Jeep',
+        'shelby': 'Shelby',
+        'plymouth': 'Plymouth',
+        'renault': 'Renault',
+        'peugeot': 'Peugeot',
+        'polestar': 'Polestar'
+    }
+};
+
 const searchInput = document.getElementById('search');
 const clearButton = document.getElementById('clearSearch');
 const stats = document.getElementById('stats');
@@ -7,6 +53,8 @@ const results = document.getElementById('results');
 
 let allCars = [];
 let fuse = null;
+let currentFilter = { type: 'all' };
+let speedLinesTimer = null;
 
 function escapeHtml(text) {
     return text
@@ -29,22 +77,104 @@ function parseCars(markdownText) {
         .filter((item) => item.name.length > 0);
 }
 
+function getBrand(carName) {
+    // Strip leading year (2-4 digits followed by space)
+    let name = carName.replace(/^\d{2,4}\s+/, '').trim();
+    const lower = name.toLowerCase();
+    
+    // 1. Check special multi-word/contains cases
+    const specialMatch = BRAND_MAPPING.special.find(item => item.test(lower));
+    if (specialMatch) return specialMatch.value;
+    
+    // 2. Check first-word lookup (handles aliases & common capitalization)
+    const firstWord = lower.split(/\s+/)[0];
+    const mapped = BRAND_MAPPING.aliases[firstWord];
+    if (mapped) return mapped;
+    
+    // Fallback: capitalize the first letter
+    return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
+}
+
+function analyzeDuplicatesAndVariants() {
+    const nameCounts = {};
+    allCars.forEach(car => {
+        nameCounts[car.name] = (nameCounts[car.name] || 0) + 1;
+    });
+
+    const getBaseName = (name) => {
+        const idx = name.indexOf('(');
+        if (idx === -1) return name.trim();
+        return name.slice(0, idx).trim();
+    };
+
+    const baseCounts = {};
+    allCars.forEach(car => {
+        const base = getBaseName(car.name);
+        baseCounts[base] = (baseCounts[base] || 0) + 1;
+    });
+
+    allCars = allCars.map(car => {
+        const baseName = getBaseName(car.name);
+        const exactCount = nameCounts[car.name];
+        const baseCount = baseCounts[baseName];
+
+        return {
+            ...car,
+            baseName,
+            isDuplicate: exactCount > 1,
+            isVariant: baseCount > 1 && exactCount < baseCount
+        };
+    });
+}
+
 function updateStats(visibleCount, totalCount, query) {
+    const statTotalEl = document.getElementById('statTotal');
+    if (statTotalEl) {
+        statTotalEl.textContent = totalCount;
+    }
+
+    const statUniqueEl = document.getElementById('statUnique');
+    if (statUniqueEl) {
+        const uniqueCastings = new Set(allCars.map(c => c.baseName)).size;
+        statUniqueEl.textContent = uniqueCastings;
+    }
+
     if (!totalCount) {
-        stats.textContent = 'No cars found in hot-wheels.md.';
+        stats.textContent = 'Empty collection.';
         return;
     }
 
     if (!query) {
-        stats.textContent = `Showing all ${totalCount} cars.`;
+        if (currentFilter.type === 'duplicates') {
+            stats.textContent = `Showing all ${visibleCount} duplicates.`;
+        } else if (currentFilter.type === 'variants') {
+            stats.textContent = `Showing all ${visibleCount} variants.`;
+        } else if (currentFilter.type === 'brand') {
+            stats.textContent = `Showing all ${visibleCount} ${currentFilter.value}s.`;
+        } else {
+            stats.textContent = `Showing all ${totalCount} cars.`;
+        }
         return;
     }
 
-    stats.textContent = `${visibleCount} match${visibleCount === 1 ? '' : 'es'} for \"${query}\".`;
+    stats.textContent = `${visibleCount} match${visibleCount === 1 ? '' : 'es'}.`;
 }
 
 function renderEmpty(message) {
     results.innerHTML = `<li class="empty">${escapeHtml(message)}</li>`;
+}
+
+function highlightQuery(name, query) {
+    if (!query) return escapeHtml(name);
+    const escapedQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+    const regex = new RegExp(`(${escapedQuery})`, 'gi');
+    const parts = name.split(regex);
+    return parts.map(part => {
+        if (part.toLowerCase() === query.toLowerCase()) {
+            return `<mark class="highlight">${escapeHtml(part)}</mark>`;
+        }
+        return escapeHtml(part);
+    }).join('');
 }
 
 function renderCars(items, query = '') {
@@ -64,29 +194,176 @@ function renderCars(items, query = '') {
                 score !== null
                     ? `<span class="score">${score}% match</span>`
                     : '';
-            return `<li><span>${escapeHtml(item.name)}</span>${scoreTag}</li>`;
+
+            let badgesHtml = '';
+            if (item.isDuplicate) {
+                badgesHtml += `<span class="badge badge-duplicate">Dup</span>`;
+            }
+            if (item.isVariant) {
+                badgesHtml += `<span class="badge badge-variant">Variant</span>`;
+            }
+
+            const displayName = highlightQuery(item.name, query);
+            
+            // Format name for Hot Wheels Wiki (prepend single quote for 2-digit years)
+            let wikiName = item.name;
+            if (/^\d{2}\s/.test(wikiName)) {
+                wikiName = "'" + wikiName;
+            }
+            const wikiUrl = `https://hotwheels.fandom.com/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
+
+            return `
+                <li data-id="${item.id}">
+                    <div class="car-info">
+                        <span class="car-name">${displayName}</span>
+                        <div class="badges">${badgesHtml}</div>
+                    </div>
+                    ${scoreTag}
+                    <div class="car-actions">
+                        <button class="action-btn copy-btn" title="Copy name" aria-label="Copy name">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
+                        <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" class="action-btn wiki-btn" title="View Fandom Wiki Page" aria-label="View Wiki Page">
+                            <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        </a>
+                    </div>
+                </li>
+            `;
         })
         .join('');
 
     results.innerHTML = html;
     updateStats(items.length, allCars.length, query);
+
+    // Attach copy clipboard event handlers
+    results.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const li = btn.closest('li');
+            const id = parseInt(li.getAttribute('data-id'), 10);
+            const car = allCars.find(c => c.id === id);
+            if (car) {
+                navigator.clipboard.writeText(car.name).then(() => {
+                    btn.classList.add('copied');
+                    btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                    setTimeout(() => {
+                        btn.classList.remove('copied');
+                        btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+                    }, 1200);
+                });
+            }
+        });
+    });
+}
+
+function triggerSpeedLines() {
+    document.documentElement.style.setProperty('--speed-lines-duration', '1.8s');
+    if (speedLinesTimer) {
+        clearTimeout(speedLinesTimer);
+    }
+    speedLinesTimer = setTimeout(() => {
+        document.documentElement.style.setProperty('--speed-lines-duration', '20s');
+    }, 800);
+}
+
+function getFilteredCars() {
+    if (currentFilter.type === 'duplicates') {
+        return allCars.filter(car => car.isDuplicate);
+    }
+    if (currentFilter.type === 'variants') {
+        return allCars.filter(car => car.isVariant);
+    }
+    if (currentFilter.type === 'brand') {
+        return allCars.filter(car => getBrand(car.name) === currentFilter.value);
+    }
+    return allCars;
 }
 
 function runSearch() {
     const query = searchInput.value.trim();
     clearButton.disabled = query.length === 0;
 
+    const filtered = getFilteredCars();
+
     if (!query) {
-        renderCars(allCars, '');
+        renderCars(filtered, '');
         return;
     }
 
-    const matches = fuse.search(query).map((entry) => ({
+    const localFuse = new Fuse(filtered, {
+        keys: ['name'],
+        includeScore: true,
+        threshold: 0.35,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+        shouldSort: true
+    });
+
+    const matches = localFuse.search(query).map((entry) => ({
         ...entry.item,
         score: entry.score
     }));
 
     renderCars(matches, query);
+}
+
+function renderBrandChips() {
+    const brandChipsContainer = document.getElementById('brandChips');
+    if (!brandChipsContainer) return;
+
+    const brandCounts = {};
+    allCars.forEach(car => {
+        const brand = getBrand(car.name);
+        brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+    });
+
+    const sortedBrands = Object.entries(brandCounts)
+        .filter(([brand]) => brand && brand.length > 0)
+        .sort((a, b) => b[1] - a[1]);
+
+    const topBrands = sortedBrands
+        .filter(([_, count]) => count > 1)
+        .slice(0, 10)
+        .map(([brand]) => brand);
+
+    const totalDuplicates = allCars.filter(c => c.isDuplicate).length;
+    const totalVariants = allCars.filter(c => c.isVariant).length;
+
+    let html = `<button class="chip active" data-filter="all">All</button>`;
+
+    if (totalDuplicates > 0) {
+        html += `<button class="chip" data-filter="duplicates">Duplicates (${totalDuplicates})</button>`;
+    }
+    if (totalVariants > 0) {
+        html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
+    }
+
+    topBrands.forEach(brand => {
+        html += `<button class="chip" data-filter="brand" data-val="${escapeHtml(brand)}">${escapeHtml(brand)} (${brandCounts[brand]})</button>`;
+    });
+
+    brandChipsContainer.innerHTML = html;
+
+    const chips = brandChipsContainer.querySelectorAll('.chip');
+    chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+            chips.forEach(c => c.classList.remove('active'));
+            chip.classList.add('active');
+            triggerSpeedLines();
+
+            const filterType = chip.getAttribute('data-filter');
+            if (filterType === 'all') {
+                currentFilter = { type: 'all' };
+            } else if (filterType === 'duplicates') {
+                currentFilter = { type: 'duplicates' };
+            } else if (filterType === 'variants') {
+                currentFilter = { type: 'variants' };
+            } else if (filterType === 'brand') {
+                currentFilter = { type: 'brand', value: chip.getAttribute('data-val') };
+            }
+
+            runSearch();
+        });
+    });
 }
 
 function debounce(fn, delay) {
@@ -113,31 +390,48 @@ async function init() {
             return;
         }
 
-        fuse = new Fuse(allCars, {
-            keys: ['name'],
-            includeScore: true,
-            threshold: 0.35,
-            ignoreLocation: true,
-            minMatchCharLength: 2,
-            shouldSort: true
-        });
+        analyzeDuplicatesAndVariants();
+        renderBrandChips();
 
         renderCars(allCars, '');
         clearButton.disabled = true;
         searchInput.focus();
     } catch (error) {
         renderEmpty('Could not load the collection file.');
-        stats.textContent =
-            'Please check that hot-wheels.md is available on this site.';
+        const statsEl = document.getElementById('stats');
+        if (statsEl) {
+            statsEl.textContent = 'Please check that hot-wheels.md is available on this site.';
+        }
         console.error(error);
     }
 }
 
-searchInput.addEventListener('input', debounce(runSearch, 80));
+// Event Listeners
+searchInput.addEventListener('input', debounce((e) => {
+    triggerSpeedLines();
+    runSearch();
+}, 80));
+
 clearButton.addEventListener('click', () => {
     searchInput.value = '';
+    triggerSpeedLines();
     runSearch();
     searchInput.focus();
+});
+
+// Keyboard Shortcuts
+window.addEventListener('keydown', (e) => {
+    if (e.key === '/' && document.activeElement !== searchInput) {
+        e.preventDefault();
+        searchInput.focus();
+        triggerSpeedLines();
+    }
+    if (e.key === 'Escape') {
+        searchInput.value = '';
+        triggerSpeedLines();
+        runSearch();
+        searchInput.blur();
+    }
 });
 
 init();
