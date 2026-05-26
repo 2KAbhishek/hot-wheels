@@ -265,45 +265,31 @@ function triggerSpeedLines() {
     }, 800);
 }
 
-function getFilteredCars() {
-    if (currentFilter.type === 'duplicates') {
-        return allCars.filter(car => car.isDuplicate);
-    }
-    if (currentFilter.type === 'variants') {
-        return allCars.filter(car => car.isVariant);
-    }
-    if (currentFilter.type === 'brand') {
-        return allCars.filter(car => getBrand(car.name) === currentFilter.value);
-    }
-    return allCars;
-}
-
 function runSearch() {
     const query = searchInput.value.trim();
     clearButton.disabled = query.length === 0;
 
-    const filtered = getFilteredCars();
-
+    // 1. Get search matches (or all cars if no query)
+    let items = [];
     if (!query) {
-        renderCars(filtered, '');
-        return;
+        items = allCars;
+    } else {
+        items = fuse.search(query).map(entry => ({
+            ...entry.item,
+            score: entry.score
+        }));
     }
 
-    const localFuse = new Fuse(filtered, {
-        keys: ['name'],
-        includeScore: true,
-        threshold: 0.35,
-        ignoreLocation: true,
-        minMatchCharLength: 2,
-        shouldSort: true
-    });
+    // 2. Filter matches by active chip
+    if (currentFilter.type === 'duplicates') {
+        items = items.filter(car => car.isDuplicate);
+    } else if (currentFilter.type === 'variants') {
+        items = items.filter(car => car.isVariant);
+    } else if (currentFilter.type === 'brand') {
+        items = items.filter(car => getBrand(car.name) === currentFilter.value);
+    }
 
-    const matches = localFuse.search(query).map((entry) => ({
-        ...entry.item,
-        score: entry.score
-    }));
-
-    renderCars(matches, query);
+    renderCars(items, query);
 }
 
 function getTopBrands() {
@@ -397,6 +383,14 @@ async function init() {
         }
 
         analyzeDuplicatesAndVariants();
+        fuse = new Fuse(allCars, {
+            keys: ['name'],
+            includeScore: true,
+            threshold: 0.35,
+            ignoreLocation: true,
+            minMatchCharLength: 2,
+            shouldSort: true
+        });
         renderBrandChips();
 
         renderCars(allCars, '');
