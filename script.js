@@ -7,7 +7,7 @@ const BRAND_MAPPING = {
         { test: (n) => n.startsWith('aston martin'), value: 'Aston Martin' },
         { test: (n) => n.startsWith('alfa romeo'), value: 'Alfa Romeo' },
         { test: (n) => n.startsWith('gordon murray'), value: 'Gordon Murray' },
-        { test: (n) => n.includes('batman') || n.includes('batmobile') || n.includes('batcopter'), value: 'Batmobile' }
+        { test: (n) => n.includes('batman') || n.includes('bat boat') || n.includes('batmobile') || n.includes('batcopter'), value: 'Batmobile' }
     ],
     aliases: {
         'chevrolet': 'Chevy',
