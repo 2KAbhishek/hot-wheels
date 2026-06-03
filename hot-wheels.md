@@ -1,78 +1,125 @@
 - 15 Cadillac ATS-V R
 - 15 Land Rover Defender
 - 16 Lamborghini Centenario Roadster
+- 1966 Bat Boat
+- 1966 Bat Boat
+- 1984 Porsche 928S
 - 1985 Honda CR-X
+- 1987 Chevy Caprice
 - 20 Dodge Charger Hellcat
 - 2020 Ford Mustang Shelby GT500
+- 2021 Toyota GR Supra
 - 21 Ford Bronco
+- 25/Seven
 - 33 Ford Lo Boy
 - 41 Willys
+- 56 Chevy
 - 59 Chevy Impala
+- 6 Alarm
 - 62 Corvette Gasser
+- 65 Lincoln Continental
+- 65 Mustang 2+2 Fastback
+- 66 Mercury Comet Cyclone
 - 67 Austin Mini Van
 - 67 Camaro
 - 67 Lotus Type 49
 - 67 Shelby GT500
+- 68 Lotus Type 49
 - 69 Chevelle
 - 69 Dodge Charger Daytona
 - 70 Chevelle SS Wagon
 - 70 Plymouth Superbird
+- 71 Chevy Camaro RS
+- 71 Dodge Hemi Challenger
+- 71 Ford Escort RS1600
+- 71 Porsche 911 (Top Gun)
+- 71 Porsche 911 (Vintage Silver)
+- 77 Packin Pacer
+- 85 Honda City Turbo II
 - 90 Acura NSX
+- 92 Jeep Wrangler Sahara
+- 93 Honda Civic EG
 - 94 Bugatti EB110 SS
 - 95 Mazda RX-7 Drift!
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning
 - Aint’t Fare
+- Alfa Romeo Giulia TI Super
 - Amaru GTC
 - Arrow Dynamic
 - Audi 90 Quattro
+- Austin Mini Cooper S
 - BMW 635 CSi
 - Baja Bison T5
 - Batcopter
 - Batman Arkham Knight Batmobile
 - Batman Forever Batmobile
+- Batmobile
 - Big-Air Bel-Air
 - Birthday Burner
 - Blitzspeeder
 - Bone Shaker
 - Boom Box
+- Bounce'N Bass
 - Bullet Proof
 - CZinger 21C
 - Cadillac Project GTP Hypercar
 - Celero GT
 - Chevy Blazer 4X4
 - Chevy Super Volt
+- Chop N Bloc
 - Classic 55 Nomad
 - Classic TV Series Batmobile
+- Combat Jet Skystriker
 - Combat Medic
+- Cone Shaker
 - Cool-One
+- Corvette Grand Sport
 - Count Muscula
+- Coupe Clip
 - Crate Racer
 - Cruise Bruiser
+- Cruise Bruiser
+- Custom '73 Chevy LUV
+- Custom 2020 Honda E
+- Custom 2020 Honda E
+- Custom 66 Tornado
 - Custom Cadillac Fleetwood
 - Custom Kia EV6
 - Custom Otto
 - D-Muscle
 - Datzun 240Z
+- Deora III
+- Deora Tooned
 - Disney SteamBoat
 - Drift-Ender
 - Drift’N Break
+- Dune Daddy
 - Dune It Up
 - Eggshelleracer
+- El Segundo Coupe
 - El Segundo Rallye
 - El Viento
+- Erikenstein Rod
 - Ferrari 365 GTB4 Competizione
+- Ferrari Dino 207 GT
+- Fiat Beast of Turin
 - Fish’D & Chip’D
 - Flippin Fast
 - Ford F-150 Lightning SuperTruck
+- Ford F-150 SVT Lightning (Fast & Furious)
 - Ford Mustang GTD
+- Ford Mustang Mach-E 141
 - Formula E Gen 3
+- Futurismo
 - Gone Mad
 - Gordon Murray Automobile T.50s
 - Gordon Murray Automotive T.33
 - Ground FX
 - HW 50 Concept
+- HW Formula Solar
 - HW Roll Cage
+- HW Tour Bus
 - HW Ultimate T-Rex Transporter
 - Hako Type D
 - Haulerback
@@ -83,44 +130,68 @@
 - Honda VFR750 RC30
 - Hot Wheengs (Black)
 - Hot Wheengs (Green)
-- Hoto Roto
+- Hoto Roto (Black)
+- Hoto Roto (Black)
+- Hoto Roto (White)
 - Hover Storm
 - Instant Boost
+- K.I.T.T.
 - Kei Swap (Pink)
 - Kei Swap (Red)
 - Kick Kart
+- Kick Sauber F2 Team
 - King Kuda
+- Kool Kombi
 - Kowloon’D Hypervan
+- La Liebre
 - Land Rover Defender 90
 - Later Crater
+- Limited Grip
 - Long Bloc
 - Loopster
 - Lotus Cortina
+- Lucid Air
+- MBK Van
+- Mach Speeder
 - MadFast
+- Maserati Tipo 61
+- Max Steel
 - Mazda 787B
 - Mazda Autozam (Brown)
 - Mazda Autozam (Purple)
+- Mazda MX-4 Miata
+- Mazda RX-2
+- Mazda RX-3 Tooned
 - McLaren Speedtail
 - McLaren W1
 - Mercedes Benz Unimog 1300L
+- Mercedes-Benz CLA
 - Mid Mill
 - Mo-Stash
 - Mod Mill
+- Mod Rod
 - Mod Speeder
 - Monster Dairy Delivery
+- Monster High Ghoul Mobile
+- Monteracer
+- Mountain Mauler
+- Nailed It
 - Nerve Hammer
 - Nissan Skyline GT-R
 - Pagani Utopia
+- Party Wagon
 - Pass’N Gasser
 - Peugeot 9X8 Hypercar
 - Pixel Shaker
 - Polestar TRX (Grey)
 - Polestar TRX (Yellow)
 - Pontiac Aztec Custom
+- Porsche 911 Carrera Clip
 - Porsche 911 Carrera T
 - Porsche 911 Turbo Cabriolet
 - Power Rocket
 - Punk Rod
+- Purple Passion
 - Quick Bite
 - RD-06 (Black)
 - RD-06 (Green)
@@ -134,15 +205,21 @@
 - Rink Racer
 - Rodger Dodger 2.0
 - Rogue Hog
+- Roller Toaster
+- Rollin Solo
 - Salt Shaker
+- Screamliner
 - Silverado
 - Slide Kick
 - Solar Reflex
+- Soooo Fast
 - Speed Dozer
 - Speed Driver
 - Standard Kart
+- Stockar
 - Street Shrieker
 - Street Wiener
+- Subaru BRAT
 - Super Twin Mill
 - Supercharged
 - TV Series Batmobile (Maroon)
@@ -150,12 +227,17 @@
 - Terra-Tracktyl
 - Tesla Cyberquad
 - The Dark Knight Batmobile
+- Time Shifter
 - Turbine Sublime
 - Twin Dorado
 - Twin Tags
+- VW ID Buzz Bomb
 - Vairstrike
+- Vespa 90 SS Super Sprint
+- Volkswagen Classic Bug
 - Volkswagen T3 Custom (Brown)
 - Volkswagen T3 Custom (Yellow)
 - Voltage Spike
 - Volvo V0 240 Drift Wagon
+- Wattzup
 - X-Steam
