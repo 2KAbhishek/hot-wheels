@@ -72,7 +72,7 @@
 - Classic TV Series Batmobile
 - Combat Jet Skystriker
 - Combat Medic
-- Cone Shaker
+- Cone Shaker (Treasure Hunt)
 - Cool-One
 - Corvette Grand Sport
 - Count Muscula
@@ -241,3 +241,35 @@
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
+
+- 2 Jet Z (Treasure Hunt)
+- 87 Dodge D100
+- Action Sedan
+- Batmobile (Brave and the Bold)
+- Batwing
+- Bogzilla
+- Bone Shaker
+- Cadillac Celestiq
+- Chevroletor (Treasure Hunt)
+- Crate Racer
+- Decidedly Go
+- Dessert Drifter
+- Donut Drifter
+- Draggin' Wagon
+- Feline Lucky
+- Head Gasket
+- Jaded
+- Lotus Sport Elise
+- Mad Drip
+- Pagani Zonda Cinque
+- Pedal Driver
+- Piranha Terror
+- Prototype H-24
+- Quick Chat
+- Rink Racer
+- Skull Shaker
+- Speedbox
+- Sushi Tuner
+- Tooned Volkswagen Golf MK1
+- Total Disposal (Treasure Hunt)
+- Track Ripper
