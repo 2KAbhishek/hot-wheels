@@ -248,10 +248,10 @@
 - Batmobile (Brave and the Bold)
 - Batwing
 - Bogzilla
-- Bone Shaker
+- Bone Shaker (Chrome and Pearl)
 - Cadillac Celestiq
 - Chevroletor (Treasure Hunt)
-- Crate Racer
+- Crate Racer (Red)
 - Decidedly Go
 - Dessert Drifter
 - Donut Drifter
@@ -261,15 +261,15 @@
 - Jaded
 - Lotus Sport Elise
 - Mad Drip
-- Pagani Zonda Cinque
+- Pagani Zonda Cinque Tooned
 - Pedal Driver
 - Piranha Terror
 - Prototype H-24
 - Quick Chat
-- Rink Racer
+- Rink Racer (Green)
 - Skull Shaker
 - Speedbox
 - Sushi Tuner
-- Tooned Volkswagen Golf MK1
+- Volkswagen Golf MK1 Tooned
 - Total Disposal (Treasure Hunt)
 - Track Ripper
