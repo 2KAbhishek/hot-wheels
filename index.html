@@ -13,7 +13,6 @@
       <header class="hero">
         <h1>My Hot Wheels Garage</h1>
       </header>
-
       <section class="search-panel" aria-label="Car search">
         <label for="search" class="sr-only">Search car name</label>
         <div class="input-wrap">
@@ -25,8 +24,25 @@
               autocomplete="off"
               spellcheck="false"
             />
-            <button id="clearSearch" type="button" aria-label="Clear search" disabled>
-              <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            <button
+              id="clearSearch"
+              type="button"
+              aria-label="Clear search"
+              disabled
+            >
+              <svg
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                stroke="currentColor"
+                stroke-width="2.5"
+                fill="none"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+              </svg>
             </button>
           </div>
         </div>
@@ -46,7 +62,9 @@
           </div>
           <div class="stats-card status-card">
             <span class="stats-label">Status</span>
-            <span id="stats" class="stats-value stats-msg" aria-live="polite">Loading collection...</span>
+            <span id="stats" class="stats-value stats-msg" aria-live="polite"
+              >Loading collection...</span
+            >
           </div>
         </div>
       </section>
@@ -56,7 +74,11 @@
       </section>
 
       <footer class="site-footer">
-        <a href="https://github.com/2KAbhishek/hot-wheels" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://github.com/2KAbhishek/hot-wheels"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           View source on GitHub
         </a>
       </footer>

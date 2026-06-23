@@ -3,57 +3,64 @@ const TOP_BRANDS_COUNT = 50;
 
 const BRAND_MAPPING = {
     special: [
-        { test: (n) => n.startsWith('land rover'), value: 'Land Rover' },
-        { test: (n) => n.startsWith('aston martin'), value: 'Aston Martin' },
-        { test: (n) => n.startsWith('alfa romeo'), value: 'Alfa Romeo' },
-        { test: (n) => n.startsWith('gordon murray'), value: 'Gordon Murray' },
-        { test: (n) => n.includes('batman') || n.includes('bat boat') || n.includes('batmobile') || n.includes('batcopter'), value: 'Batmobile' }
+        {test: (n) => n.startsWith('land rover'), value: 'Land Rover'},
+        {test: (n) => n.startsWith('aston martin'), value: 'Aston Martin'},
+        {test: (n) => n.startsWith('alfa romeo'), value: 'Alfa Romeo'},
+        {test: (n) => n.startsWith('gordon murray'), value: 'Gordon Murray'},
+        {
+            test: (n) =>
+                n.includes('batman') ||
+                n.includes('bat boat') ||
+                n.includes('batmobile') ||
+                n.includes('batcopter'),
+            value: 'Batmobile'
+        }
     ],
     aliases: {
-        'chevrolet': 'Chevy',
-        'chevy': 'Chevy',
-        'camaro': 'Chevy',
-        'corvette': 'Chevy',
-        'chevelle': 'Chevy',
-        'silverado': 'Chevy',
-        'bugatti': 'Bugatti',
-        'volkswagen': 'VW',
-        'vw': 'VW',
-        'bmw': 'BMW',
-        'honda': 'Honda',
-        'ford': 'Ford',
-        'nissan': 'Nissan',
-        'mazda': 'Mazda',
-        'porsche': 'Porsche',
-        'tesla': 'Tesla',
-        'volvo': 'Volvo',
-        'cadillac': 'Cadillac',
-        'dodge': 'Dodge',
-        'mclaren': 'McLaren',
-        'ferrari': 'Ferrari',
-        'lamborghini': 'Lamborghini',
-        'mercedes': 'Mercedes',
-        'pagani': 'Pagani',
-        'czinger': 'Czinger',
-        'austin': 'Austin',
-        'willys': 'Willys',
-        'datzun': 'Datsun',
-        'datsun': 'Datsun',
-        'audi': 'Audi',
-        'lotus': 'Lotus',
-        'acura': 'Acura',
-        'toyota': 'Toyota',
-        'subaru': 'Subaru',
-        'jaguar': 'Jaguar',
-        'lexus': 'Lexus',
-        'pontiac': 'Pontiac',
-        'kia': 'Kia',
-        'jeep': 'Jeep',
-        'shelby': 'Shelby',
-        'plymouth': 'Plymouth',
-        'renault': 'Renault',
-        'peugeot': 'Peugeot',
-        'polestar': 'Polestar'
+        chevrolet: 'Chevy',
+        chevy: 'Chevy',
+        camaro: 'Chevy',
+        corvette: 'Chevy',
+        chevelle: 'Chevy',
+        silverado: 'Chevy',
+        bugatti: 'Bugatti',
+        volkswagen: 'VW',
+        vw: 'VW',
+        bmw: 'BMW',
+        honda: 'Honda',
+        ford: 'Ford',
+        nissan: 'Nissan',
+        mazda: 'Mazda',
+        porsche: 'Porsche',
+        tesla: 'Tesla',
+        volvo: 'Volvo',
+        cadillac: 'Cadillac',
+        dodge: 'Dodge',
+        mclaren: 'McLaren',
+        ferrari: 'Ferrari',
+        lamborghini: 'Lamborghini',
+        mercedes: 'Mercedes',
+        pagani: 'Pagani',
+        czinger: 'Czinger',
+        austin: 'Austin',
+        willys: 'Willys',
+        datzun: 'Datsun',
+        datsun: 'Datsun',
+        audi: 'Audi',
+        lotus: 'Lotus',
+        acura: 'Acura',
+        toyota: 'Toyota',
+        subaru: 'Subaru',
+        jaguar: 'Jaguar',
+        lexus: 'Lexus',
+        pontiac: 'Pontiac',
+        kia: 'Kia',
+        jeep: 'Jeep',
+        shelby: 'Shelby',
+        plymouth: 'Plymouth',
+        renault: 'Renault',
+        peugeot: 'Peugeot',
+        polestar: 'Polestar'
     }
 };
 
@@ -64,7 +71,7 @@ const results = document.getElementById('results');
 
 let allCars = [];
 let fuse = null;
-let currentFilter = { type: 'all' };
+let currentFilter = {type: 'all'};
 let speedLinesTimer = null;
 
 function escapeHtml(text) {
@@ -93,7 +100,7 @@ function getBrand(carName) {
     let name = carName.replace(/^\d{2,4}\s+/, '').trim();
     const lower = name.toLowerCase();
 
-    const specialMatch = BRAND_MAPPING.special.find(item => item.test(lower));
+    const specialMatch = BRAND_MAPPING.special.find((item) => item.test(lower));
     if (specialMatch) return specialMatch.value;
 
     const firstWord = lower.split(/\s+/)[0];
@@ -105,7 +112,7 @@ function getBrand(carName) {
 
 function analyzeDuplicatesAndVariants() {
     const nameCounts = {};
-    allCars.forEach(car => {
+    allCars.forEach((car) => {
         nameCounts[car.name] = (nameCounts[car.name] || 0) + 1;
     });
 
@@ -116,12 +123,12 @@ function analyzeDuplicatesAndVariants() {
     };
 
     const baseCounts = {};
-    allCars.forEach(car => {
+    allCars.forEach((car) => {
         const base = getBaseName(car.name);
         baseCounts[base] = (baseCounts[base] || 0) + 1;
     });
 
-    allCars = allCars.map(car => {
+    allCars = allCars.map((car) => {
         const baseName = getBaseName(car.name);
         const exactCount = nameCounts[car.name];
         const baseCount = baseCounts[baseName];
@@ -143,7 +150,7 @@ function updateStats(visibleCount, totalCount, query) {
 
     const statUniqueEl = document.getElementById('statUnique');
     if (statUniqueEl) {
-        const uniqueCastings = new Set(allCars.map(c => c.baseName)).size;
+        const uniqueCastings = new Set(allCars.map((c) => c.baseName)).size;
         statUniqueEl.textContent = uniqueCastings;
     }
 
@@ -177,12 +184,14 @@ function highlightQuery(name, query) {
     const escapedQuery = query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
     const regex = new RegExp(`(${escapedQuery})`, 'gi');
     const parts = name.split(regex);
-    return parts.map(part => {
-        if (part.toLowerCase() === query.toLowerCase()) {
-            return `<mark class="highlight">${escapeHtml(part)}</mark>`;
-        }
-        return escapeHtml(part);
-    }).join('');
+    return parts
+        .map((part) => {
+            if (part.toLowerCase() === query.toLowerCase()) {
+                return `<mark class="highlight">${escapeHtml(part)}</mark>`;
+            }
+            return escapeHtml(part);
+        })
+        .join('');
 }
 
 function getWikiUrl(carName) {
@@ -194,12 +203,12 @@ function getWikiUrl(carName) {
 }
 
 function createCarHtml(item, query) {
-    const score = typeof item.score === 'number'
-        ? Math.round((1 - item.score) * 100)
-        : null;
-    const scoreTag = score !== null
-        ? `<span class="score">${score}% match</span>`
-        : '';
+    const score =
+        typeof item.score === 'number'
+            ? Math.round((1 - item.score) * 100)
+            : null;
+    const scoreTag =
+        score !== null ? `<span class="score">${score}% match</span>` : '';
 
     let badgesHtml = '';
     if (item.isDuplicate) {
@@ -234,11 +243,11 @@ function createCarHtml(item, query) {
 }
 
 function attachCopyListeners() {
-    results.querySelectorAll('.copy-btn').forEach(btn => {
+    results.querySelectorAll('.copy-btn').forEach((btn) => {
         btn.addEventListener('click', () => {
             const li = btn.closest('li');
             const id = parseInt(li.getAttribute('data-id'), 10);
-            const car = allCars.find(c => c.id === id);
+            const car = allCars.find((c) => c.id === id);
             if (car) {
                 navigator.clipboard.writeText(car.name).then(() => {
                     btn.classList.add('copied');
@@ -260,17 +269,22 @@ function renderCars(items, query = '') {
         return;
     }
 
-    results.innerHTML = items.map(item => createCarHtml(item, query)).join('');
+    results.innerHTML = items
+        .map((item) => createCarHtml(item, query))
+        .join('');
     updateStats(items.length, allCars.length, query);
     attachCopyListeners();
 
     // Enable horizontal scroll/ticker animation on overflow
-    results.querySelectorAll('.car-name').forEach(el => {
+    results.querySelectorAll('.car-name').forEach((el) => {
         const container = el.parentElement;
         const overflowVal = el.scrollWidth - container.clientWidth;
         if (overflowVal > 0) {
             container.classList.add('has-ticker');
-            container.style.setProperty('--scroll-dist', `-${overflowVal + 10}px`);
+            container.style.setProperty(
+                '--scroll-dist',
+                `-${overflowVal + 10}px`
+            );
             const duration = Math.max(3, Math.round(overflowVal / 35));
             container.style.setProperty('--ticker-duration', `${duration}s`);
         }
@@ -278,12 +292,18 @@ function renderCars(items, query = '') {
 }
 
 function triggerSpeedLines() {
-    document.documentElement.style.setProperty('--speed-lines-duration', '1.8s');
+    document.documentElement.style.setProperty(
+        '--speed-lines-duration',
+        '1.8s'
+    );
     if (speedLinesTimer) {
         clearTimeout(speedLinesTimer);
     }
     speedLinesTimer = setTimeout(() => {
-        document.documentElement.style.setProperty('--speed-lines-duration', '20s');
+        document.documentElement.style.setProperty(
+            '--speed-lines-duration',
+            '20s'
+        );
     }, 800);
 }
 
@@ -296,7 +316,7 @@ function runSearch() {
     if (!query) {
         items = allCars;
     } else {
-        items = fuse.search(query).map(entry => ({
+        items = fuse.search(query).map((entry) => ({
             ...entry.item,
             score: entry.score
         }));
@@ -304,11 +324,13 @@ function runSearch() {
 
     // 2. Filter matches by active chip
     if (currentFilter.type === 'duplicates') {
-        items = items.filter(car => car.isDuplicate);
+        items = items.filter((car) => car.isDuplicate);
     } else if (currentFilter.type === 'variants') {
-        items = items.filter(car => car.isVariant);
+        items = items.filter((car) => car.isVariant);
     } else if (currentFilter.type === 'brand') {
-        items = items.filter(car => getBrand(car.name) === currentFilter.value);
+        items = items.filter(
+            (car) => getBrand(car.name) === currentFilter.value
+        );
     }
 
     renderCars(items, query);
@@ -316,7 +338,7 @@ function runSearch() {
 
 function getTopBrands() {
     const brandCounts = {};
-    allCars.forEach(car => {
+    allCars.forEach((car) => {
         const brand = getBrand(car.name);
         brandCounts[brand] = (brandCounts[brand] || 0) + 1;
     });
@@ -324,7 +346,7 @@ function getTopBrands() {
     // Derive recognized brands dynamically from our global mapping
     const knownBrands = new Set([
         ...Object.values(BRAND_MAPPING.aliases),
-        ...BRAND_MAPPING.special.map(s => s.value)
+        ...BRAND_MAPPING.special.map((s) => s.value)
     ]);
 
     const sortedBrands = Object.entries(brandCounts)
@@ -346,21 +368,24 @@ function getTopBrands() {
 
 function attachChipListeners(container) {
     const chips = container.querySelectorAll('.chip');
-    chips.forEach(chip => {
+    chips.forEach((chip) => {
         chip.addEventListener('click', () => {
-            chips.forEach(c => c.classList.remove('active'));
+            chips.forEach((c) => c.classList.remove('active'));
             chip.classList.add('active');
             triggerSpeedLines();
 
             const filterType = chip.getAttribute('data-filter');
             if (filterType === 'all') {
-                currentFilter = { type: 'all' };
+                currentFilter = {type: 'all'};
             } else if (filterType === 'duplicates') {
-                currentFilter = { type: 'duplicates' };
+                currentFilter = {type: 'duplicates'};
             } else if (filterType === 'variants') {
-                currentFilter = { type: 'variants' };
+                currentFilter = {type: 'variants'};
             } else if (filterType === 'brand') {
-                currentFilter = { type: 'brand', value: chip.getAttribute('data-val') };
+                currentFilter = {
+                    type: 'brand',
+                    value: chip.getAttribute('data-val')
+                };
             }
 
             runSearch();
@@ -372,9 +397,9 @@ function renderBrandChips() {
     const container = document.getElementById('brandChips');
     if (!container) return;
 
-    const { topBrands, brandCounts } = getTopBrands();
-    const totalDuplicates = allCars.filter(c => c.isDuplicate).length;
-    const totalVariants = allCars.filter(c => c.isVariant).length;
+    const {topBrands, brandCounts} = getTopBrands();
+    const totalDuplicates = allCars.filter((c) => c.isDuplicate).length;
+    const totalVariants = allCars.filter((c) => c.isVariant).length;
 
     let html = `<button class="chip active" data-filter="all">All</button>`;
 
@@ -385,7 +410,7 @@ function renderBrandChips() {
         html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
     }
 
-    topBrands.forEach(brand => {
+    topBrands.forEach((brand) => {
         html += `<button class="chip" data-filter="brand" data-val="${escapeHtml(brand)}">${escapeHtml(brand)} (${brandCounts[brand]})</button>`;
     });
 
@@ -435,16 +460,20 @@ async function init() {
         renderEmpty('Could not load the collection file.');
         const statsEl = document.getElementById('stats');
         if (statsEl) {
-            statsEl.textContent = 'Please check that hot-wheels.md is available on this site.';
+            statsEl.textContent =
+                'Please check that hot-wheels.md is available on this site.';
         }
         console.error(error);
     }
 }
 
-searchInput.addEventListener('input', debounce((e) => {
-    triggerSpeedLines();
-    runSearch();
-}, 80));
+searchInput.addEventListener(
+    'input',
+    debounce((e) => {
+        triggerSpeedLines();
+        runSearch();
+    }, 80)
+);
 
 clearButton.addEventListener('click', () => {
     searchInput.value = '';
@@ -484,9 +513,13 @@ window.addEventListener('keydown', (e) => {
     }
 
     // 4. Navigation inside list items
-    const focusedLi = document.activeElement ? document.activeElement.closest('li[data-id]') : null;
+    const focusedLi = document.activeElement
+        ? document.activeElement.closest('li[data-id]')
+        : null;
     if (focusedLi) {
-        const listItems = Array.from(results.querySelectorAll('li[tabindex="0"]'));
+        const listItems = Array.from(
+            results.querySelectorAll('li[tabindex="0"]')
+        );
         const index = listItems.indexOf(focusedLi);
         const key = e.key.toLowerCase();
 

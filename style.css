@@ -19,8 +19,16 @@ body {
     font-family: 'Sora', sans-serif;
     min-height: 100vh;
     background:
-        radial-gradient(circle at 8% 12%, rgba(255, 209, 0, 0.25), transparent 28%),
-        radial-gradient(circle at 88% 10%, rgba(255, 209, 0, 0.16), transparent 28%),
+        radial-gradient(
+            circle at 8% 12%,
+            rgba(255, 209, 0, 0.25),
+            transparent 28%
+        ),
+        radial-gradient(
+            circle at 88% 10%,
+            rgba(255, 209, 0, 0.16),
+            transparent 28%
+        ),
         linear-gradient(138deg, #1a0202 0%, #2f0505 34%, #061833 100%);
 }
 
@@ -208,28 +216,28 @@ h1 {
 }
 
 /* Special chip colors */
-.chip[data-filter="duplicates"] {
+.chip[data-filter='duplicates'] {
     border-color: rgba(225, 106, 0, 0.4);
 }
-.chip[data-filter="duplicates"]:hover {
+.chip[data-filter='duplicates']:hover {
     background: rgba(225, 106, 0, 0.15);
     color: #ffa866;
 }
-.chip[data-filter="duplicates"].active {
+.chip[data-filter='duplicates'].active {
     background: #e16a00;
     border-color: #e16a00;
     color: #fff;
     box-shadow: 0 0 12px rgba(225, 106, 0, 0.4);
 }
 
-.chip[data-filter="variants"] {
+.chip[data-filter='variants'] {
     border-color: rgba(147, 51, 234, 0.4);
 }
-.chip[data-filter="variants"]:hover {
+.chip[data-filter='variants']:hover {
     background: rgba(147, 51, 234, 0.15);
     color: #d8b4fe;
 }
-.chip[data-filter="variants"].active {
+.chip[data-filter='variants'].active {
     background: #9333ea;
     border-color: #9333ea;
     color: #fff;
@@ -384,10 +392,18 @@ h1 {
 }
 
 @keyframes ticker {
-    0% { transform: translateX(0); }
-    15% { transform: translateX(0); } /* Pause at start */
-    85% { transform: translateX(var(--scroll-dist)); } /* Scroll to end */
-    100% { transform: translateX(var(--scroll-dist)); }
+    0% {
+        transform: translateX(0);
+    }
+    15% {
+        transform: translateX(0);
+    } /* Pause at start */
+    85% {
+        transform: translateX(var(--scroll-dist));
+    } /* Scroll to end */
+    100% {
+        transform: translateX(var(--scroll-dist));
+    }
 }
 
 .badges {
@@ -511,8 +527,12 @@ mark.highlight {
 }
 
 @keyframes race {
-    from { background-position: 0 0; }
-    to { background-position: 0 -480px; }
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 -480px;
+    }
 }
 
 @keyframes lift {
@@ -538,15 +558,21 @@ mark.highlight {
 }
 
 @media (max-width: 640px) {
-    html { font-size: 14px; }
+    html {
+        font-size: 14px;
+    }
 
-    .page { width: min(960px, 100% - 1rem); }
+    .page {
+        width: min(960px, 100% - 1rem);
+    }
 
-    h1 { font-size: clamp(1.6rem, 10vw, 2.2rem); }
+    h1 {
+        font-size: clamp(1.6rem, 10vw, 2.2rem);
+    }
 
-    .results { max-height: 55vh; }
-
-
+    .results {
+        max-height: 55vh;
+    }
 
     .stats-dashboard {
         grid-template-columns: 1fr 1fr;
@@ -560,3 +586,4 @@ mark.highlight {
         font-size: 0.8rem;
     }
 }
+
