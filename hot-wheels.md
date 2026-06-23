@@ -3,14 +3,19 @@
 - 16 Lamborghini Centenario Roadster
 - 1966 Bat Boat
 - 1966 Bat Boat
+- 1978 Dodge Li'l Red Express Truck
 - 1984 Porsche 928S
 - 1985 Honda CR-X
 - 1987 Chevy Caprice
+- 2 Jet Z (Treasure Hunt)
 - 20 Dodge Charger Hellcat
+- 2002 Pontiac Firebird
+- 2008 Mercedes-Benz CLK 63 AMG
 - 2020 Ford Mustang Shelby GT500
 - 2021 Toyota GR Supra
 - 21 Ford Bronco
 - 25/Seven
+- 32 Ford
 - 33 Ford Lo Boy
 - 41 Willys
 - 56 Chevy
@@ -34,8 +39,12 @@
 - 71 Ford Escort RS1600
 - 71 Porsche 911 (Top Gun)
 - 71 Porsche 911 (Vintage Silver)
+- 75 Ford Bronco
 - 77 Packin Pacer
+- 84 Mustang SVO
 - 85 Honda City Turbo II
+- 87 Dodge D100
+- 88 Honda CRX
 - 90 Acura NSX
 - 92 Jeep Wrangler Sahara
 - 93 Honda Civic EG
@@ -43,6 +52,7 @@
 - 95 Mazda RX-7 Drift!
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning
+- Action Sedan
 - Aint’t Fare
 - Alfa Romeo Giulia TI Super
 - Amaru GTC
@@ -55,16 +65,22 @@
 - Batman Arkham Knight Batmobile
 - Batman Forever Batmobile
 - Batmobile
+- Batmobile (Brave and the Bold)
+- Batwing
 - Big-Air Bel-Air
 - Birthday Burner
 - Blitzspeeder
+- Bogzilla
 - Bone Shaker
+- Bone Shaker (Chrome and Pearl)
 - Boom Box
 - Bounce'N Bass
 - Bullet Proof
 - CZinger 21C
+- Cadillac Celestiq
 - Cadillac Project GTP Hypercar
 - Celero GT
+- Chevroletor (Treasure Hunt)
 - Chevy Blazer 4X4
 - Chevy Super Volt
 - Chop N Bloc
@@ -78,20 +94,27 @@
 - Count Muscula
 - Coupe Clip
 - Crate Racer
+- Crate Racer (Red)
 - Cruise Bruiser
 - Cruise Bruiser
 - Custom '73 Chevy LUV
 - Custom 2020 Honda E
 - Custom 2020 Honda E
+- Custom 62 Chevy Pickup
 - Custom 66 Tornado
+- Custom 77 Dodge Van
 - Custom Cadillac Fleetwood
 - Custom Kia EV6
 - Custom Otto
 - D-Muscle
 - Datzun 240Z
+- Decidedly Go
 - Deora III
 - Deora Tooned
+- Dessert Drifter
 - Disney SteamBoat
+- Donut Drifter
+- Draggin' Wagon
 - Drift-Ender
 - Drift’N Break
 - Dune Daddy
@@ -101,6 +124,7 @@
 - El Segundo Rallye
 - El Viento
 - Erikenstein Rod
+- Feline Lucky
 - Ferrari 365 GTB4 Competizione
 - Ferrari Dino 207 GT
 - Fiat Beast of Turin
@@ -123,6 +147,7 @@
 - HW Ultimate T-Rex Transporter
 - Hako Type D
 - Haulerback
+- Head Gasket
 - Hi-Roller II
 - High-Tail Chaser
 - Honda CB750 Cafe
@@ -135,6 +160,7 @@
 - Hoto Roto (White)
 - Hover Storm
 - Instant Boost
+- Jaded
 - K.I.T.T.
 - Kei Swap (Pink)
 - Kei Swap (Red)
@@ -144,15 +170,18 @@
 - Kool Kombi
 - Kowloon’D Hypervan
 - La Liebre
+- La Troca
 - Land Rover Defender 90
 - Later Crater
 - Limited Grip
 - Long Bloc
 - Loopster
 - Lotus Cortina
+- Lotus Sport Elise
 - Lucid Air
 - MBK Van
 - Mach Speeder
+- Mad Drip
 - MadFast
 - Maserati Tipo 61
 - Max Steel
@@ -166,6 +195,7 @@
 - McLaren W1
 - Mercedes Benz Unimog 1300L
 - Mercedes-Benz CLA
+- Meyers Manx
 - Mid Mill
 - Mo-Stash
 - Mod Mill
@@ -179,9 +209,12 @@
 - Nerve Hammer
 - Nissan Skyline GT-R
 - Pagani Utopia
+- Pagani Zonda Cinque Tooned
 - Party Wagon
 - Pass’N Gasser
+- Pedal Driver
 - Peugeot 9X8 Hypercar
+- Piranha Terror
 - Pixel Shaker
 - Polestar TRX (Grey)
 - Polestar TRX (Yellow)
@@ -190,9 +223,11 @@
 - Porsche 911 Carrera T
 - Porsche 911 Turbo Cabriolet
 - Power Rocket
+- Prototype H-24
 - Punk Rod
 - Purple Passion
 - Quick Bite
+- Quick Chat
 - RD-06 (Black)
 - RD-06 (Green)
 - RRRoadster
@@ -203,6 +238,7 @@
 - Ravenger S/T
 - Renault ESpace F1
 - Rink Racer
+- Rink Racer (Green)
 - Rodger Dodger 2.0
 - Rogue Hog
 - Roller Toaster
@@ -210,11 +246,13 @@
 - Salt Shaker
 - Screamliner
 - Silverado
+- Skull Shaker
 - Slide Kick
 - Solar Reflex
 - Soooo Fast
 - Speed Dozer
 - Speed Driver
+- Speedbox
 - Standard Kart
 - Stockar
 - Street Shrieker
@@ -222,54 +260,29 @@
 - Subaru BRAT
 - Super Twin Mill
 - Supercharged
+- Surf Crate
+- Sushi Tuner
 - TV Series Batmobile (Maroon)
 - TV Series Batmobile (Silver)
 - Terra-Tracktyl
 - Tesla Cyberquad
 - The Dark Knight Batmobile
 - Time Shifter
+- Total Disposal (Treasure Hunt)
+- Track Ripper
 - Turbine Sublime
 - Twin Dorado
 - Twin Tags
 - VW ID Buzz Bomb
 - Vairstrike
 - Vespa 90 SS Super Sprint
+- Volkswagen Baja Bug
+- Volkswagen Caddy
 - Volkswagen Classic Bug
+- Volkswagen Golf MK1 Tooned
 - Volkswagen T3 Custom (Brown)
 - Volkswagen T3 Custom (Yellow)
 - Voltage Spike
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
-
-- 2 Jet Z (Treasure Hunt)
-- 87 Dodge D100
-- Action Sedan
-- Batmobile (Brave and the Bold)
-- Batwing
-- Bogzilla
-- Bone Shaker (Chrome and Pearl)
-- Cadillac Celestiq
-- Chevroletor (Treasure Hunt)
-- Crate Racer (Red)
-- Decidedly Go
-- Dessert Drifter
-- Donut Drifter
-- Draggin' Wagon
-- Feline Lucky
-- Head Gasket
-- Jaded
-- Lotus Sport Elise
-- Mad Drip
-- Pagani Zonda Cinque Tooned
-- Pedal Driver
-- Piranha Terror
-- Prototype H-24
-- Quick Chat
-- Rink Racer (Green)
-- Skull Shaker
-- Speedbox
-- Sushi Tuner
-- Volkswagen Golf MK1 Tooned
-- Total Disposal (Treasure Hunt)
-- Track Ripper
