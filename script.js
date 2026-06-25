@@ -65,7 +65,7 @@ const BRAND_MAPPING = {
 };
 
 const searchInput = document.getElementById('search');
-const clearButton = document.getElementById('clearSearch');
+const clearButtons = document.querySelectorAll('.clear-search-btn');
 const stats = document.getElementById('stats');
 const results = document.getElementById('results');
 
@@ -309,7 +309,7 @@ function triggerSpeedLines() {
 
 function runSearch() {
     const query = searchInput.value.trim();
-    clearButton.disabled = query.length === 0;
+    clearButtons.forEach((btn) => (btn.disabled = query.length === 0));
 
     // 1. Get search matches (or all cars if no query)
     let items = [];
@@ -454,7 +454,7 @@ async function init() {
         renderBrandChips();
 
         renderCars(allCars, '');
-        clearButton.disabled = true;
+        clearButtons.forEach((btn) => (btn.disabled = true));
         searchInput.focus();
     } catch (error) {
         renderEmpty('Could not load the collection file.');
@@ -475,11 +475,13 @@ searchInput.addEventListener(
     }, 80)
 );
 
-clearButton.addEventListener('click', () => {
-    searchInput.value = '';
-    triggerSpeedLines();
-    runSearch();
-    searchInput.focus();
+clearButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+        searchInput.value = '';
+        triggerSpeedLines();
+        runSearch();
+        searchInput.focus();
+    });
 });
 
 window.addEventListener('keydown', (e) => {
