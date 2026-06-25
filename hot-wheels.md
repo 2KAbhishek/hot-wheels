@@ -286,3 +286,16 @@
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
+
+- Rockster (Treasure Hunt)
+- 2019 Audi R8 Spyder
+- 2020 Koenigsegg Jesko
+- 19 Corvette ZR1 Convertible
+- 94 Audi Avant RS2
+- Jaguar MK1
+- 2017 Camaro ZL1
+- 2023 Nissan Z
+- 15 Mazda MX-5 Miata
+- Rig Heat
+- MS-T Suzuka
+- Group C Fantasy
