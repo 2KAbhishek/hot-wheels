@@ -1,6 +1,8 @@
 - 15 Cadillac ATS-V R
 - 15 Land Rover Defender
+- 15 Mazda MX-5 Miata
 - 16 Lamborghini Centenario Roadster
+- 19 Corvette ZR1 Convertible
 - 1966 Bat Boat
 - 1966 Bat Boat
 - 1978 Dodge Li'l Red Express Truck
@@ -11,8 +13,12 @@
 - 20 Dodge Charger Hellcat
 - 2002 Pontiac Firebird
 - 2008 Mercedes-Benz CLK 63 AMG
+- 2017 Camaro ZL1
+- 2019 Audi R8 Spyder
 - 2020 Ford Mustang Shelby GT500
+- 2020 Koenigsegg Jesko
 - 2021 Toyota GR Supra
+- 2023 Nissan Z
 - 21 Ford Bronco
 - 25/Seven
 - 32 Ford
@@ -48,6 +54,7 @@
 - 90 Acura NSX
 - 92 Jeep Wrangler Sahara
 - 93 Honda Civic EG
+- 94 Audi Avant RS2
 - 94 Bugatti EB110 SS
 - 95 Mazda RX-7 Drift!
 - 98 Subaru Impreza 22B-STi
@@ -140,6 +147,7 @@
 - Gordon Murray Automobile T.50s
 - Gordon Murray Automotive T.33
 - Ground FX
+- Group C Fantasy
 - HW 50 Concept
 - HW Formula Solar
 - HW Roll Cage
@@ -161,6 +169,7 @@
 - Hover Storm
 - Instant Boost
 - Jaded
+- Jaguar MK1
 - K.I.T.T.
 - Kei Swap (Pink)
 - Kei Swap (Red)
@@ -180,6 +189,7 @@
 - Lotus Sport Elise
 - Lucid Air
 - MBK Van
+- MS-T Suzuka
 - Mach Speeder
 - Mad Drip
 - MadFast
@@ -237,8 +247,10 @@
 - Rapid Pulse (Blue)
 - Ravenger S/T
 - Renault ESpace F1
+- Rig Heat
 - Rink Racer
 - Rink Racer (Green)
+- Rockster (Treasure Hunt)
 - Rodger Dodger 2.0
 - Rogue Hog
 - Roller Toaster
@@ -286,16 +298,3 @@
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
-
-- Rockster (Treasure Hunt)
-- 2019 Audi R8 Spyder
-- 2020 Koenigsegg Jesko
-- 19 Corvette ZR1 Convertible
-- 94 Audi Avant RS2
-- Jaguar MK1
-- 2017 Camaro ZL1
-- 2023 Nissan Z
-- 15 Mazda MX-5 Miata
-- Rig Heat
-- MS-T Suzuka
-- Group C Fantasy
