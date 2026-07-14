@@ -298,3 +298,29 @@
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
+
+- 18 Camaro SS
+- 1972 Datsun Sunny Coupe
+- 2024 Aston Martin Vantage GT3
+- 70 Buick GSX
+- 88 Mitsubishi Starion
+- 96 Dodge Viper GTS
+- 98 Honda Prelude
+- Bugatti Bolide
+- Bully Goat
+- Click Shift
+- Fiat 500C
+- Gotta Go
+- HW Test Ride
+- Hyper Rocker
+- Jaguar XJC V12 Coupe
+- Lil Mad
+- Lil Roar
+- Mad Manga (Treasure Hunt)
+- Maserati Shamal
+- Mod Mill
+- Nissan Maxima Drift Car
+- PT Fast
+- Spider-Mobile
+- Toyota AE86 Sprinter Trueno
+- Uncertain-T
