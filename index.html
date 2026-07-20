@@ -71,18 +71,23 @@
 
         <div id="statsDashboard" class="stats-dashboard">
           <div class="stats-card">
-            <span class="stats-label">Total Collection</span>
+            <span class="stats-label">Total</span>
             <span id="statTotal" class="stats-value">0</span>
           </div>
           <div class="stats-card">
-            <span class="stats-label">Unique Castings</span>
+            <span class="stats-label">Unique</span>
             <span id="statUnique" class="stats-value">0</span>
           </div>
-          <div class="stats-card status-card">
-            <span class="stats-label">Status</span>
-            <span id="stats" class="stats-value stats-msg" aria-live="polite"
-              >Loading collection...</span
-            >
+          <div class="stats-card sort-card-wrap">
+            <span class="stats-label">Sort</span>
+            <button id="sortBtn" class="stats-value sort-btn" type="button">
+              <span id="sortVal">A – Z</span> ▾
+            </button>
+            <div id="sortMenu" class="sort-menu hidden">
+              <div class="sort-option active" data-val="name-asc">A – Z</div>
+              <div class="sort-option" data-val="name-desc">Z – A</div>
+              <div class="sort-option" data-val="qty-desc">Qty</div>
+            </div>
           </div>
         </div>
       </section>

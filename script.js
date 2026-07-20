@@ -81,8 +81,10 @@ const ICONS = {
 // --- DOM References ---
 const DOM = {
     searchInput: document.getElementById('search'),
+    sortBtn: document.getElementById('sortBtn'),
+    sortVal: document.getElementById('sortVal'),
+    sortMenu: document.getElementById('sortMenu'),
     clearButtons: document.querySelectorAll('.clear-search-btn'),
-    statsMsg: document.getElementById('stats'),
     statTotal: document.getElementById('statTotal'),
     statUnique: document.getElementById('statUnique'),
     resultsList: document.getElementById('results'),
@@ -94,6 +96,7 @@ const state = {
     rawCars: [],
     groupedCars: [],
     currentFilter: {type: 'all', value: null},
+    currentSort: 'name-asc',
     fuse: null,
     speedLinesTimer: null
 };
@@ -354,43 +357,15 @@ function renderEmpty(message) {
     DOM.resultsList.innerHTML = `<li class="empty">${escapeHtml(message)}</li>`;
 }
 
-function updateStatsDashboard(visibleCount, totalCount, query) {
-    const totalCars = state.rawCars.length;
-    if (DOM.statTotal) DOM.statTotal.textContent = totalCars;
-    if (DOM.statUnique) DOM.statUnique.textContent = state.groupedCars.length;
-
-    if (!totalCount) {
-        DOM.statsMsg.textContent = 'Empty collection.';
-        return;
-    }
-
-    if (!query) {
-        if (state.currentFilter.type === 'variants') {
-            DOM.statsMsg.textContent = `Showing ${visibleCount} castings with variants & duplicates.`;
-        } else if (state.currentFilter.type === 'treasure-hunt') {
-            DOM.statsMsg.textContent = `Showing ${visibleCount} Treasure Hunt castings.`;
-        } else if (state.currentFilter.type === 'brand') {
-            DOM.statsMsg.textContent = `Showing ${visibleCount} ${state.currentFilter.value} castings.`;
-        } else {
-            DOM.statsMsg.textContent = `Showing all ${totalCount} unique castings (${totalCars} total cars).`;
-        }
-        return;
-    }
-
-    DOM.statsMsg.textContent = `${visibleCount} matching casting${visibleCount === 1 ? '' : 's'}.`;
-}
-
 function renderCarList(items, query = '') {
     if (!items.length) {
         renderEmpty('No matching car found. Try a different spelling.');
-        updateStatsDashboard(0, state.groupedCars.length, query);
         return;
     }
 
     DOM.resultsList.innerHTML = items
         .map((item) => createCarRowHtml(item, query))
         .join('');
-    updateStatsDashboard(items.length, state.groupedCars.length, query);
 
     // Frame-aligned horizontal scroll animation calculation
     requestAnimationFrame(() => {
@@ -484,6 +459,22 @@ function triggerSpeedLines() {
     }, CONFIG.speedLinesShortMs);
 }
 
+function sortItems(items) {
+    const sorted = [...items];
+    if (state.currentSort === 'name-asc') {
+        sorted.sort((a, b) => a.baseName.localeCompare(b.baseName));
+    } else if (state.currentSort === 'name-desc') {
+        sorted.sort((a, b) => b.baseName.localeCompare(a.baseName));
+    } else if (state.currentSort === 'qty-desc') {
+        sorted.sort(
+            (a, b) =>
+                b.totalCount - a.totalCount ||
+                a.baseName.localeCompare(b.baseName)
+        );
+    }
+    return sorted;
+}
+
 function runSearch() {
     const query = DOM.searchInput.value.trim();
     DOM.clearButtons.forEach((btn) => (btn.disabled = query.length === 0));
@@ -508,6 +499,7 @@ function runSearch() {
         );
     }
 
+    items = sortItems(items);
     renderCarList(items, query);
 }
 
@@ -566,6 +558,53 @@ function initCopyDelegation() {
                     btn.innerHTML = ICONS.copy;
                 }, 1200);
             });
+        }
+    });
+}
+
+function initSortMenuDelegation() {
+    if (!DOM.sortBtn || !DOM.sortMenu) return;
+
+    DOM.sortBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = !DOM.sortMenu.classList.contains('hidden');
+        DOM.sortMenu.classList.toggle('hidden', isOpen);
+        DOM.sortBtn.setAttribute('aria-expanded', String(!isOpen));
+    });
+
+    DOM.sortMenu.addEventListener('click', (e) => {
+        const option = e.target.closest('.sort-option');
+        if (!option) return;
+
+        const val = option.getAttribute('data-val');
+        const text = option.textContent;
+
+        DOM.sortMenu.querySelectorAll('.sort-option').forEach((opt) => {
+            const isActive = opt === option;
+            opt.classList.toggle('active', isActive);
+            opt.setAttribute('aria-selected', String(isActive));
+        });
+
+        if (DOM.sortVal) DOM.sortVal.textContent = text;
+        state.currentSort = val;
+        DOM.sortMenu.classList.add('hidden');
+        DOM.sortBtn.setAttribute('aria-expanded', 'false');
+
+        triggerSpeedLines();
+        runSearch();
+    });
+
+    document.addEventListener('click', () => {
+        if (DOM.sortMenu && !DOM.sortMenu.classList.contains('hidden')) {
+            DOM.sortMenu.classList.add('hidden');
+            if (DOM.sortBtn) DOM.sortBtn.setAttribute('aria-expanded', 'false');
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && DOM.sortMenu && !DOM.sortMenu.classList.contains('hidden')) {
+            DOM.sortMenu.classList.add('hidden');
+            if (DOM.sortBtn) DOM.sortBtn.setAttribute('aria-expanded', 'false');
         }
     });
 }
@@ -683,11 +722,14 @@ async function init() {
 
         if (!state.rawCars.length) {
             renderEmpty('No car names detected in hot-wheels.md.');
-            updateStatsDashboard(0, 0, '');
             return;
         }
 
         state.groupedCars = groupCastings(state.rawCars);
+
+        if (DOM.statTotal) DOM.statTotal.textContent = state.rawCars.length;
+        if (DOM.statUnique) DOM.statUnique.textContent = state.groupedCars.length;
+
         state.fuse = new Fuse(state.groupedCars, {
             keys: ['baseName', 'searchString'],
             includeScore: true,
@@ -700,6 +742,7 @@ async function init() {
         renderBrandChips();
         renderCarList(state.groupedCars, '');
         initChipDelegation();
+        initSortMenuDelegation();
         initCopyDelegation();
         initSearchEvents();
         initKeyboardNavigation();
@@ -708,10 +751,6 @@ async function init() {
         DOM.searchInput.focus();
     } catch (error) {
         renderEmpty('Could not load the collection file.');
-        if (DOM.statsMsg) {
-            DOM.statsMsg.textContent =
-                'Please check that hot-wheels.md is available on this site.';
-        }
         console.error(error);
     }
 }
