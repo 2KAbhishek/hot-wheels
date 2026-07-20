@@ -84,6 +84,7 @@ const DOM = {
     sortBtn: document.getElementById('sortBtn'),
     sortVal: document.getElementById('sortVal'),
     sortMenu: document.getElementById('sortMenu'),
+    copyListBtn: document.getElementById('copyListBtn'),
     clearButtons: document.querySelectorAll('.clear-search-btn'),
     statTotal: document.getElementById('statTotal'),
     statUnique: document.getElementById('statUnique'),
@@ -95,6 +96,7 @@ const DOM = {
 const state = {
     rawCars: [],
     groupedCars: [],
+    currentlyVisibleItems: [],
     currentFilter: {type: 'all', value: null},
     currentSort: 'name-asc',
     fuse: null,
@@ -203,7 +205,7 @@ function parseMarkdownCars(markdownText) {
             const name = line.slice(2).trim();
             const isTreasureHunt =
                 /\btreasure\s+hunt\b/i.test(name) || /\bth\b/i.test(name);
-            return {id: index + 1, name, isTreasureHunt};
+            return {id: index + 1, name, isTreasureHunt, rawLine: line};
         })
         .filter((item) => item.name.length > 0);
 }
@@ -234,6 +236,7 @@ function createCastingGroup(id, baseName, group) {
         baseName,
         totalCount: group.totalCount,
         variants,
+        rawLines: variants.flatMap((v) => v.rawLines),
         showVariantPills,
         exactDupCount,
         isDuplicate: hasExactDuplicates,
@@ -272,13 +275,15 @@ function groupCastings(parsedCars) {
                 isDefault: tag === null,
                 count: 0,
                 isTreasureHunt: item.isTreasureHunt,
-                fullNames: []
+                fullNames: [],
+                rawLines: []
             });
         }
 
         const varEntry = group.variantsMap.get(tagKey);
         varEntry.count += 1;
         varEntry.fullNames.push(item.name);
+        varEntry.rawLines.push(item.rawLine);
     });
 
     let idCounter = 1;
@@ -500,6 +505,7 @@ function runSearch() {
     }
 
     items = sortItems(items);
+    state.currentlyVisibleItems = items;
     renderCarList(items, query);
 }
 
@@ -606,6 +612,28 @@ function initSortMenuDelegation() {
             DOM.sortMenu.classList.add('hidden');
             if (DOM.sortBtn) DOM.sortBtn.setAttribute('aria-expanded', 'false');
         }
+    });
+}
+
+function initExportDelegation() {
+    if (!DOM.copyListBtn) return;
+    DOM.copyListBtn.innerHTML = ICONS.copy;
+
+    DOM.copyListBtn.addEventListener('click', () => {
+        const items = state.currentlyVisibleItems.length
+            ? state.currentlyVisibleItems
+            : state.groupedCars;
+        const exportText = items.flatMap((car) => car.rawLines).join('\n');
+
+        navigator.clipboard.writeText(exportText).then(() => {
+            DOM.copyListBtn.classList.add('copied');
+            DOM.copyListBtn.innerHTML = ICONS.copied;
+
+            setTimeout(() => {
+                DOM.copyListBtn.classList.remove('copied');
+                DOM.copyListBtn.innerHTML = ICONS.copy;
+            }, 1200);
+        });
     });
 }
 
@@ -740,9 +768,11 @@ async function init() {
         });
 
         renderBrandChips();
+        state.currentlyVisibleItems = state.groupedCars;
         renderCarList(state.groupedCars, '');
         initChipDelegation();
         initSortMenuDelegation();
+        initExportDelegation();
         initCopyDelegation();
         initSearchEvents();
         initKeyboardNavigation();

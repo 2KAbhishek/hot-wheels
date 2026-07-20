@@ -355,7 +355,8 @@ h1 {
     z-index: 30;
 }
 
-.sort-btn {
+.sort-btn,
+.share-btn {
     font: inherit;
     font-size: 0.9rem;
     font-weight: 700;
@@ -374,8 +375,14 @@ h1 {
 }
 
 .sort-btn:hover,
-.sort-btn:focus {
+.sort-btn:focus,
+.share-btn:hover,
+.share-btn:focus {
     filter: brightness(1.2);
+}
+
+.share-btn.copied {
+    color: #52de88 !important;
 }
 
 .sort-menu {
