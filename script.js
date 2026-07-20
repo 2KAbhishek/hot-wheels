@@ -179,6 +179,17 @@ function highlightQuery(name, query) {
         .join('');
 }
 
+function extractCarNameAndTag(fullName) {
+    const parenIdx = fullName.indexOf('(');
+    if (parenIdx !== -1 && fullName.endsWith(')')) {
+        return {
+            baseName: fullName.slice(0, parenIdx).trim(),
+            tag: fullName.slice(parenIdx + 1, -1).trim()
+        };
+    }
+    return {baseName: fullName, tag: null};
+}
+
 // --- Data Parsing & Grouping ---
 function parseMarkdownCars(markdownText) {
     return markdownText
@@ -194,19 +205,47 @@ function parseMarkdownCars(markdownText) {
         .filter((item) => item.name.length > 0);
 }
 
+function createCastingGroup(id, baseName, group) {
+    const variants = Array.from(group.variantsMap.values());
+    const nonThVariants = variants.filter(
+        (v) => !/\b(treasure hunt|th)\b/i.test(v.tag)
+    );
+
+    const exactDupCount = variants.reduce(
+        (sum, v) => sum + (v.count > 1 ? v.count : 0),
+        0
+    );
+    const hasExactDuplicates =
+        variants.some((v) => v.count > 1) || group.totalCount > 1;
+    const hasMultipleVariants = nonThVariants.length > 1 || hasExactDuplicates;
+    const showVariantPills = nonThVariants.length > 1;
+
+    const searchTokens = [
+        baseName,
+        ...variants.flatMap((v) => v.fullNames),
+        ...variants.map((v) => v.tag).filter(Boolean)
+    ];
+
+    return {
+        id,
+        baseName,
+        totalCount: group.totalCount,
+        variants,
+        showVariantPills,
+        exactDupCount,
+        isDuplicate: hasExactDuplicates,
+        isVariant: hasMultipleVariants,
+        isTreasureHunt: group.hasTH,
+        brand: getBrand(baseName),
+        searchString: searchTokens.join(' ')
+    };
+}
+
 function groupCastings(parsedCars) {
     const groupsMap = new Map();
 
     parsedCars.forEach((item) => {
-        let name = item.name;
-        let baseName = name;
-        let tag = null;
-
-        const parenIdx = name.indexOf('(');
-        if (parenIdx !== -1 && name.endsWith(')')) {
-            baseName = name.slice(0, parenIdx).trim();
-            tag = name.slice(parenIdx + 1, -1).trim();
-        }
+        const {baseName, tag} = extractCarNameAndTag(item.name);
 
         if (!groupsMap.has(baseName)) {
             groupsMap.set(baseName, {
@@ -241,42 +280,8 @@ function groupCastings(parsedCars) {
 
     let idCounter = 1;
     const list = [];
-
     groupsMap.forEach((group, baseName) => {
-        const variants = Array.from(group.variantsMap.values());
-        const nonThVariants = variants.filter(
-            (v) => !/\b(treasure hunt|th)\b/i.test(v.tag)
-        );
-
-        const exactDupCount = variants.reduce(
-            (sum, v) => sum + (v.count > 1 ? v.count : 0),
-            0
-        );
-        const hasExactDuplicates =
-            variants.some((v) => v.count > 1) || group.totalCount > 1;
-        const hasMultipleVariants =
-            nonThVariants.length > 1 || hasExactDuplicates;
-        const showVariantPills = nonThVariants.length > 1;
-
-        const searchTokens = [
-            baseName,
-            ...variants.flatMap((v) => v.fullNames),
-            ...variants.map((v) => v.tag).filter(Boolean)
-        ];
-
-        list.push({
-            id: idCounter++,
-            baseName,
-            totalCount: group.totalCount,
-            variants,
-            showVariantPills,
-            exactDupCount,
-            isDuplicate: hasExactDuplicates,
-            isVariant: hasMultipleVariants,
-            isTreasureHunt: group.hasTH,
-            brand: getBrand(baseName),
-            searchString: searchTokens.join(' ')
-        });
+        list.push(createCastingGroup(idCounter++, baseName, group));
     });
 
     return list;
@@ -578,6 +583,67 @@ function initSearchEvents() {
     });
 }
 
+function handleSearchKeyboardShortcuts(e, isInputFocused, isSearchFocused) {
+    if ((e.key === '/' || e.key.toLowerCase() === 's') && !isInputFocused) {
+        e.preventDefault();
+        DOM.searchInput.focus();
+        triggerSpeedLines();
+        return true;
+    }
+
+    if (e.key === 'Escape' && isSearchFocused) {
+        DOM.searchInput.value = '';
+        triggerSpeedLines();
+        runSearch();
+        DOM.searchInput.blur();
+        return true;
+    }
+
+    if (isSearchFocused && e.key === 'ArrowDown') {
+        const firstItem = DOM.resultsList.querySelector('li[tabindex="0"]');
+        if (firstItem) {
+            e.preventDefault();
+            firstItem.focus();
+        }
+        return true;
+    }
+
+    return false;
+}
+
+function handleListKeyboardShortcuts(e, focusedLi) {
+    const listItems = Array.from(
+        DOM.resultsList.querySelectorAll('li[tabindex="0"]')
+    );
+    const index = listItems.indexOf(focusedLi);
+    const key = e.key.toLowerCase();
+
+    if (e.key === 'ArrowDown' || key === 'j') {
+        e.preventDefault();
+        const nextItem = listItems[index + 1];
+        if (nextItem) nextItem.focus();
+    } else if (e.key === 'ArrowUp' || key === 'k') {
+        e.preventDefault();
+        const prevItem = listItems[index - 1];
+        if (prevItem) {
+            prevItem.focus();
+        } else {
+            DOM.searchInput.focus();
+        }
+    } else if (e.key === 'Escape') {
+        e.preventDefault();
+        DOM.searchInput.focus();
+    } else if (e.key === 'Enter') {
+        e.preventDefault();
+        const wikiLink = focusedLi.querySelector('.wiki-btn');
+        if (wikiLink) window.open(wikiLink.href, '_blank');
+    } else if (key === 'c') {
+        e.preventDefault();
+        const copyBtn = focusedLi.querySelector('.copy-btn');
+        if (copyBtn) copyBtn.click();
+    }
+}
+
 function initKeyboardNavigation() {
     window.addEventListener('keydown', (e) => {
         const activeEl = document.activeElement;
@@ -587,66 +653,13 @@ function initKeyboardNavigation() {
                 activeEl.isContentEditable);
         const isSearchFocused = activeEl === DOM.searchInput;
 
-        // 1. Focus search on '/' or 's' (if no text input is focused)
-        if ((e.key === '/' || e.key.toLowerCase() === 's') && !isInputFocused) {
-            e.preventDefault();
-            DOM.searchInput.focus();
-            triggerSpeedLines();
+        if (handleSearchKeyboardShortcuts(e, isInputFocused, isSearchFocused)) {
             return;
         }
 
-        // 2. Clear search on Escape (when input is focused)
-        if (e.key === 'Escape' && isSearchFocused) {
-            DOM.searchInput.value = '';
-            triggerSpeedLines();
-            runSearch();
-            DOM.searchInput.blur();
-            return;
-        }
-
-        // 3. Navigation from search input to list
-        if (isSearchFocused && e.key === 'ArrowDown') {
-            const firstItem = DOM.resultsList.querySelector('li[tabindex="0"]');
-            if (firstItem) {
-                e.preventDefault();
-                firstItem.focus();
-            }
-            return;
-        }
-
-        // 4. List item navigation & action shortcuts
         const focusedLi = activeEl ? activeEl.closest('li[data-id]') : null;
         if (focusedLi) {
-            const listItems = Array.from(
-                DOM.resultsList.querySelectorAll('li[tabindex="0"]')
-            );
-            const index = listItems.indexOf(focusedLi);
-            const key = e.key.toLowerCase();
-
-            if (e.key === 'ArrowDown' || key === 'j') {
-                e.preventDefault();
-                const nextItem = listItems[index + 1];
-                if (nextItem) nextItem.focus();
-            } else if (e.key === 'ArrowUp' || key === 'k') {
-                e.preventDefault();
-                const prevItem = listItems[index - 1];
-                if (prevItem) {
-                    prevItem.focus();
-                } else {
-                    DOM.searchInput.focus();
-                }
-            } else if (e.key === 'Escape') {
-                e.preventDefault();
-                DOM.searchInput.focus();
-            } else if (e.key === 'Enter') {
-                e.preventDefault();
-                const wikiLink = focusedLi.querySelector('.wiki-btn');
-                if (wikiLink) window.open(wikiLink.href, '_blank');
-            } else if (key === 'c') {
-                e.preventDefault();
-                const copyBtn = focusedLi.querySelector('.copy-btn');
-                if (copyBtn) copyBtn.click();
-            }
+            handleListKeyboardShortcuts(e, focusedLi);
         }
     });
 }
