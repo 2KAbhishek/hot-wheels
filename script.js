@@ -216,10 +216,6 @@ function createCastingGroup(id, baseName, group) {
         (v) => !/\b(treasure hunt|th)\b/i.test(v.tag)
     );
 
-    const exactDupCount = variants.reduce(
-        (sum, v) => sum + (v.count > 1 ? v.count : 0),
-        0
-    );
     const hasExactDuplicates =
         variants.some((v) => v.count > 1) || group.totalCount > 1;
     const hasMultipleVariants = nonThVariants.length > 1 || hasExactDuplicates;
@@ -238,7 +234,6 @@ function createCastingGroup(id, baseName, group) {
         variants,
         rawLines: variants.flatMap((v) => v.rawLines),
         showVariantPills,
-        exactDupCount,
         isDuplicate: hasExactDuplicates,
         isVariant: hasMultipleVariants,
         isTreasureHunt: group.hasTH,
