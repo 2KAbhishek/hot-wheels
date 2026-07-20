@@ -256,23 +256,26 @@ function createCarHtml(item, query) {
     `;
 }
 
-function attachCopyListeners() {
-    results.querySelectorAll('.copy-btn').forEach((btn) => {
-        btn.addEventListener('click', () => {
-            const li = btn.closest('li');
-            const id = parseInt(li.getAttribute('data-id'), 10);
-            const car = allCars.find((c) => c.id === id);
-            if (car) {
-                navigator.clipboard.writeText(car.name).then(() => {
-                    btn.classList.add('copied');
-                    btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                    setTimeout(() => {
-                        btn.classList.remove('copied');
-                        btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
-                    }, 1200);
-                });
-            }
-        });
+function initCopyDelegation() {
+    results.addEventListener('click', (e) => {
+        const btn = e.target.closest('.copy-btn');
+        if (!btn) return;
+
+        const li = btn.closest('li');
+        if (!li) return;
+
+        const id = parseInt(li.getAttribute('data-id'), 10);
+        const car = allCars.find((c) => c.id === id);
+        if (car) {
+            navigator.clipboard.writeText(car.name).then(() => {
+                btn.classList.add('copied');
+                btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
+                setTimeout(() => {
+                    btn.classList.remove('copied');
+                    btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>`;
+                }, 1200);
+            });
+        }
     });
 }
 
@@ -287,21 +290,23 @@ function renderCars(items, query = '') {
         .map((item) => createCarHtml(item, query))
         .join('');
     updateStats(items.length, allCars.length, query);
-    attachCopyListeners();
 
-    // Enable horizontal scroll/ticker animation on overflow
-    results.querySelectorAll('.car-name').forEach((el) => {
-        const container = el.parentElement;
-        const overflowVal = el.scrollWidth - container.clientWidth;
-        if (overflowVal > 0) {
-            container.classList.add('has-ticker');
-            container.style.setProperty(
-                '--scroll-dist',
-                `-${overflowVal + 10}px`
-            );
-            const duration = Math.max(3, Math.round(overflowVal / 35));
-            container.style.setProperty('--ticker-duration', `${duration}s`);
-        }
+    // Enable horizontal scroll/ticker animation on overflow after frame layout
+    requestAnimationFrame(() => {
+        results.querySelectorAll('.car-name').forEach((el) => {
+            const container = el.parentElement;
+            if (!container) return;
+            const overflowVal = el.scrollWidth - container.clientWidth;
+            if (overflowVal > 0) {
+                container.classList.add('has-ticker');
+                container.style.setProperty(
+                    '--scroll-dist',
+                    `-${overflowVal + 10}px`
+                );
+                const duration = Math.max(3, Math.round(overflowVal / 35));
+                container.style.setProperty('--ticker-duration', `${duration}s`);
+            }
+        });
     });
 }
 
@@ -476,6 +481,7 @@ async function init() {
         renderBrandChips();
 
         renderCars(allCars, '');
+        initCopyDelegation();
         clearButtons.forEach((btn) => (btn.disabled = true));
         searchInput.focus();
     } catch (error) {
@@ -507,10 +513,15 @@ clearButtons.forEach((btn) => {
 });
 
 window.addEventListener('keydown', (e) => {
-    const isSearchFocused = document.activeElement === searchInput;
+    const activeEl = document.activeElement;
+    const isInputFocused =
+        activeEl &&
+        (['INPUT', 'TEXTAREA', 'SELECT'].includes(activeEl.tagName) ||
+            activeEl.isContentEditable);
+    const isSearchFocused = activeEl === searchInput;
 
-    // 1. Focus search on '/' or 's' (if not already focused)
-    if ((e.key === '/' || e.key.toLowerCase() === 's') && !isSearchFocused) {
+    // 1. Focus search on '/' or 's' (if no text input is currently focused)
+    if ((e.key === '/' || e.key.toLowerCase() === 's') && !isInputFocused) {
         e.preventDefault();
         searchInput.focus();
         triggerSpeedLines();

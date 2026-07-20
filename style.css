@@ -3,6 +3,9 @@
 :root {
     --hw-red: #e10600;
     --hw-yellow: #ffd100;
+    --hw-duplicate: #e16a00;
+    --hw-variant: #9333ea;
+    --hw-success: #52de88;
     --ink: #f5f8ff;
     --ink-soft: #b4c2e7;
     --line: #2a3f6c;
