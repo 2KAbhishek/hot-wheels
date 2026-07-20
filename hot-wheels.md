@@ -67,7 +67,7 @@
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning
 - Action Sedan
-- Aint’t Fare
+- Ain't Fare
 - Alfa Romeo Giulia TI Super
 - Amaru GTC
 - Arrow Dynamic
@@ -118,18 +118,18 @@
 - Custom 2020 Honda E
 - Custom 2020 Honda E
 - Custom 62 Chevy Pickup
-- Custom 66 Tornado
+- Custom 66 Toronado
 - Custom 77 Dodge Van
 - Custom Cadillac Fleetwood
 - Custom Kia EV6
 - Custom Otto
 - D-Muscle
-- Datzun 240Z
+- Datsun 240Z
 - Decidedly Go
 - Deora III
 - Deora Tooned
 - Dessert Drifter
-- Disney SteamBoat
+- Disney Steamboat
 - Donut Drifter
 - Draggin' Wagon
 - Drift-Ender
@@ -143,7 +143,7 @@
 - Erikenstein Rod
 - Feline Lucky
 - Ferrari 365 GTB4 Competizione
-- Ferrari Dino 207 GT
+- Ferrari Dino 206 GT
 - Fiat 500C
 - Fiat Beast of Turin
 - Fish’D & Chip’D
@@ -151,11 +151,11 @@
 - Ford F-150 Lightning SuperTruck
 - Ford F-150 SVT Lightning (Fast & Furious)
 - Ford Mustang GTD
-- Ford Mustang Mach-E 141
+- Ford Mustang Mach-E 1400
 - Formula E Gen 3
 - Futurismo
 - Gone Mad
-- Gordon Murray Automobile T.50s
+- Gordon Murray Automotive T.50s
 - Gordon Murray Automotive T.33
 - Gotta Go
 - Ground FX
@@ -189,7 +189,7 @@
 - Kei Swap (Pink)
 - Kei Swap (Red)
 - Kick Kart
-- Kick Sauber F2 Team
+- Kick Sauber F1 Team
 - King Kuda
 - Kool Kombi
 - Kowloon’D Hypervan
@@ -217,7 +217,7 @@
 - Mazda 787B
 - Mazda Autozam (Brown)
 - Mazda Autozam (Purple)
-- Mazda MX-4 Miata
+- Mazda MX-5 Miata
 - Mazda RX-2
 - Mazda RX-3 Tooned
 - McLaren Speedtail
@@ -250,7 +250,7 @@
 - Pixel Shaker
 - Polestar TRX (Grey)
 - Polestar TRX (Yellow)
-- Pontiac Aztec Custom
+- Pontiac Aztek Custom
 - Porsche 911 Carrera Clip
 - Porsche 911 Carrera T
 - Porsche 911 Turbo Cabriolet
@@ -268,7 +268,7 @@
 - Rapid Pulse (Black)
 - Rapid Pulse (Blue)
 - Ravenger S/T
-- Renault ESpace F1
+- Renault Espace F1
 - Rig Heat
 - Rink Racer
 - Rink Racer (Green)
@@ -320,6 +320,6 @@
 - Volkswagen T3 Custom (Brown)
 - Volkswagen T3 Custom (Yellow)
 - Voltage Spike
-- Volvo V0 240 Drift Wagon
+- Volvo 240 Drift Wagon
 - Wattzup
 - X-Steam
