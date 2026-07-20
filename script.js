@@ -70,7 +70,8 @@ const clearButtons = document.querySelectorAll('.clear-search-btn');
 const stats = document.getElementById('stats');
 const results = document.getElementById('results');
 
-let allCars = [];
+let rawCars = [];
+let groupedCars = [];
 let fuse = null;
 let currentFilter = {type: 'all'};
 let speedLinesTimer = null;
@@ -117,48 +118,140 @@ function getBrand(carName) {
     return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 }
 
-function analyzeDuplicatesAndVariants() {
-    const nameCounts = {};
-    allCars.forEach((car) => {
-        nameCounts[car.name] = (nameCounts[car.name] || 0) + 1;
+function getColorStyle(tag) {
+    const lower = tag.toLowerCase().trim();
+    if (lower === 'mainline' || lower === 'base')
+        return 'background: rgba(42,63,108,0.35); color: #b4c2e7; border: 1px solid rgba(42,63,108,0.6);';
+    if (lower.includes('black'))
+        return 'background: rgba(20,20,25,0.9); color: #f0f0f0; border: 1px solid #555;';
+    if (lower.includes('red'))
+        return 'background: rgba(220,38,38,0.25); color: #fca5a5; border: 1px solid rgba(220,38,38,0.5);';
+    if (lower.includes('pink'))
+        return 'background: rgba(236,72,153,0.25); color: #fbcfe8; border: 1px solid rgba(236,72,153,0.5);';
+    if (lower.includes('green'))
+        return 'background: rgba(22,163,74,0.25); color: #86efac; border: 1px solid rgba(22,163,74,0.5);';
+    if (lower.includes('yellow'))
+        return 'background: rgba(234,179,8,0.25); color: #fef08a; border: 1px solid rgba(234,179,8,0.5);';
+    if (lower.includes('purple'))
+        return 'background: rgba(147,51,234,0.25); color: #e9d5ff; border: 1px solid rgba(147,51,234,0.5);';
+    if (lower.includes('blue'))
+        return 'background: rgba(37,99,235,0.25); color: #bfdbfe; border: 1px solid rgba(37,99,235,0.5);';
+    if (lower.includes('brown'))
+        return 'background: rgba(120,53,15,0.3); color: #fed7aa; border: 1px solid rgba(180,83,9,0.5);';
+    if (lower.includes('white'))
+        return 'background: rgba(245,245,245,0.9); color: #111; border: 1px solid #ccc;';
+    if (
+        lower.includes('silver') ||
+        lower.includes('grey') ||
+        lower.includes('gray')
+    )
+        return 'background: rgba(156,163,175,0.3); color: #e5e7eb; border: 1px solid rgba(156,163,175,0.5);';
+    if (lower.includes('maroon'))
+        return 'background: rgba(136,19,55,0.3); color: #fecdd3; border: 1px solid rgba(190,18,60,0.5);';
+    if (lower.includes('treasure hunt') || lower.includes('th'))
+        return 'background: rgba(255,209,0,0.2); color: #ffd100; border: 1px solid rgba(255,209,0,0.5);';
+    return 'background: rgba(147,51,234,0.2); color: #d8b4fe; border: 1px solid rgba(147,51,234,0.4);';
+}
+
+function processCarData(parsedCars) {
+    const groupsMap = new Map();
+
+    parsedCars.forEach((item) => {
+        let name = item.name;
+        let baseName = name;
+        let tag = null;
+
+        const parenIdx = name.indexOf('(');
+        if (parenIdx !== -1 && name.endsWith(')')) {
+            baseName = name.slice(0, parenIdx).trim();
+            tag = name.slice(parenIdx + 1, -1).trim();
+        }
+
+        if (!groupsMap.has(baseName)) {
+            groupsMap.set(baseName, {
+                baseName,
+                variantsMap: new Map(),
+                totalCount: 0,
+                hasTH: false
+            });
+        }
+
+        const group = groupsMap.get(baseName);
+        group.totalCount += 1;
+        if (item.isTreasureHunt) {
+            group.hasTH = true;
+        }
+
+        const tagKey = tag ? tag.toLowerCase() : '__mainline__';
+        const displayTag = tag || 'Mainline';
+
+        if (!group.variantsMap.has(tagKey)) {
+            group.variantsMap.set(tagKey, {
+                tag: displayTag,
+                isDefault: tag === null,
+                count: 0,
+                isTreasureHunt: item.isTreasureHunt,
+                fullNames: []
+            });
+        }
+
+        const varEntry = group.variantsMap.get(tagKey);
+        varEntry.count += 1;
+        varEntry.fullNames.push(item.name);
     });
 
-    const getBaseName = (name) => {
-        const idx = name.indexOf('(');
-        if (idx === -1) return name.trim();
-        return name.slice(0, idx).trim();
-    };
+    let idCounter = 1;
+    const list = [];
 
-    const baseCounts = {};
-    allCars.forEach((car) => {
-        const base = getBaseName(car.name);
-        baseCounts[base] = (baseCounts[base] || 0) + 1;
-    });
+    groupsMap.forEach((group, baseName) => {
+        const variants = Array.from(group.variantsMap.values());
+        
+        const nonThVariants = variants.filter(
+            (v) => !/\b(treasure hunt|th)\b/i.test(v.tag)
+        );
 
-    allCars = allCars.map((car) => {
-        const baseName = getBaseName(car.name);
-        const exactCount = nameCounts[car.name];
-        const baseCount = baseCounts[baseName];
+        const exactDupCount = variants.reduce(
+            (sum, v) => sum + (v.count > 1 ? v.count : 0),
+            0
+        );
+        const hasExactDuplicates = variants.some((v) => v.count > 1) || group.totalCount > 1;
+        const hasMultipleVariants = nonThVariants.length > 1 || hasExactDuplicates;
+        const showVariantPills = nonThVariants.length > 1;
 
-        return {
-            ...car,
+        const searchTokens = [
             baseName,
-            isDuplicate: exactCount > 1,
-            isVariant: baseCount > 1 && exactCount < baseCount
-        };
+            ...variants.flatMap((v) => v.fullNames),
+            ...variants.map((v) => v.tag).filter(Boolean)
+        ];
+
+        list.push({
+            id: idCounter++,
+            baseName,
+            totalCount: group.totalCount,
+            variants,
+            showVariantPills,
+            exactDupCount,
+            isDuplicate: hasExactDuplicates,
+            isVariant: hasMultipleVariants,
+            isTreasureHunt: group.hasTH,
+            brand: getBrand(baseName),
+            searchString: searchTokens.join(' ')
+        });
     });
+
+    return list;
 }
 
 function updateStats(visibleCount, totalCount, query) {
+    const totalCars = rawCars.length;
     const statTotalEl = document.getElementById('statTotal');
     if (statTotalEl) {
-        statTotalEl.textContent = totalCount;
+        statTotalEl.textContent = totalCars;
     }
 
     const statUniqueEl = document.getElementById('statUnique');
     if (statUniqueEl) {
-        const uniqueCastings = new Set(allCars.map((c) => c.baseName)).size;
-        statUniqueEl.textContent = uniqueCastings;
+        statUniqueEl.textContent = groupedCars.length;
     }
 
     if (!totalCount) {
@@ -168,20 +261,20 @@ function updateStats(visibleCount, totalCount, query) {
 
     if (!query) {
         if (currentFilter.type === 'duplicates') {
-            stats.textContent = `Showing all ${visibleCount} duplicates.`;
+            stats.textContent = `Showing ${visibleCount} castings with duplicates.`;
         } else if (currentFilter.type === 'variants') {
-            stats.textContent = `Showing all ${visibleCount} variants.`;
+            stats.textContent = `Showing ${visibleCount} castings with variants & duplicates.`;
         } else if (currentFilter.type === 'treasure-hunt') {
-            stats.textContent = `Showing all ${visibleCount} Treasure Hunts.`;
+            stats.textContent = `Showing ${visibleCount} Treasure Hunt castings.`;
         } else if (currentFilter.type === 'brand') {
-            stats.textContent = `Showing all ${visibleCount} ${currentFilter.value}s.`;
+            stats.textContent = `Showing ${visibleCount} ${currentFilter.value} castings.`;
         } else {
-            stats.textContent = `Showing all ${totalCount} cars.`;
+            stats.textContent = `Showing all ${totalCount} unique castings (${totalCars} total cars).`;
         }
         return;
     }
 
-    stats.textContent = `${visibleCount} match${visibleCount === 1 ? '' : 'es'}.`;
+    stats.textContent = `${visibleCount} matching casting${visibleCount === 1 ? '' : 's'}.`;
 }
 
 function renderEmpty(message) {
@@ -226,14 +319,30 @@ function createCarHtml(item, query) {
         badgesHtml += `<span class="badge badge-th">TH</span>`;
     }
     if (item.isDuplicate) {
-        badgesHtml += `<span class="badge badge-duplicate">Dup</span>`;
-    }
-    if (item.isVariant) {
-        badgesHtml += `<span class="badge badge-variant">Variant</span>`;
+        const dupLabel =
+            item.exactDupCount > 0 ? `x${item.exactDupCount}` : 'x2';
+        badgesHtml += `<span class="badge badge-duplicate">${dupLabel}</span>`;
     }
 
-    const displayName = highlightQuery(item.name, query);
-    const wikiUrl = getWikiUrl(item.name);
+    let variantPillsHtml = '';
+    if (item.showVariantPills && item.variants && item.variants.length > 0) {
+        variantPillsHtml = item.variants
+            .filter(
+                (v) =>
+                    v.tag !== null &&
+                    !/\b(treasure hunt|th)\b/i.test(v.tag)
+            )
+            .map((v) => {
+                const style = getColorStyle(v.tag);
+                const countSuffix =
+                    v.count > 1 ? ` <span class="v-count">x${v.count}</span>` : '';
+                return `<span class="variant-pill" style="${style}">${escapeHtml(v.tag)}${countSuffix}</span>`;
+            })
+            .join('');
+    }
+
+    const displayName = highlightQuery(item.baseName, query);
+    const wikiUrl = getWikiUrl(item.baseName);
 
     return `
         <li data-id="${item.id}" tabindex="0">
@@ -241,15 +350,16 @@ function createCarHtml(item, query) {
                 <div class="car-name-container">
                     <span class="car-name">${displayName}</span>
                 </div>
+                ${variantPillsHtml ? `<div class="variant-pills">${variantPillsHtml}</div>` : ''}
                 <div class="badges">${badgesHtml}</div>
             </div>
             ${scoreTag}
             <div class="car-actions">
-                <button class="action-btn copy-btn" title="Copy name" aria-label="Copy name">
-                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                <button class="action-btn copy-btn" title="Copy name" aria-label="Copy name" data-copy="${escapeHtml(item.baseName)}">
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                 </button>
                 <a href="${wikiUrl}" target="_blank" rel="noopener noreferrer" class="action-btn wiki-btn" title="View Fandom Wiki Page" aria-label="View Wiki Page">
-                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                    <svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
                 </a>
             </div>
         </li>
@@ -261,13 +371,9 @@ function initCopyDelegation() {
         const btn = e.target.closest('.copy-btn');
         if (!btn) return;
 
-        const li = btn.closest('li');
-        if (!li) return;
-
-        const id = parseInt(li.getAttribute('data-id'), 10);
-        const car = allCars.find((c) => c.id === id);
-        if (car) {
-            navigator.clipboard.writeText(car.name).then(() => {
+        const copyText = btn.getAttribute('data-copy');
+        if (copyText) {
+            navigator.clipboard.writeText(copyText).then(() => {
                 btn.classList.add('copied');
                 btn.innerHTML = `<svg viewBox="0 0 24 24" width="14" height="14" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
                 setTimeout(() => {
@@ -282,14 +388,14 @@ function initCopyDelegation() {
 function renderCars(items, query = '') {
     if (!items.length) {
         renderEmpty('No matching car found. Try a different spelling.');
-        updateStats(0, allCars.length, query);
+        updateStats(0, groupedCars.length, query);
         return;
     }
 
     results.innerHTML = items
         .map((item) => createCarHtml(item, query))
         .join('');
-    updateStats(items.length, allCars.length, query);
+    updateStats(items.length, groupedCars.length, query);
 
     // Enable horizontal scroll/ticker animation on overflow after frame layout
     requestAnimationFrame(() => {
@@ -330,10 +436,10 @@ function runSearch() {
     const query = searchInput.value.trim();
     clearButtons.forEach((btn) => (btn.disabled = query.length === 0));
 
-    // 1. Get search matches (or all cars if no query)
+    // 1. Get search matches (or all grouped cars if no query)
     let items = [];
     if (!query) {
-        items = allCars;
+        items = groupedCars;
     } else {
         items = fuse.search(query).map((entry) => ({
             ...entry.item,
@@ -345,12 +451,12 @@ function runSearch() {
     if (currentFilter.type === 'duplicates') {
         items = items.filter((car) => car.isDuplicate);
     } else if (currentFilter.type === 'variants') {
-        items = items.filter((car) => car.isVariant);
+        items = items.filter((car) => car.isVariant || car.isDuplicate);
     } else if (currentFilter.type === 'treasure-hunt') {
         items = items.filter((car) => car.isTreasureHunt);
     } else if (currentFilter.type === 'brand') {
         items = items.filter(
-            (car) => getBrand(car.name) === currentFilter.value
+            (car) => getBrand(car.baseName) === currentFilter.value
         );
     }
 
@@ -359,9 +465,9 @@ function runSearch() {
 
 function getTopBrands() {
     const brandCounts = {};
-    allCars.forEach((car) => {
-        const brand = getBrand(car.name);
-        brandCounts[brand] = (brandCounts[brand] || 0) + 1;
+    groupedCars.forEach((car) => {
+        const brand = getBrand(car.baseName);
+        brandCounts[brand] = (brandCounts[brand] || 0) + car.totalCount;
     });
 
     // Derive recognized brands dynamically from our global mapping
@@ -429,17 +535,13 @@ function renderBrandChips() {
     if (!container) return;
 
     const {topBrands, brandCounts} = getTopBrands();
-    const totalTreasureHunts = allCars.filter((c) => c.isTreasureHunt).length;
-    const totalDuplicates = allCars.filter((c) => c.isDuplicate).length;
-    const totalVariants = allCars.filter((c) => c.isVariant).length;
+    const totalTreasureHunts = groupedCars.filter((c) => c.isTreasureHunt).length;
+    const totalVariants = groupedCars.filter((c) => c.isVariant).length;
 
-    let html = `<button class="chip active" data-filter="all">All</button>`;
+    let html = `<button class="chip active" data-filter="all">All (${groupedCars.length})</button>`;
 
     if (totalTreasureHunts > 0) {
         html += `<button class="chip" data-filter="treasure-hunt">Treasure Hunt (${totalTreasureHunts})</button>`;
-    }
-    if (totalDuplicates > 0) {
-        html += `<button class="chip" data-filter="duplicates">Duplicates (${totalDuplicates})</button>`;
     }
     if (totalVariants > 0) {
         html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
@@ -469,17 +571,17 @@ async function init() {
         }
 
         const markdown = await response.text();
-        allCars = parseCars(markdown);
+        rawCars = parseCars(markdown);
 
-        if (!allCars.length) {
+        if (!rawCars.length) {
             renderEmpty('No car names detected in hot-wheels.md.');
             updateStats(0, 0, '');
             return;
         }
 
-        analyzeDuplicatesAndVariants();
-        fuse = new Fuse(allCars, {
-            keys: ['name'],
+        groupedCars = processCarData(rawCars);
+        fuse = new Fuse(groupedCars, {
+            keys: ['baseName', 'searchString'],
             includeScore: true,
             threshold: 0.35,
             ignoreLocation: true,
@@ -488,7 +590,7 @@ async function init() {
         });
         renderBrandChips();
 
-        renderCars(allCars, '');
+        renderCars(groupedCars, '');
         initCopyDelegation();
         clearButtons.forEach((btn) => (btn.disabled = true));
         searchInput.focus();

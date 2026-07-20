@@ -469,6 +469,32 @@ h1 {
     }
 }
 
+.variant-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.variant-pill {
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.12rem 0.5rem;
+    border-radius: 999px;
+    letter-spacing: 0.01em;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+}
+
+.v-count {
+    font-size: 0.65rem;
+    font-weight: 700;
+    opacity: 0.9;
+}
+
 .badges {
     display: flex;
     gap: 0.35rem;
