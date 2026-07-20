@@ -391,26 +391,34 @@ function attachChipListeners(container) {
     const chips = container.querySelectorAll('.chip');
     chips.forEach((chip) => {
         chip.addEventListener('click', () => {
-            chips.forEach((c) => c.classList.remove('active'));
-            chip.classList.add('active');
-            triggerSpeedLines();
-
             const filterType = chip.getAttribute('data-filter');
-            if (filterType === 'all') {
+            const isActive = chip.classList.contains('active');
+
+            chips.forEach((c) => c.classList.remove('active'));
+
+            if (isActive && filterType !== 'all') {
+                const allChip = container.querySelector('[data-filter="all"]');
+                if (allChip) allChip.classList.add('active');
                 currentFilter = {type: 'all'};
-            } else if (filterType === 'duplicates') {
-                currentFilter = {type: 'duplicates'};
-            } else if (filterType === 'variants') {
-                currentFilter = {type: 'variants'};
-            } else if (filterType === 'treasure-hunt') {
-                currentFilter = {type: 'treasure-hunt'};
-            } else if (filterType === 'brand') {
-                currentFilter = {
-                    type: 'brand',
-                    value: chip.getAttribute('data-val')
-                };
+            } else {
+                chip.classList.add('active');
+                if (filterType === 'all') {
+                    currentFilter = {type: 'all'};
+                } else if (filterType === 'duplicates') {
+                    currentFilter = {type: 'duplicates'};
+                } else if (filterType === 'variants') {
+                    currentFilter = {type: 'variants'};
+                } else if (filterType === 'treasure-hunt') {
+                    currentFilter = {type: 'treasure-hunt'};
+                } else if (filterType === 'brand') {
+                    currentFilter = {
+                        type: 'brand',
+                        value: chip.getAttribute('data-val')
+                    };
+                }
             }
 
+            triggerSpeedLines();
             runSearch();
         });
     });
