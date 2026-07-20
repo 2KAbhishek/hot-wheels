@@ -394,22 +394,26 @@ function renderCarList(items, query = '') {
 
     // Frame-aligned horizontal scroll animation calculation
     requestAnimationFrame(() => {
+        const overflowList = [];
         DOM.resultsList.querySelectorAll('.car-name').forEach((el) => {
             const container = el.parentElement;
             if (!container) return;
             const overflowVal = el.scrollWidth - container.clientWidth;
             if (overflowVal > 0) {
-                container.classList.add('has-ticker');
-                container.style.setProperty(
-                    '--scroll-dist',
-                    `-${overflowVal + 10}px`
-                );
-                const duration = Math.max(3, Math.round(overflowVal / 35));
-                container.style.setProperty(
-                    '--ticker-duration',
-                    `${duration}s`
-                );
+                overflowList.push({container, overflowVal});
             }
+        });
+
+        overflowList.forEach(({container, overflowVal}) => {
+            container.classList.add('has-ticker');
+            container.style.setProperty(
+                '--scroll-dist',
+                `-${overflowVal + 10}px`
+            );
+            container.style.setProperty(
+                '--ticker-duration',
+                `${Math.max(3, Math.round(overflowVal / 35))}s`
+            );
         });
     });
 }
@@ -461,7 +465,6 @@ function renderBrandChips() {
     });
 
     DOM.brandChipsContainer.innerHTML = html;
-    attachChipListeners();
 }
 
 // --- User Interaction & Events ---
@@ -508,40 +511,43 @@ function runSearch() {
     renderCarList(items, query);
 }
 
-function attachChipListeners() {
-    const chips = DOM.brandChipsContainer.querySelectorAll('.chip');
-    chips.forEach((chip) => {
-        chip.addEventListener('click', () => {
-            const filterType = chip.getAttribute('data-filter');
-            const isActive = chip.classList.contains('active');
+function initChipDelegation() {
+    if (!DOM.brandChipsContainer) return;
 
-            chips.forEach((c) => c.classList.remove('active'));
+    DOM.brandChipsContainer.addEventListener('click', (e) => {
+        const chip = e.target.closest('.chip');
+        if (!chip) return;
 
-            if (isActive && filterType !== 'all') {
-                const allChip = DOM.brandChipsContainer.querySelector(
-                    '[data-filter="all"]'
-                );
-                if (allChip) allChip.classList.add('active');
+        const filterType = chip.getAttribute('data-filter');
+        const isActive = chip.classList.contains('active');
+
+        const chips = DOM.brandChipsContainer.querySelectorAll('.chip');
+        chips.forEach((c) => c.classList.remove('active'));
+
+        if (isActive && filterType !== 'all') {
+            const allChip = DOM.brandChipsContainer.querySelector(
+                '[data-filter="all"]'
+            );
+            if (allChip) allChip.classList.add('active');
+            state.currentFilter = {type: 'all', value: null};
+        } else {
+            chip.classList.add('active');
+            if (filterType === 'all') {
                 state.currentFilter = {type: 'all', value: null};
-            } else {
-                chip.classList.add('active');
-                if (filterType === 'all') {
-                    state.currentFilter = {type: 'all', value: null};
-                } else if (filterType === 'variants') {
-                    state.currentFilter = {type: 'variants', value: null};
-                } else if (filterType === 'treasure-hunt') {
-                    state.currentFilter = {type: 'treasure-hunt', value: null};
-                } else if (filterType === 'brand') {
-                    state.currentFilter = {
-                        type: 'brand',
-                        value: chip.getAttribute('data-val')
-                    };
-                }
+            } else if (filterType === 'variants') {
+                state.currentFilter = {type: 'variants', value: null};
+            } else if (filterType === 'treasure-hunt') {
+                state.currentFilter = {type: 'treasure-hunt', value: null};
+            } else if (filterType === 'brand') {
+                state.currentFilter = {
+                    type: 'brand',
+                    value: chip.getAttribute('data-val')
+                };
             }
+        }
 
-            triggerSpeedLines();
-            runSearch();
-        });
+        triggerSpeedLines();
+        runSearch();
     });
 }
 
@@ -693,6 +699,7 @@ async function init() {
 
         renderBrandChips();
         renderCarList(state.groupedCars, '');
+        initChipDelegation();
         initCopyDelegation();
         initSearchEvents();
         initKeyboardNavigation();
