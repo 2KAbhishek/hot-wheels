@@ -2,9 +2,11 @@
 - 15 Land Rover Defender
 - 15 Mazda MX-5 Miata
 - 16 Lamborghini Centenario Roadster
+- 18 Camaro SS
 - 19 Corvette ZR1 Convertible
 - 1966 Bat Boat
 - 1966 Bat Boat
+- 1972 Datsun Sunny Coupe
 - 1978 Dodge Li'l Red Express Truck
 - 1984 Porsche 928S
 - 1985 Honda CR-X
@@ -19,6 +21,7 @@
 - 2020 Koenigsegg Jesko
 - 2021 Toyota GR Supra
 - 2023 Nissan Z
+- 2024 Aston Martin Vantage GT3
 - 21 Ford Bronco
 - 25/Seven
 - 32 Ford
@@ -38,6 +41,7 @@
 - 68 Lotus Type 49
 - 69 Chevelle
 - 69 Dodge Charger Daytona
+- 70 Buick GSX
 - 70 Chevelle SS Wagon
 - 70 Plymouth Superbird
 - 71 Chevy Camaro RS
@@ -51,12 +55,15 @@
 - 85 Honda City Turbo II
 - 87 Dodge D100
 - 88 Honda CRX
+- 88 Mitsubishi Starion
 - 90 Acura NSX
 - 92 Jeep Wrangler Sahara
 - 93 Honda Civic EG
 - 94 Audi Avant RS2
 - 94 Bugatti EB110 SS
 - 95 Mazda RX-7 Drift!
+- 96 Dodge Viper GTS
+- 98 Honda Prelude
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning
 - Action Sedan
@@ -82,7 +89,9 @@
 - Bone Shaker (Chrome and Pearl)
 - Boom Box
 - Bounce'N Bass
+- Bugatti Bolide
 - Bullet Proof
+- Bully Goat
 - CZinger 21C
 - Cadillac Celestiq
 - Cadillac Project GTP Hypercar
@@ -93,6 +102,7 @@
 - Chop N Bloc
 - Classic 55 Nomad
 - Classic TV Series Batmobile
+- Click Shift
 - Combat Jet Skystriker
 - Combat Medic
 - Cone Shaker (Treasure Hunt)
@@ -134,6 +144,7 @@
 - Feline Lucky
 - Ferrari 365 GTB4 Competizione
 - Ferrari Dino 207 GT
+- Fiat 500C
 - Fiat Beast of Turin
 - Fish’D & Chip’D
 - Flippin Fast
@@ -146,11 +157,13 @@
 - Gone Mad
 - Gordon Murray Automobile T.50s
 - Gordon Murray Automotive T.33
+- Gotta Go
 - Ground FX
 - Group C Fantasy
 - HW 50 Concept
 - HW Formula Solar
 - HW Roll Cage
+- HW Test Ride
 - HW Tour Bus
 - HW Ultimate T-Rex Transporter
 - Hako Type D
@@ -167,9 +180,11 @@
 - Hoto Roto (Black)
 - Hoto Roto (White)
 - Hover Storm
+- Hyper Rocker
 - Instant Boost
 - Jaded
 - Jaguar MK1
+- Jaguar XJC V12 Coupe
 - K.I.T.T.
 - Kei Swap (Pink)
 - Kei Swap (Red)
@@ -182,6 +197,8 @@
 - La Troca
 - Land Rover Defender 90
 - Later Crater
+- Lil Mad
+- Lil Roar
 - Limited Grip
 - Long Bloc
 - Loopster
@@ -192,7 +209,9 @@
 - MS-T Suzuka
 - Mach Speeder
 - Mad Drip
+- Mad Manga (Treasure Hunt)
 - MadFast
+- Maserati Shamal
 - Maserati Tipo 61
 - Max Steel
 - Mazda 787B
@@ -209,6 +228,7 @@
 - Mid Mill
 - Mo-Stash
 - Mod Mill
+- Mod Mill (Black / Red)
 - Mod Rod
 - Mod Speeder
 - Monster Dairy Delivery
@@ -217,7 +237,9 @@
 - Mountain Mauler
 - Nailed It
 - Nerve Hammer
+- Nissan Maxima Drift Car
 - Nissan Skyline GT-R
+- PT Fast
 - Pagani Utopia
 - Pagani Zonda Cinque Tooned
 - Party Wagon
@@ -265,6 +287,7 @@
 - Speed Dozer
 - Speed Driver
 - Speedbox
+- Spider-Mobile
 - Standard Kart
 - Stockar
 - Street Shrieker
@@ -281,10 +304,12 @@
 - The Dark Knight Batmobile
 - Time Shifter
 - Total Disposal (Treasure Hunt)
+- Toyota AE86 Sprinter Trueno
 - Track Ripper
 - Turbine Sublime
 - Twin Dorado
 - Twin Tags
+- Uncertain-T
 - VW ID Buzz Bomb
 - Vairstrike
 - Vespa 90 SS Super Sprint
@@ -298,29 +323,3 @@
 - Volvo V0 240 Drift Wagon
 - Wattzup
 - X-Steam
-
-- 18 Camaro SS
-- 1972 Datsun Sunny Coupe
-- 2024 Aston Martin Vantage GT3
-- 70 Buick GSX
-- 88 Mitsubishi Starion
-- 96 Dodge Viper GTS
-- 98 Honda Prelude
-- Bugatti Bolide
-- Bully Goat
-- Click Shift
-- Fiat 500C
-- Gotta Go
-- HW Test Ride
-- Hyper Rocker
-- Jaguar XJC V12 Coupe
-- Lil Mad
-- Lil Roar
-- Mad Manga (Treasure Hunt)
-- Maserati Shamal
-- Mod Mill
-- Nissan Maxima Drift Car
-- PT Fast
-- Spider-Mobile
-- Toyota AE86 Sprinter Trueno
-- Uncertain-T
