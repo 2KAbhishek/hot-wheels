@@ -40,6 +40,7 @@ const BRAND_MAPPING = {
         ferrari: 'Ferrari',
         lamborghini: 'Lamborghini',
         mercedes: 'Mercedes',
+        'mercedes-benz': 'Mercedes',
         pagani: 'Pagani',
         czinger: 'Czinger',
         austin: 'Austin',
@@ -88,16 +89,22 @@ function parseCars(markdownText) {
         .split('\n')
         .map((line) => line.trim())
         .filter((line) => line.startsWith('- '))
-        .map((line, index) => ({
-            id: index + 1,
-            name: line.slice(2).trim()
-        }))
+        .map((line, index) => {
+            const name = line.slice(2).trim();
+            const isTreasureHunt =
+                /\btreasure\s+hunt\b/i.test(name) || /\bth\b/i.test(name);
+            return {
+                id: index + 1,
+                name,
+                isTreasureHunt
+            };
+        })
         .filter((item) => item.name.length > 0);
 }
 
 function getBrand(carName) {
-    // Strip leading year (2-4 digits followed by space)
-    let name = carName.replace(/^\d{2,4}\s+/, '').trim();
+    // Strip leading year (2-4 digits, optionally preceded by apostrophe, followed by space)
+    let name = carName.replace(/^['’]?\d{2,4}\s+/, '').trim();
     const lower = name.toLowerCase();
 
     const specialMatch = BRAND_MAPPING.special.find((item) => item.test(lower));
@@ -164,6 +171,8 @@ function updateStats(visibleCount, totalCount, query) {
             stats.textContent = `Showing all ${visibleCount} duplicates.`;
         } else if (currentFilter.type === 'variants') {
             stats.textContent = `Showing all ${visibleCount} variants.`;
+        } else if (currentFilter.type === 'treasure-hunt') {
+            stats.textContent = `Showing all ${visibleCount} Treasure Hunts.`;
         } else if (currentFilter.type === 'brand') {
             stats.textContent = `Showing all ${visibleCount} ${currentFilter.value}s.`;
         } else {
@@ -195,7 +204,9 @@ function highlightQuery(name, query) {
 }
 
 function getWikiUrl(carName) {
-    let wikiName = carName;
+    let wikiName = carName
+        .replace(/\s*\([^)]*treasure\s+hunt[^)]*\)/gi, '')
+        .trim();
     if (/^\d{2}\s/.test(wikiName)) {
         wikiName = "'" + wikiName;
     }
@@ -211,6 +222,9 @@ function createCarHtml(item, query) {
         score !== null ? `<span class="score">${score}% match</span>` : '';
 
     let badgesHtml = '';
+    if (item.isTreasureHunt) {
+        badgesHtml += `<span class="badge badge-th">TH</span>`;
+    }
     if (item.isDuplicate) {
         badgesHtml += `<span class="badge badge-duplicate">Dup</span>`;
     }
@@ -327,6 +341,8 @@ function runSearch() {
         items = items.filter((car) => car.isDuplicate);
     } else if (currentFilter.type === 'variants') {
         items = items.filter((car) => car.isVariant);
+    } else if (currentFilter.type === 'treasure-hunt') {
+        items = items.filter((car) => car.isTreasureHunt);
     } else if (currentFilter.type === 'brand') {
         items = items.filter(
             (car) => getBrand(car.name) === currentFilter.value
@@ -381,6 +397,8 @@ function attachChipListeners(container) {
                 currentFilter = {type: 'duplicates'};
             } else if (filterType === 'variants') {
                 currentFilter = {type: 'variants'};
+            } else if (filterType === 'treasure-hunt') {
+                currentFilter = {type: 'treasure-hunt'};
             } else if (filterType === 'brand') {
                 currentFilter = {
                     type: 'brand',
@@ -398,11 +416,15 @@ function renderBrandChips() {
     if (!container) return;
 
     const {topBrands, brandCounts} = getTopBrands();
+    const totalTreasureHunts = allCars.filter((c) => c.isTreasureHunt).length;
     const totalDuplicates = allCars.filter((c) => c.isDuplicate).length;
     const totalVariants = allCars.filter((c) => c.isVariant).length;
 
     let html = `<button class="chip active" data-filter="all">All</button>`;
 
+    if (totalTreasureHunts > 0) {
+        html += `<button class="chip" data-filter="treasure-hunt">Treasure Hunt (${totalTreasureHunts})</button>`;
+    }
     if (totalDuplicates > 0) {
         html += `<button class="chip" data-filter="duplicates">Duplicates (${totalDuplicates})</button>`;
     }
