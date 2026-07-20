@@ -121,7 +121,7 @@ function getTagClassName(tag) {
     const lower = tag.toLowerCase().trim();
     if (lower === 'mainline' || lower === 'base') return 'v-tag-mainline';
     if (lower.includes('black')) return 'v-tag-black';
-    if (lower.includes('red')) return 'v-tag-red';
+    if (lower.includes('red') || lower.includes('maroon')) return 'v-tag-red';
     if (lower.includes('pink')) return 'v-tag-pink';
     if (lower.includes('green')) return 'v-tag-green';
     if (lower.includes('yellow')) return 'v-tag-yellow';
@@ -135,7 +135,6 @@ function getTagClassName(tag) {
         lower.includes('gray')
     )
         return 'v-tag-silver';
-    if (lower.includes('maroon')) return 'v-tag-maroon';
     if (lower.includes('treasure hunt') || lower.includes('th'))
         return 'v-tag-th';
     return 'v-tag-default';
