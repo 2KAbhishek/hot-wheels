@@ -301,10 +301,8 @@ function renderBadges(item) {
     if (item.isTreasureHunt) {
         html += `<span class="badge badge-th">TH</span>`;
     }
-    if (item.isDuplicate) {
-        const dupLabel =
-            item.exactDupCount > 0 ? `x${item.exactDupCount}` : 'x2';
-        html += `<span class="badge badge-duplicate">${dupLabel}</span>`;
+    if (item.totalCount > 1) {
+        html += `<span class="badge badge-duplicate">x${item.totalCount}</span>`;
     }
     return html;
 }
