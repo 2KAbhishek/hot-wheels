@@ -323,3 +323,30 @@
 - Volvo 240 Drift Wagon
 - Wattzup
 - X-Steam
+
+- Batman Arkham Asylum Batmobile
+- Batman & Robin Batmobile
+- Mad Mike Drift Attack
+- Minecraft Cart
+- Lamborghini Huracan Sterrato
+- HW K.I.T.T. Concept
+- Toyota Off Road Truck
+- 2020 Toyota Tacoma
+- Toyota Land Cruiser
+- 2020 RAM 1500 Rebel
+- McLaren F1 Red
+- Mustang NHRA Funny Car
+- GMC Hummer EV
+- LB Works Lamborghini Huracan Coupe
+- 1988 Jeep Wagoneer (Zamac)
+- Pagani Zonda R Red
+- Ferrari SF90 Stradale
+- McLaren Solus GT
+- Lamborghini Reventon
+- 2015 Toyota Alphard
+- Koenigsegg CC850
+- Datsun King Cab Baja Custom
+- 1967 Jeepster Commando
+- 2021 Toyota GR Supra
+- Ford Model A Custom
+- Kool Kombi
