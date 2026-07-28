@@ -350,3 +350,11 @@
 - 2021 Toyota GR Supra
 - Ford Model A Custom
 - Kool Kombi
+- Cobra H.I.S.S
+- Airwolf Helicopter
+- Spider-Mobile Dead-Buggy
+– 2019 Chevrolet Silverado Trail Boss LT
+– 2019 Jeep Grand Cherokee Trackhawk
+– 2019 Ford Ranger Raptor
+- 2020 RAM 1500 Rebel
+– Ford Bronco R
