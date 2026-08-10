@@ -6,20 +6,30 @@
 - 19 Corvette ZR1 Convertible
 - 1966 Bat Boat
 - 1966 Bat Boat
+- 1967 Jeepster Commando
 - 1972 Datsun Sunny Coupe
 - 1978 Dodge Li'l Red Express Truck
 - 1984 Porsche 928S
 - 1985 Honda CR-X
 - 1987 Chevy Caprice
+- 1988 Jeep Wagoneer (Zamac)
 - 2 Jet Z (Treasure Hunt)
 - 20 Dodge Charger Hellcat
 - 2002 Pontiac Firebird
 - 2008 Mercedes-Benz CLK 63 AMG
+- 2015 Toyota Alphard
 - 2017 Camaro ZL1
 - 2019 Audi R8 Spyder
+- 2019 Chevrolet Silverado Trail Boss LT
+- 2019 Ford Ranger Raptor
+- 2019 Jeep Grand Cherokee Trackhawk
 - 2020 Ford Mustang Shelby GT500
 - 2020 Koenigsegg Jesko
+- 2020 RAM 1500 Rebel
+- 2020 RAM 1500 Rebel
+- 2020 Toyota Tacoma
 - 2021 Toyota GR Supra
+- 2021 Toyota GR Supra (Silver)
 - 2023 Nissan Z
 - 2024 Aston Martin Vantage GT3
 - 21 Ford Bronco
@@ -68,6 +78,7 @@
 - 99 Ford F-150 SVT Lightning
 - Action Sedan
 - Ain't Fare
+- Airwolf Helicopter
 - Alfa Romeo Giulia TI Super
 - Amaru GTC
 - Arrow Dynamic
@@ -76,6 +87,8 @@
 - BMW 635 CSi
 - Baja Bison T5
 - Batcopter
+- Batman & Robin Batmobile
+- Batman Arkham Asylum Batmobile
 - Batman Arkham Knight Batmobile
 - Batman Forever Batmobile
 - Batmobile
@@ -103,6 +116,7 @@
 - Classic 55 Nomad
 - Classic TV Series Batmobile
 - Click Shift
+- Cobra H.I.S.S
 - Combat Jet Skystriker
 - Combat Medic
 - Cone Shaker (Treasure Hunt)
@@ -125,10 +139,12 @@
 - Custom Otto
 - D-Muscle
 - Datsun 240Z
+- Datsun King Cab Baja Custom
 - Decidedly Go
 - Deora III
 - Deora Tooned
 - Dessert Drifter
+- Dimachinni Veloce
 - Disney Steamboat
 - Donut Drifter
 - Draggin' Wagon
@@ -144,24 +160,30 @@
 - Feline Lucky
 - Ferrari 365 GTB4 Competizione
 - Ferrari Dino 206 GT
+- Ferrari SF90 Stradale
 - Fiat 500C
 - Fiat Beast of Turin
 - Fish’D & Chip’D
 - Flippin Fast
+- Ford Bronco R
 - Ford F-150 Lightning SuperTruck
 - Ford F-150 SVT Lightning (Fast & Furious)
+- Ford Model A Custom
 - Ford Mustang GTD
 - Ford Mustang Mach-E 1400
+- Ford Performance Supervan 4
 - Formula E Gen 3
 - Futurismo
+- GMC Hummer EV
 - Gone Mad
-- Gordon Murray Automotive T.50s
 - Gordon Murray Automotive T.33
+- Gordon Murray Automotive T.50s
 - Gotta Go
 - Ground FX
 - Group C Fantasy
 - HW 50 Concept
 - HW Formula Solar
+- HW K.I.T.T. Concept
 - HW Roll Cage
 - HW Test Ride
 - HW Tour Bus
@@ -191,10 +213,15 @@
 - Kick Kart
 - Kick Sauber F1 Team
 - King Kuda
+- Koenigsegg CC850
+- Kool Kombi
 - Kool Kombi
 - Kowloon’D Hypervan
+- LB Works Lamborghini Huracan Coupe
 - La Liebre
 - La Troca
+- Lamborghini Huracan Sterrato
+- Lamborghini Reventon
 - Land Rover Defender 90
 - Later Crater
 - Lil Mad
@@ -210,6 +237,7 @@
 - Mach Speeder
 - Mad Drip
 - Mad Manga (Treasure Hunt)
+- Mad Mike Drift Attack
 - MadFast
 - Maserati Shamal
 - Maserati Tipo 61
@@ -220,12 +248,15 @@
 - Mazda MX-5 Miata
 - Mazda RX-2
 - Mazda RX-3 Tooned
+- McLaren F1 Red
+- McLaren Solus GT
 - McLaren Speedtail
 - McLaren W1
 - Mercedes Benz Unimog 1300L
 - Mercedes-Benz CLA
 - Meyers Manx
 - Mid Mill
+- Minecraft Cart
 - Mo-Stash
 - Mod Mill
 - Mod Mill (Black / Red)
@@ -235,6 +266,7 @@
 - Monster High Ghoul Mobile
 - Monteracer
 - Mountain Mauler
+- Mustang NHRA Funny Car
 - Nailed It
 - Nerve Hammer
 - Nissan Maxima Drift Car
@@ -242,6 +274,7 @@
 - PT Fast
 - Pagani Utopia
 - Pagani Zonda Cinque Tooned
+- Pagani Zonda R
 - Party Wagon
 - Pass’N Gasser
 - Pedal Driver
@@ -288,6 +321,7 @@
 - Speed Driver
 - Speedbox
 - Spider-Mobile
+- Spider-Mobile Dead-Buggy
 - Standard Kart
 - Stockar
 - Street Shrieker
@@ -305,6 +339,8 @@
 - Time Shifter
 - Total Disposal (Treasure Hunt)
 - Toyota AE86 Sprinter Trueno
+- Toyota Land Cruiser
+- Toyota Off Road Truck
 - Track Ripper
 - Turbine Sublime
 - Twin Dorado
@@ -323,38 +359,3 @@
 - Volvo 240 Drift Wagon
 - Wattzup
 - X-Steam
-
-- Batman Arkham Asylum Batmobile
-- Batman & Robin Batmobile
-- Mad Mike Drift Attack
-- Minecraft Cart
-- Lamborghini Huracan Sterrato
-- HW K.I.T.T. Concept
-- Toyota Off Road Truck
-- 2020 Toyota Tacoma
-- Toyota Land Cruiser
-- 2020 RAM 1500 Rebel
-- McLaren F1 Red
-- Mustang NHRA Funny Car
-- GMC Hummer EV
-- LB Works Lamborghini Huracan Coupe
-- 1988 Jeep Wagoneer (Zamac)
-- Pagani Zonda R Red
-- Ferrari SF90 Stradale
-- McLaren Solus GT
-- Lamborghini Reventon
-- 2015 Toyota Alphard
-- Koenigsegg CC850
-- Datsun King Cab Baja Custom
-- 1967 Jeepster Commando
-- 2021 Toyota GR Supra
-- Ford Model A Custom
-- Kool Kombi
-- Cobra H.I.S.S
-- Airwolf Helicopter
-- Spider-Mobile Dead-Buggy
-– 2019 Chevrolet Silverado Trail Boss LT
-– 2019 Jeep Grand Cherokee Trackhawk
-– 2019 Ford Ranger Raptor
-- 2020 RAM 1500 Rebel
-– Ford Bronco R
