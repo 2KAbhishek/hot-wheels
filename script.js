@@ -94,7 +94,6 @@ const DOM = {
     sortMenu: document.getElementById('sortMenu'),
     copyListBtn: document.getElementById('copyListBtn'),
     clearButtons: document.querySelectorAll('.clear-search-btn'),
-    statTotal: document.getElementById('statTotal'),
     statUnique: document.getElementById('statUnique'),
     resultsList: document.getElementById('results'),
     brandChipsContainer: document.getElementById('brandChips')
@@ -455,7 +454,7 @@ function renderBrandChips() {
         new Set(state.rawCars.map((c) => c.segment).filter(Boolean))
     );
 
-    let html = `<button class="chip active" data-filter="all">All (${state.groupedCars.length})</button>`;
+    let html = `<button class="chip active" data-filter="all">All (${state.rawCars.length})</button>`;
 
     if (segments.length > 1) {
         segments.forEach((seg) => {
@@ -544,6 +543,7 @@ function runSearch() {
 
     items = sortItems(items);
     state.currentlyVisibleItems = items;
+    if (DOM.statUnique) DOM.statUnique.textContent = items.length;
     renderCarList(items, query);
 }
 
@@ -798,8 +798,10 @@ async function init() {
 
         state.groupedCars = groupCastings(state.rawCars);
 
-        if (DOM.statTotal) DOM.statTotal.textContent = state.rawCars.length;
         if (DOM.statUnique) DOM.statUnique.textContent = state.groupedCars.length;
+        if (DOM.searchInput) {
+            DOM.searchInput.placeholder = `Search ${state.rawCars.length} cars... (/)`;
+        }
 
         state.fuse = new Fuse(state.groupedCars, {
             keys: ['baseName', 'searchString'],

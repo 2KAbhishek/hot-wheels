@@ -68,34 +68,28 @@
         <div id="brandChips" class="brand-chips" aria-label="Filter by brand">
           <!-- Dynamic Chips will be rendered here -->
         </div>
-
-        <div id="statsDashboard" class="stats-dashboard">
-          <div class="stats-card">
-            <span class="stats-label">All</span>
-            <span id="statTotal" class="stats-value">0</span>
-          </div>
-          <div class="stats-card">
-            <span class="stats-label">Uniq</span>
-            <span id="statUnique" class="stats-value">0</span>
-          </div>
-          <div class="stats-card sort-card-wrap">
-            <span class="stats-label">Sort</span>
-            <button id="sortBtn" class="stats-value sort-btn" type="button">
-              <span id="sortVal">A – Z</span> ▾
-            </button>
-            <div id="sortMenu" class="sort-menu hidden">
-              <div class="sort-option active" data-val="name-asc">A – Z</div>
-              <div class="sort-option" data-val="name-desc">Z – A</div>
-              <div class="sort-option" data-val="qty-desc">Qty</div>
-            </div>
-          </div>
-          <div class="stats-card">
-            <button id="copyListBtn" class="stats-value share-btn" type="button" aria-label="Copy filtered list to clipboard" title="Copy list"></button>
-          </div>
-        </div>
       </section>
 
       <section class="results-panel" aria-label="Search results">
+        <div class="results-header">
+          <div class="results-count">
+            <span id="statUnique" class="count-val">0</span>
+            <span class="count-label">unique</span>
+          </div>
+          <div class="results-controls">
+            <div class="sort-card-wrap">
+              <button id="sortBtn" class="sort-btn" type="button" aria-haspopup="true" aria-expanded="false" title="Sort options">
+                <span id="sortVal">A – Z</span> ▾
+              </button>
+              <div id="sortMenu" class="sort-menu hidden">
+                <div class="sort-option active" data-val="name-asc">A – Z</div>
+                <div class="sort-option" data-val="name-desc">Z – A</div>
+                <div class="sort-option" data-val="qty-desc">Qty</div>
+              </div>
+            </div>
+            <button id="copyListBtn" class="share-btn" type="button" aria-label="Copy filtered list to clipboard" title="Copy list"></button>
+          </div>
+        </div>
         <ul id="results" class="results"></ul>
       </section>
 
