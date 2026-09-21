@@ -1,7 +1,7 @@
 // --- Constants & Configuration ---
 const CONFIG = {
     carListPath: './hot-wheels.md',
-    topBrandsCount: 50,
+    minBrandCount: 2,
     searchDebounceMs: 80,
     speedLinesShortMs: 800,
     speedLinesLongDuration: '20s',
@@ -27,7 +27,8 @@ const BRAND_MAPPING = {
                 n.includes('batman') ||
                 n.includes('bat boat') ||
                 n.includes('batmobile') ||
-                n.includes('batcopter'),
+                n.includes('batcopter') ||
+                n.includes('batwing'),
             value: 'Batmobile'
         }
     ],
@@ -38,6 +39,7 @@ const BRAND_MAPPING = {
         corvette: 'Chevy',
         chevelle: 'Chevy',
         silverado: 'Chevy',
+        mustang: 'Ford',
         bugatti: 'Bugatti',
         volkswagen: 'VW',
         vw: 'VW',
@@ -76,7 +78,24 @@ const BRAND_MAPPING = {
         plymouth: 'Plymouth',
         renault: 'Renault',
         peugeot: 'Peugeot',
-        polestar: 'Polestar'
+        polestar: 'Polestar',
+        koenigsegg: 'Koenigsegg',
+        mitsubishi: 'Mitsubishi',
+        buick: 'Buick',
+        maserati: 'Maserati',
+        fiat: 'Fiat',
+        ram: 'RAM',
+        chrysler: 'Chrysler',
+        lincoln: 'Lincoln',
+        mercury: 'Mercury',
+        gmc: 'GMC',
+        lucid: 'Lucid',
+        vespa: 'Vespa',
+        boeing: 'Boeing',
+        cirrus: 'Cirrus',
+        cessna: 'Cessna',
+        sikorsky: 'Sikorsky',
+        freightliner: 'Freightliner'
     }
 };
 
@@ -154,6 +173,9 @@ function getTagClassName(tag) {
 
 function getBrand(carName) {
     let name = carName.replace(/^['’]?\d{2,4}\s+/, '').trim();
+    if (/^custom\s+/i.test(name)) {
+        name = name.replace(/^custom\s+(['’]?\d{2,4}\s+)?/i, '').trim();
+    }
     const lower = name.toLowerCase();
 
     const specialMatch = BRAND_MAPPING.special.find((item) => item.test(lower));
@@ -172,6 +194,8 @@ function getWikiUrl(carName, segment = '') {
         .trim();
     if (/^\d{2}\s/.test(wikiName)) {
         wikiName = "'" + wikiName;
+    } else if (/^custom\s+\d{2}\s/i.test(wikiName)) {
+        wikiName = wikiName.replace(/^custom\s+(\d{2})\b/i, "Custom '$1");
     }
     const isMatchbox = typeof segment === 'string'
         ? segment.toLowerCase().includes('matchbox')
@@ -243,11 +267,13 @@ function createCastingGroup(id, baseName, group) {
     const hasMultipleVariants = nonThVariants.length > 1 || hasExactDuplicates;
     const showVariantPills = nonThVariants.length > 1;
 
+    const brand = getBrand(baseName);
     const searchTokens = [
         baseName,
+        brand,
         ...variants.flatMap((v) => v.fullNames),
         ...variants.map((v) => v.tag).filter(Boolean)
-    ];
+    ].filter(Boolean);
 
     return {
         id,
@@ -259,7 +285,7 @@ function createCastingGroup(id, baseName, group) {
         isDuplicate: hasExactDuplicates,
         isVariant: hasMultipleVariants,
         isTreasureHunt: group.hasTH,
-        brand: getBrand(baseName),
+        brand,
         segment: group.segment,
         searchString: searchTokens.join(' ')
     };
@@ -430,13 +456,21 @@ function getTopBrands() {
     ]);
 
     const sortedBrands = Object.entries(brandCounts)
-        .filter(([brand]) => brand && brand.length > 0)
-        .sort((a, b) => b[1] - a[1]);
+        .filter(
+            ([brand, count]) =>
+                brand &&
+                brand.length > 0 &&
+                knownBrands.has(brand) &&
+                count >= (CONFIG.minBrandCount ?? 2)
+        )
+        .sort((a, b) => {
+            if (b[1] !== a[1]) {
+                return b[1] - a[1];
+            }
+            return a[0].localeCompare(b[0]);
+        });
 
-    const topBrands = sortedBrands
-        .filter(([brand]) => knownBrands.has(brand))
-        .slice(0, CONFIG.topBrandsCount)
-        .map(([brand]) => brand);
+    const topBrands = sortedBrands.map(([brand]) => brand);
 
     return {topBrands, brandCounts};
 }
@@ -457,6 +491,11 @@ function renderBrandChips() {
     let html = `<button class="chip active" data-filter="all">All (${state.rawCars.length})</button>`;
 
     if (segments.length > 1) {
+        segments.sort((a, b) => {
+            const countA = state.rawCars.filter((c) => c.segment === a).length;
+            const countB = state.rawCars.filter((c) => c.segment === b).length;
+            return countB - countA || a.localeCompare(b);
+        });
         segments.forEach((seg) => {
             const count = state.rawCars.filter((c) =>
                 c.segment === seg
@@ -466,11 +505,11 @@ function renderBrandChips() {
         });
     }
 
-    if (totalTH > 0) {
-        html += `<button class="chip" data-filter="treasure-hunt">Treasure Hunt (${totalTH})</button>`;
-    }
     if (totalVariants > 0) {
         html += `<button class="chip" data-filter="variants">Variants (${totalVariants})</button>`;
+    }
+    if (totalTH > 0) {
+        html += `<button class="chip" data-filter="treasure-hunt">Treasure Hunt (${totalTH})</button>`;
     }
 
     topBrands.forEach((brand) => {
