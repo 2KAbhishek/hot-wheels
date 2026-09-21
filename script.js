@@ -8,6 +8,14 @@ const CONFIG = {
     speedLinesShortDuration: '1.8s'
 };
 
+const SEGMENT_SHORT_NAMES = {
+    'Hot Wheels': 'Hot Wheels',
+    'Hot Wheels Premium': 'Premium',
+    'Hot Wheels Silver Series': 'Silver Series',
+    'Matchbox': 'Matchbox',
+    'Matchbox Skybusters': 'Skybusters'
+};
+
 const BRAND_MAPPING = {
     special: [
         {test: (n) => n.startsWith('land rover'), value: 'Land Rover'},
@@ -159,14 +167,16 @@ function getBrand(carName) {
     return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 }
 
-function getWikiUrl(carName) {
+function getWikiUrl(carName, segments = []) {
     let wikiName = carName
         .replace(/\s*\([^)]*treasure\s+hunt[^)]*\)/gi, '')
         .trim();
     if (/^\d{2}\s/.test(wikiName)) {
         wikiName = "'" + wikiName;
     }
-    return `https://hotwheels.fandom.com/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
+    const isMatchbox = segments.some((s) => s.toLowerCase().includes('matchbox'));
+    const domain = isMatchbox ? 'matchbox.fandom.com' : 'hotwheels.fandom.com';
+    return `https://${domain}/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
 }
 
 function highlightQuery(name, query) {
@@ -197,17 +207,28 @@ function extractCarNameAndTag(fullName) {
 
 // --- Data Parsing & Grouping ---
 function parseMarkdownCars(markdownText) {
-    return markdownText
-        .split('\n')
-        .map((line) => line.trim())
-        .filter((line) => line.startsWith('- '))
-        .map((line, index) => {
+    let currentSegment = 'Hot Wheels';
+    const cars = [];
+    markdownText.split('\n').forEach((rawLine, index) => {
+        const line = rawLine.trim();
+        if (line.startsWith('#')) {
+            currentSegment = line.replace(/^#+\s*/, '').trim();
+        } else if (line.startsWith('- ')) {
             const name = line.slice(2).trim();
             const isTreasureHunt =
                 /\btreasure\s+hunt\b/i.test(name) || /\bth\b/i.test(name);
-            return {id: index + 1, name, isTreasureHunt, rawLine: line};
-        })
-        .filter((item) => item.name.length > 0);
+            if (name.length > 0) {
+                cars.push({
+                    id: index + 1,
+                    name,
+                    isTreasureHunt,
+                    rawLine: line,
+                    segment: currentSegment
+                });
+            }
+        }
+    });
+    return cars;
 }
 
 function createCastingGroup(id, baseName, group) {
@@ -238,6 +259,7 @@ function createCastingGroup(id, baseName, group) {
         isVariant: hasMultipleVariants,
         isTreasureHunt: group.hasTH,
         brand: getBrand(baseName),
+        segments: Array.from(group.segments),
         searchString: searchTokens.join(' ')
     };
 }
@@ -252,6 +274,7 @@ function groupCastings(parsedCars) {
             groupsMap.set(baseName, {
                 baseName,
                 variantsMap: new Map(),
+                segments: new Set(),
                 totalCount: 0,
                 hasTH: false
             });
@@ -259,6 +282,7 @@ function groupCastings(parsedCars) {
 
         const group = groupsMap.get(baseName);
         group.totalCount += 1;
+        group.segments.add(item.segment);
         if (item.isTreasureHunt) group.hasTH = true;
 
         const tagKey = tag ? tag.toLowerCase() : '__mainline__';
@@ -271,7 +295,8 @@ function groupCastings(parsedCars) {
                 count: 0,
                 isTreasureHunt: item.isTreasureHunt,
                 fullNames: [],
-                rawLines: []
+                rawLines: [],
+                segment: item.segment
             });
         }
 
@@ -327,7 +352,7 @@ function createCarRowHtml(item, query) {
         score !== null ? `<span class="score">${score}% match</span>` : '';
 
     const displayName = highlightQuery(item.baseName, query);
-    const wikiUrl = getWikiUrl(item.baseName);
+    const wikiUrl = getWikiUrl(item.baseName, item.segments);
 
     return `
         <li data-id="${item.id}" tabindex="0">
@@ -424,7 +449,21 @@ function renderBrandChips() {
         (c) => c.isVariant || c.isDuplicate
     ).length;
 
+    const segments = Array.from(
+        new Set(state.rawCars.map((c) => c.segment).filter(Boolean))
+    );
+
     let html = `<button class="chip active" data-filter="all">All (${state.groupedCars.length})</button>`;
+
+    if (segments.length > 1) {
+        segments.forEach((seg) => {
+            const count = state.groupedCars.filter((c) =>
+                c.segments.includes(seg)
+            ).length;
+            const label = SEGMENT_SHORT_NAMES[seg] || seg;
+            html += `<button class="chip" data-filter="segment" data-val="${escapeHtml(seg)}">${escapeHtml(label)} (${count})</button>`;
+        });
+    }
 
     if (totalTH > 0) {
         html += `<button class="chip" data-filter="treasure-hunt">Treasure Hunt (${totalTH})</button>`;
@@ -491,6 +530,10 @@ function runSearch() {
         items = items.filter((car) => car.isVariant || car.isDuplicate);
     } else if (state.currentFilter.type === 'treasure-hunt') {
         items = items.filter((car) => car.isTreasureHunt);
+    } else if (state.currentFilter.type === 'segment') {
+        items = items.filter((car) =>
+            car.segments.includes(state.currentFilter.value)
+        );
     } else if (state.currentFilter.type === 'brand') {
         items = items.filter(
             (car) => getBrand(car.baseName) === state.currentFilter.value
@@ -529,6 +572,11 @@ function initChipDelegation() {
                 state.currentFilter = {type: 'variants', value: null};
             } else if (filterType === 'treasure-hunt') {
                 state.currentFilter = {type: 'treasure-hunt', value: null};
+            } else if (filterType === 'segment') {
+                state.currentFilter = {
+                    type: 'segment',
+                    value: chip.getAttribute('data-val')
+                };
             } else if (filterType === 'brand') {
                 state.currentFilter = {
                     type: 'brand',
@@ -616,7 +664,19 @@ function initExportDelegation() {
         const items = state.currentlyVisibleItems.length
             ? state.currentlyVisibleItems
             : state.groupedCars;
-        const exportText = items.flatMap((car) => car.rawLines).join('\n');
+        const exportText = items
+            .flatMap((car) => {
+                if (state.currentFilter.type === 'segment') {
+                    const segmentVariants = car.variants.filter(
+                        (v) => v.segment === state.currentFilter.value
+                    );
+                    return segmentVariants.length
+                        ? segmentVariants.flatMap((v) => v.rawLines)
+                        : car.rawLines;
+                }
+                return car.rawLines;
+            })
+            .join('\n');
 
         navigator.clipboard.writeText(exportText).then(() => {
             DOM.copyListBtn.classList.add('copied');
