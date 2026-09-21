@@ -24,11 +24,7 @@ const BRAND_MAPPING = {
         {test: (n) => n.startsWith('gordon murray'), value: 'Gordon Murray'},
         {
             test: (n) =>
-                n.includes('batman') ||
-                n.includes('bat boat') ||
-                n.includes('batmobile') ||
-                n.includes('batcopter') ||
-                n.includes('batwing'),
+                /\b(batman|bat\s*boat|batmobile|batcopter|batwing)\b/i.test(n),
             value: 'Batmobile'
         }
     ],
@@ -40,63 +36,26 @@ const BRAND_MAPPING = {
         chevelle: 'Chevy',
         silverado: 'Chevy',
         mustang: 'Ford',
-        bugatti: 'Bugatti',
         volkswagen: 'VW',
         vw: 'VW',
         bmw: 'BMW',
-        honda: 'Honda',
-        ford: 'Ford',
-        nissan: 'Nissan',
-        mazda: 'Mazda',
-        porsche: 'Porsche',
-        tesla: 'Tesla',
-        volvo: 'Volvo',
-        cadillac: 'Cadillac',
-        dodge: 'Dodge',
-        mclaren: 'McLaren',
-        ferrari: 'Ferrari',
-        lamborghini: 'Lamborghini',
-        mercedes: 'Mercedes',
-        'mercedes-benz': 'Mercedes',
-        pagani: 'Pagani',
-        czinger: 'Czinger',
-        austin: 'Austin',
-        willys: 'Willys',
-        datzun: 'Datsun',
-        datsun: 'Datsun',
-        audi: 'Audi',
-        lotus: 'Lotus',
-        acura: 'Acura',
-        toyota: 'Toyota',
-        subaru: 'Subaru',
-        jaguar: 'Jaguar',
-        lexus: 'Lexus',
-        pontiac: 'Pontiac',
-        kia: 'Kia',
-        jeep: 'Jeep',
-        shelby: 'Shelby',
-        plymouth: 'Plymouth',
-        renault: 'Renault',
-        peugeot: 'Peugeot',
-        polestar: 'Polestar',
-        koenigsegg: 'Koenigsegg',
-        mitsubishi: 'Mitsubishi',
-        buick: 'Buick',
-        maserati: 'Maserati',
-        fiat: 'Fiat',
         ram: 'RAM',
-        chrysler: 'Chrysler',
-        lincoln: 'Lincoln',
-        mercury: 'Mercury',
         gmc: 'GMC',
-        lucid: 'Lucid',
-        vespa: 'Vespa',
-        boeing: 'Boeing',
-        cirrus: 'Cirrus',
-        cessna: 'Cessna',
-        sikorsky: 'Sikorsky',
-        freightliner: 'Freightliner'
-    }
+        mclaren: 'McLaren',
+        'mercedes-benz': 'Mercedes',
+        datzun: 'Datsun'
+    },
+    known: new Set([
+        'Acura', 'Alfa Romeo', 'Aston Martin', 'Audi', 'Austin', 'BMW', 'Batmobile',
+        'Boeing', 'Bugatti', 'Buick', 'Cadillac', 'Cessna', 'Chevy', 'Chrysler',
+        'Cirrus', 'Czinger', 'Datsun', 'Dodge', 'Ferrari', 'Fiat', 'Ford',
+        'Freightliner', 'GMC', 'Gordon Murray', 'Honda', 'Jaguar', 'Jeep', 'Kia',
+        'Koenigsegg', 'Lamborghini', 'Land Rover', 'Lexus', 'Lincoln', 'Lotus',
+        'Lucid', 'Maserati', 'Mazda', 'McLaren', 'Mercedes', 'Mercury', 'Mitsubishi',
+        'Nissan', 'Pagani', 'Peugeot', 'Plymouth', 'Polestar', 'Pontiac', 'Porsche',
+        'RAM', 'Renault', 'Shelby', 'Sikorsky', 'Subaru', 'Tesla', 'Toyota', 'VW',
+        'Vespa', 'Volvo', 'Willys'
+    ])
 };
 
 const ICONS = {
@@ -112,7 +71,7 @@ const DOM = {
     sortVal: document.getElementById('sortVal'),
     sortMenu: document.getElementById('sortMenu'),
     copyListBtn: document.getElementById('copyListBtn'),
-    clearButtons: document.querySelectorAll('.clear-search-btn'),
+    clearBtn: document.getElementById('clearSearch'),
     statUnique: document.getElementById('statUnique'),
     resultsList: document.getElementById('results'),
     brandChipsContainer: document.getElementById('brandChips')
@@ -147,28 +106,37 @@ function debounce(fn, delay) {
     };
 }
 
+function copyToClipboard(text, btn) {
+    if (!text || !btn) return;
+    navigator.clipboard.writeText(text).then(() => {
+        btn.classList.add('copied');
+        btn.innerHTML = ICONS.copied;
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            btn.innerHTML = ICONS.copy;
+        }, 1200);
+    });
+}
+
+const TAG_COLOR_PATTERNS = [
+    [/mainline|base/i, 'v-tag-mainline'],
+    [/black/i, 'v-tag-black'],
+    [/red|maroon/i, 'v-tag-red'],
+    [/pink/i, 'v-tag-pink'],
+    [/green/i, 'v-tag-green'],
+    [/yellow/i, 'v-tag-yellow'],
+    [/purple/i, 'v-tag-purple'],
+    [/blue/i, 'v-tag-blue'],
+    [/brown/i, 'v-tag-brown'],
+    [/white/i, 'v-tag-white'],
+    [/silver|grey|gray/i, 'v-tag-silver'],
+    [/\b(treasure hunt|th)\b/i, 'v-tag-th']
+];
+
 function getTagClassName(tag) {
     if (!tag) return 'v-tag-default';
-    const lower = tag.toLowerCase().trim();
-    if (lower === 'mainline' || lower === 'base') return 'v-tag-mainline';
-    if (lower.includes('black')) return 'v-tag-black';
-    if (lower.includes('red') || lower.includes('maroon')) return 'v-tag-red';
-    if (lower.includes('pink')) return 'v-tag-pink';
-    if (lower.includes('green')) return 'v-tag-green';
-    if (lower.includes('yellow')) return 'v-tag-yellow';
-    if (lower.includes('purple')) return 'v-tag-purple';
-    if (lower.includes('blue')) return 'v-tag-blue';
-    if (lower.includes('brown')) return 'v-tag-brown';
-    if (lower.includes('white')) return 'v-tag-white';
-    if (
-        lower.includes('silver') ||
-        lower.includes('grey') ||
-        lower.includes('gray')
-    )
-        return 'v-tag-silver';
-    if (lower.includes('treasure hunt') || lower.includes('th'))
-        return 'v-tag-th';
-    return 'v-tag-default';
+    const match = TAG_COLOR_PATTERNS.find(([pattern]) => pattern.test(tag));
+    return match ? match[1] : 'v-tag-default';
 }
 
 function getBrand(carName) {
@@ -446,29 +414,17 @@ function renderCarList(items, query = '') {
 function getTopBrands() {
     const brandCounts = {};
     state.groupedCars.forEach((car) => {
-        const brand = getBrand(car.baseName);
-        brandCounts[brand] = (brandCounts[brand] || 0) + car.totalCount;
+        brandCounts[car.brand] = (brandCounts[car.brand] || 0) + car.totalCount;
     });
-
-    const knownBrands = new Set([
-        ...Object.values(BRAND_MAPPING.aliases),
-        ...BRAND_MAPPING.special.map((s) => s.value)
-    ]);
 
     const sortedBrands = Object.entries(brandCounts)
         .filter(
             ([brand, count]) =>
                 brand &&
-                brand.length > 0 &&
-                knownBrands.has(brand) &&
+                BRAND_MAPPING.known.has(brand) &&
                 count >= (CONFIG.minBrandCount ?? 2)
         )
-        .sort((a, b) => {
-            if (b[1] !== a[1]) {
-                return b[1] - a[1];
-            }
-            return a[0].localeCompare(b[0]);
-        });
+        .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
     const topBrands = sortedBrands.map(([brand]) => brand);
 
@@ -554,30 +510,24 @@ function sortItems(items) {
 
 function runSearch() {
     const query = DOM.searchInput.value.trim();
-    DOM.clearButtons.forEach((btn) => (btn.disabled = query.length === 0));
+    if (DOM.clearBtn) DOM.clearBtn.disabled = query.length === 0;
 
-    let items = [];
-    if (!query) {
-        items = state.groupedCars;
-    } else {
-        items = state.fuse.search(query).map((entry) => ({
-            ...entry.item,
-            score: entry.score
-        }));
-    }
+    let items = query
+        ? state.fuse.search(query).map((entry) => ({
+              ...entry.item,
+              score: entry.score
+          }))
+        : state.groupedCars;
 
-    if (state.currentFilter.type === 'variants') {
+    const {type, value} = state.currentFilter;
+    if (type === 'variants') {
         items = items.filter((car) => car.isVariant || car.isDuplicate);
-    } else if (state.currentFilter.type === 'treasure-hunt') {
+    } else if (type === 'treasure-hunt') {
         items = items.filter((car) => car.isTreasureHunt);
-    } else if (state.currentFilter.type === 'segment') {
-        items = items.filter((car) =>
-            car.segment === state.currentFilter.value
-        );
-    } else if (state.currentFilter.type === 'brand') {
-        items = items.filter(
-            (car) => getBrand(car.baseName) === state.currentFilter.value
-        );
+    } else if (type === 'segment') {
+        items = items.filter((car) => car.segment === value);
+    } else if (type === 'brand') {
+        items = items.filter((car) => car.brand === value);
     }
 
     items = sortItems(items);
@@ -596,8 +546,9 @@ function initChipDelegation() {
         const filterType = chip.getAttribute('data-filter');
         const isActive = chip.classList.contains('active');
 
-        const chips = DOM.brandChipsContainer.querySelectorAll('.chip');
-        chips.forEach((c) => c.classList.remove('active'));
+        DOM.brandChipsContainer
+            .querySelectorAll('.chip')
+            .forEach((c) => c.classList.remove('active'));
 
         if (isActive && filterType !== 'all') {
             const allChip = DOM.brandChipsContainer.querySelector(
@@ -607,23 +558,10 @@ function initChipDelegation() {
             state.currentFilter = {type: 'all', value: null};
         } else {
             chip.classList.add('active');
-            if (filterType === 'all') {
-                state.currentFilter = {type: 'all', value: null};
-            } else if (filterType === 'variants') {
-                state.currentFilter = {type: 'variants', value: null};
-            } else if (filterType === 'treasure-hunt') {
-                state.currentFilter = {type: 'treasure-hunt', value: null};
-            } else if (filterType === 'segment') {
-                state.currentFilter = {
-                    type: 'segment',
-                    value: chip.getAttribute('data-val')
-                };
-            } else if (filterType === 'brand') {
-                state.currentFilter = {
-                    type: 'brand',
-                    value: chip.getAttribute('data-val')
-                };
-            }
+            state.currentFilter = {
+                type: filterType,
+                value: chip.getAttribute('data-val') || null
+            };
         }
 
         triggerSpeedLines();
@@ -634,19 +572,7 @@ function initChipDelegation() {
 function initCopyDelegation() {
     DOM.resultsList.addEventListener('click', (e) => {
         const btn = e.target.closest('.copy-btn');
-        if (!btn) return;
-
-        const copyText = btn.getAttribute('data-copy');
-        if (copyText) {
-            navigator.clipboard.writeText(copyText).then(() => {
-                btn.classList.add('copied');
-                btn.innerHTML = ICONS.copied;
-                setTimeout(() => {
-                    btn.classList.remove('copied');
-                    btn.innerHTML = ICONS.copy;
-                }, 1200);
-            });
-        }
+        if (btn) copyToClipboard(btn.getAttribute('data-copy'), btn);
     });
 }
 
@@ -706,16 +632,7 @@ function initExportDelegation() {
             ? state.currentlyVisibleItems
             : state.groupedCars;
         const exportText = items.flatMap((car) => car.rawLines).join('\n');
-
-        navigator.clipboard.writeText(exportText).then(() => {
-            DOM.copyListBtn.classList.add('copied');
-            DOM.copyListBtn.innerHTML = ICONS.copied;
-
-            setTimeout(() => {
-                DOM.copyListBtn.classList.remove('copied');
-                DOM.copyListBtn.innerHTML = ICONS.copy;
-            }, 1200);
-        });
+        copyToClipboard(exportText, DOM.copyListBtn);
     });
 }
 
@@ -728,14 +645,14 @@ function initSearchEvents() {
         }, CONFIG.searchDebounceMs)
     );
 
-    DOM.clearButtons.forEach((btn) => {
-        btn.addEventListener('click', () => {
+    if (DOM.clearBtn) {
+        DOM.clearBtn.addEventListener('click', () => {
             DOM.searchInput.value = '';
             triggerSpeedLines();
             runSearch();
             DOM.searchInput.focus();
         });
-    });
+    }
 }
 
 function handleSearchKeyboardShortcuts(e, isInputFocused, isSearchFocused) {
@@ -861,7 +778,7 @@ async function init() {
         initSearchEvents();
         initKeyboardNavigation();
 
-        DOM.clearButtons.forEach((btn) => (btn.disabled = true));
+        if (DOM.clearBtn) DOM.clearBtn.disabled = true;
         DOM.searchInput.focus();
     } catch (error) {
         renderEmpty('Could not load the collection file.');

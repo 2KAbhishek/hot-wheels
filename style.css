@@ -3,8 +3,6 @@
 :root {
     --hw-red: #e10600;
     --hw-yellow: #ffd100;
-    --hw-duplicate: #e16a00;
-    --hw-variant: #9333ea;
     --hw-success: #52de88;
     --ink: #f5f8ff;
     --ink-soft: #b4c2e7;
@@ -181,50 +179,6 @@ h1 {
     outline: 2px solid rgba(225, 6, 0, 0.45);
 }
 
-/* Visibility utilities */
-.mobile-only {
-    display: none;
-}
-
-#clearSearchMobile {
-    border: 0 solid var(--line);
-    background: rgba(7, 12, 22, 0.5);
-    color: var(--ink-soft);
-    cursor: pointer;
-    font-size: 0.82rem;
-    font-weight: 600;
-    align-items: center;
-    justify-content: center;
-    gap: 0.4rem;
-    padding: 0 0.85rem;
-    border-radius: 12px;
-    height: 0;
-    opacity: 0;
-    pointer-events: none;
-    margin-top: 0;
-    overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    width: 100%;
-}
-
-#clearSearchMobile:not([disabled]) {
-    opacity: 1;
-    pointer-events: auto;
-    height: 42px;
-    margin-top: 0.6rem;
-    border-width: 1px;
-}
-
-#clearSearchMobile:hover {
-    border-color: var(--hw-red);
-    color: var(--hw-red);
-    background: rgba(225, 6, 0, 0.1);
-}
-
-#clearSearchMobile:focus {
-    outline: 2px solid rgba(225, 6, 0, 0.45);
-}
-
 /* Brand Chips Styling */
 .brand-chips {
     display: flex;
@@ -267,19 +221,6 @@ h1 {
 }
 
 /* Special chip colors */
-.chip[data-filter='duplicates'] {
-    border-color: rgba(225, 106, 0, 0.4);
-}
-.chip[data-filter='duplicates']:hover {
-    background: rgba(225, 106, 0, 0.15);
-    color: #ffa866;
-}
-.chip[data-filter='duplicates'].active {
-    background: #e16a00;
-    border-color: #e16a00;
-    color: #fff;
-    box-shadow: 0 0 12px rgba(225, 106, 0, 0.4);
-}
 
 .chip[data-filter='treasure-hunt'] {
     border-color: rgba(255, 209, 0, 0.4);
@@ -349,7 +290,6 @@ h1 {
     justify-content: space-between;
     align-items: center;
     padding: 0.35rem 0.4rem 0.65rem;
-    font-family: 'Sora', sans-serif;
 }
 
 .results-count {
@@ -377,27 +317,30 @@ h1 {
     gap: 0.5rem;
 }
 
-/* Custom Rounded Sort Dropdown */
+/* Custom Rounded Sort Dropdown & Controls */
 .sort-card-wrap {
     position: relative;
     z-index: 30;
 }
 
-.sort-btn {
+.sort-btn,
+.share-btn {
     font: inherit;
     font-size: 0.88rem;
     font-weight: 700;
-    font-family: 'Sora', sans-serif;
-    color: var(--hw-yellow);
     background: transparent;
     border: none;
     cursor: pointer;
     outline: none;
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
     padding: 0.2rem 0.35rem;
     line-height: 1.2;
+}
+
+.sort-btn {
+    color: var(--hw-yellow);
+    gap: 0.3rem;
     transition: filter 0.2s ease;
 }
 
@@ -407,19 +350,7 @@ h1 {
 }
 
 .share-btn {
-    font: inherit;
-    font-size: 0.88rem;
-    font-weight: 700;
-    font-family: 'Sora', sans-serif;
     color: var(--ink-soft);
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    outline: none;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.2rem 0.35rem;
-    line-height: 1.2;
     transition: color 0.2s ease, filter 0.2s ease;
 }
 
@@ -430,7 +361,7 @@ h1 {
 }
 
 .share-btn.copied {
-    color: #52de88 !important;
+    color: var(--hw-success) !important;
 }
 
 .sort-menu {
@@ -457,7 +388,6 @@ h1 {
 .sort-option {
     font-size: 0.85rem;
     font-weight: 600;
-    font-family: 'Sora', sans-serif;
     color: #cbd5e1;
     padding: 0.35rem 0.7rem;
     border-radius: 8px;
@@ -748,7 +678,7 @@ h1 {
 }
 
 .action-btn.copy-btn.copied {
-    color: #52de88 !important;
+    color: var(--hw-success) !important;
     border-color: rgba(82, 222, 136, 0.4) !important;
     background: rgba(82, 222, 136, 0.1) !important;
 }
@@ -837,18 +767,6 @@ mark.highlight {
 
     h1 {
         font-size: clamp(1.6rem, 10vw, 2.2rem);
-    }
-
-    .mobile-only {
-        display: flex;
-    }
-
-    .desktop-only {
-        display: none !important;
-    }
-
-    #search {
-        padding-right: 1rem;
     }
 
     .results {
