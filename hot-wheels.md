@@ -6,7 +6,7 @@
 - 16 Lamborghini Centenario Roadster
 - 18 Camaro SS
 - 19 Corvette ZR1 Convertible
-- 19 Mercedes Benz A-Class
+- 19 Mercedes-Benz A-Class
 - 1966 Bat Boat
 - 1966 Bat Boat
 - 1967 Jeepster Commando
@@ -62,7 +62,7 @@
 - 71 Chevy Camaro RS
 - 71 Dodge Hemi Challenger
 - 71 Ford Escort RS1600
-- 73 Jeep Jio
+- 73 Jeep J10
 - 75 Ford Bronco
 - 77 Packin Pacer
 - 84 Mustang SVO
@@ -75,7 +75,7 @@
 - 93 Honda Civic EG
 - 94 Audi Avant RS2
 - 94 Bugatti EB110 SS
-- 95 Mazda RX-7 Drift!
+- 95 Mazda RX-7 Drift
 - 96 Dodge Viper GTS
 - 98 Honda Prelude
 - 98 Subaru Impreza 22B-STi
@@ -109,7 +109,7 @@
 - Bugatti Bolide
 - Bullet Proof
 - Bully Goat
-- CZinger 21C
+- Czinger 21C
 - Cadillac Celestiq
 - Cadillac Project GTP Hypercar
 - Celero GT
@@ -121,7 +121,7 @@
 - Classic 55 Nomad
 - Classic TV Series Batmobile
 - Click Shift
-- Cobra H.I.S.S
+- Cobra H.I.S.S.
 - Combat Medic
 - Cone Shaker (Treasure Hunt)
 - Cool-One
@@ -132,7 +132,7 @@
 - Crate Racer (Red)
 - Cruise Bruiser
 - Cruise Bruiser
-- Custom '73 Chevy LUV
+- Custom 73 Chevy LUV
 - Custom 2020 Honda E
 - Custom 2020 Honda E
 - Custom 62 Chevy Pickup
@@ -153,7 +153,7 @@
 - Donut Drifter
 - Draggin' Wagon
 - Drift-Ender
-- Drift’N Break
+- Drift'N Break
 - Dune Daddy
 - Dune It Up
 - Eggshelleracer
@@ -168,7 +168,7 @@
 - Ferrari SF90 Stradale
 - Fiat 500C
 - Fiat Beast of Turin
-- Fish’D & Chip’D
+- Fish'D & Chip'D
 - Flippin Fast
 - Ford Bronco R
 - Ford F-150 Lightning SuperTruck
@@ -222,7 +222,7 @@
 - Kick Sauber F1 Team
 - King Kuda
 - Koenigsegg CC850
-- Kowloon’D Hypervan
+- Kowloon'D Hypervan
 - LB Works Lamborghini Huracan Coupe
 - La Liebre
 - La Troca
@@ -258,10 +258,10 @@
 - Mazda MX-5 Miata
 - Mazda RX-2
 - Mazda RX-3 Tooned
-- McLaren F1 Red
+- McLaren F1
 - McLaren Speedtail
 - McLaren W1
-- Mercedes Benz Unimog 1300L
+- Mercedes-Benz Unimog 1300L
 - Mercedes-Benz CLA
 - Meyers Manx
 - Mid Mill
@@ -287,7 +287,7 @@
 - Pagani Zonda Cinque Tooned
 - Pagani Zonda R
 - Party Wagon
-- Pass’N Gasser
+- Pass'N Gasser
 - Pedal Driver
 - Peugeot 9X8 Hypercar
 - Piranha Terror
@@ -394,7 +394,7 @@
 
 # Matchbox
 
-- 2024 Mercedes Benz Sprinter Ambulance
+- 2024 Mercedes-Benz Sprinter Ambulance
 - Blaze Blaster III
 - Bucket Tipper
 - Ford F-350 Stake Bed Truck
@@ -421,7 +421,7 @@
 - Cessna 172 Skyhawk
 - Cirrus SF50 Vision Jet
 - Cirrus SF50 Vision Jet
-- F-35 B Lightning II
+- F-35B Lightning II
 - MBX Enemy Strike Jet
 - MBX Enemy Strike Jet
 - MBX Sky Cruiser
