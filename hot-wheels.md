@@ -11,7 +11,6 @@
 - 1966 Bat Boat
 - 1967 Jeepster Commando
 - 1972 Datsun Sunny Coupe
-- 1978 Dodge Li'l Red Express Truck
 - 1984 Porsche 928S
 - 1985 Honda CR-X
 - 1987 Chevy Caprice
@@ -19,26 +18,15 @@
 - 2 Jet Z (Treasure Hunt)
 - 20 Dodge Charger Hellcat
 - 20 Jeep Gladiator
-- 2002 Pontiac Firebird
-- 2008 Mercedes-Benz CLK 63 AMG
-- 2015 Toyota Alphard
 - 2017 Camaro ZL1
 - 2019 Audi R8 Spyder
 - 2019 Audi TT Safari
-- 2019 Chevrolet Silverado Trail Boss LT
-- 2019 Ford Ranger Raptor
-- 2019 Jeep Grand Cherokee Trackhawk
 - 2020 Ford Mustang Shelby GT500
 - 2020 Koenigsegg Jesko
-- 2020 RAM 1500 Rebel
-- 2020 RAM 1500 Rebel
-- 2020 Toyota Tacoma
-- 2021 Toyota GR Supra
 - 2023 Nissan Z
 - 2024 Aston Martin Vantage GT3
 - 21 Ford Bronco
 - 25/Seven
-- 32 Ford
 - 33 Ford Lo Boy
 - 41 Willys
 - 56 Chevy
@@ -63,15 +51,10 @@
 - 71 Dodge Hemi Challenger
 - 71 Ford Escort RS1600
 - 73 Jeep J10
-- 75 Ford Bronco
-- 77 Packin Pacer
-- 84 Mustang SVO
 - 85 Honda City Turbo II
 - 87 Dodge D100
-- 88 Honda CRX
 - 88 Mitsubishi Starion
 - 90 Acura NSX
-- 92 Jeep Wrangler Sahara
 - 93 Honda Civic EG
 - 94 Audi Avant RS2
 - 94 Bugatti EB110 SS
@@ -80,9 +63,7 @@
 - 98 Honda Prelude
 - 98 Subaru Impreza 22B-STi
 - 99 Ford F-150 SVT Lightning
-- Action Sedan
 - Ain't Fare
-- Airwolf Helicopter
 - Alfa Romeo Giulia TI Super
 - Amaru GTC
 - Arrow Dynamic
@@ -90,21 +71,17 @@
 - Austin Mini Cooper S
 - BMW 635 CSi
 - Baja Bison T5
-- Batcopter
 - Batman & Robin Batmobile
 - Batman Arkham Asylum Batmobile
 - Batman Arkham Knight Batmobile
 - Batman Forever Batmobile
-- Batmobile
 - Batmobile (Brave and the Bold)
-- Batwing
 - Big-Air Bel-Air
 - Birthday Burner
 - Blitzspeeder
 - Bogzilla
 - Bone Shaker
 - Bone Shaker (Chrome and Pearl)
-- Boom Box
 - Bounce'N Bass
 - Bugatti Bolide
 - Bullet Proof
@@ -121,12 +98,8 @@
 - Classic 55 Nomad
 - Classic TV Series Batmobile
 - Click Shift
-- Cobra H.I.S.S.
-- Combat Medic
 - Cone Shaker (Treasure Hunt)
-- Cool-One
 - Corvette Grand Sport
-- Count Muscula
 - Coupe Clip
 - Crate Racer
 - Crate Racer (Red)
@@ -135,15 +108,12 @@
 - Custom 73 Chevy LUV
 - Custom 2020 Honda E
 - Custom 2020 Honda E
-- Custom 62 Chevy Pickup
 - Custom 66 Toronado
-- Custom 77 Dodge Van
 - Custom Cadillac Fleetwood
 - Custom Kia EV6
 - Custom Otto
 - D-Muscle
 - Datsun 240Z
-- Datsun King Cab Baja Custom
 - Decidedly Go
 - Deora III
 - Deora Tooned
@@ -168,11 +138,8 @@
 - Ferrari SF90 Stradale
 - Fiat 500C
 - Fiat Beast of Turin
-- Fish'D & Chip'D
 - Flippin Fast
-- Ford Bronco R
 - Ford F-150 Lightning SuperTruck
-- Ford F-150 SVT Lightning (Fast & Furious)
 - Ford Model A Custom
 - Ford Mustang GTD
 - Ford Mustang Mach-E 1400
@@ -185,19 +152,16 @@
 - Gordon Murray Automotive T.33
 - Gordon Murray Automotive T.50s
 - Gotta Go
-- Ground FX
 - Group C Fantasy
 - HW 50 Concept
 - HW Formula Solar
 - HW K.I.T.T. Concept
 - HW Roll Cage
 - HW Test Ride
-- HW Tour Bus
 - HW Ultimate T-Rex Transporter
 - Hako Type D
 - Haulerback
 - Head Gasket
-- Hi-Roller II
 - High-Tail Chaser
 - Honda CB750 Cafe
 - Honda Odyssey
@@ -211,7 +175,6 @@
 - Humvee
 - Hyper Rocker
 - Instant Boost
-- Jaded
 - Jaguar MK1
 - Jaguar XJC V12 Coupe
 - Jeep Scrambler
@@ -221,7 +184,6 @@
 - Kick Kart
 - Kick Sauber F1 Team
 - King Kuda
-- Koenigsegg CC850
 - Kowloon'D Hypervan
 - LB Works Lamborghini Huracan Coupe
 - La Liebre
@@ -263,7 +225,6 @@
 - McLaren W1
 - Mercedes-Benz Unimog 1300L
 - Mercedes-Benz CLA
-- Meyers Manx
 - Mid Mill
 - Minecraft Cart
 - Mitsubishi Pajero Evolution
@@ -286,7 +247,6 @@
 - Pagani Utopia
 - Pagani Zonda Cinque Tooned
 - Pagani Zonda R
-- Party Wagon
 - Pass'N Gasser
 - Pedal Driver
 - Peugeot 9X8 Hypercar
@@ -300,7 +260,6 @@
 - Porsche 911 Turbo Cabriolet
 - Power Rocket
 - Project Twin Mill
-- Prototype H-24
 - Punk Rod
 - Purple Passion
 - Quick Bite
@@ -319,7 +278,6 @@
 - Rink Racer (Green)
 - Rockster (Treasure Hunt)
 - Rodger Dodger 2.0
-- Rogue Hog
 - Roller Toaster
 - Rollin Solo
 - Salt Shaker
@@ -331,9 +289,7 @@
 - Soooo Fast
 - Speed Dozer
 - Speed Driver
-- Speedbox
 - Spider-Mobile
-- Spider-Mobile Dead-Buggy
 - Standard Kart
 - Stockar
 - Street Shrieker
@@ -341,7 +297,6 @@
 - Subaru BRAT
 - Super Twin Mill
 - Supercharged
-- Surf Crate
 - Sushi Tuner
 - TV Series Batmobile (Maroon)
 - TV Series Batmobile (Silver)
@@ -351,8 +306,6 @@
 - Time Shifter
 - Total Disposal (Treasure Hunt)
 - Toyota AE86 Sprinter Trueno
-- Toyota Land Cruiser
-- Toyota Off Road Truck
 - Track Ripper
 - Turbine Sublime
 - Twin Dorado
@@ -362,8 +315,6 @@
 - VW ID Buzz Bomb
 - Vairstrike
 - Vespa 90 SS Super Sprint
-- Volkswagen Baja Bug
-- Volkswagen Caddy
 - Volkswagen Classic Bug
 - Volkswagen Golf MK1 Tooned
 - Volkswagen T3 Custom (Brown)
@@ -373,24 +324,73 @@
 - Wattzup
 - X-Steam
 
+# Hot Wheels Silver Series
+
+- 20 Toyota Tacoma
+- 2019 Chevrolet Silverado Trail Boss LT
+- 2019 Ford Ranger Raptor
+- 2019 Jeep Grand Cherokee Trackhawk
+- 2020 RAM 1500 Rebel
+- 2020 RAM 1500 Rebel
+- 2021 Toyota GR Supra (Silver)
+- 71 Porsche 911 (Vintage Silver)
+- Batcopter
+- Batmobile
+- Batwing
+- Boom Box
+- Combat Medic
+- Cool-One
+- Count Muscula
+- Custom 62 Chevy Pickup
+- Custom 77 Dodge Van
+- Fish'D & Chip'D
+- Ford Bronco R
+- Ground FX
+- Hi-Roller II
+- Jaded
+- Prototype H-24
+- Rogue Hog
+- Speedbox
+- Surf Crate
+- Toyota Land Cruiser
+- Toyota Off Road Truck
+- Volkswagen Baja Bug
+- Volkswagen Caddy
+
 # Hot Wheels Premium
 
+- 1978 Dodge Li'l Red Express Truck
+- 2002 Pontiac Firebird
+- 2008 Mercedes-Benz CLK 63 AMG
+- 2015 Toyota Alphard
+- 2021 Toyota GR Supra
+- 32 Ford
 - 71 Porsche 911 (Top Gun)
+- 75 Ford Bronco
+- 77 Packin Pacer
+- 84 Mustang SVO
+- 88 Honda CRX
+- 92 Jeep Wrangler Sahara
+- Action Sedan
+- Airwolf Helicopter
 - Audi 90 Quattro (Forza)
+- Cobra H.I.S.S.
 - Combat Jet Skystriker
 - Combat Jet Skystriker
+- Datsun King Cab Baja Custom
+- Ford F-150 SVT Lightning (Fast & Furious)
+- HW Tour Bus
+- Koenigsegg CC850
 - Kool Kombi
 - Kool Kombi
 - Kool Kombi (Dracula)
 - Lamborghini Gallardo
 - Masters Of The Universe Wind Raider
 - McLaren Solus GT
+- Meyers Manx
+- Party Wagon
 - RC Car
-
-# Hot Wheels Silver Series
-
-- 2021 Toyota GR Supra (Silver)
-- 71 Porsche 911 (Vintage Silver)
+- Spider-Mobile Dead-Buggy
 
 # Matchbox
 
