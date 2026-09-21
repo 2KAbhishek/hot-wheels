@@ -1,9 +1,12 @@
+# Hot Wheels
+
 - 15 Cadillac ATS-V R
 - 15 Land Rover Defender
 - 15 Mazda MX-5 Miata
 - 16 Lamborghini Centenario Roadster
 - 18 Camaro SS
 - 19 Corvette ZR1 Convertible
+- 19 Mercedes Benz A-Class
 - 1966 Bat Boat
 - 1966 Bat Boat
 - 1967 Jeepster Commando
@@ -15,11 +18,13 @@
 - 1988 Jeep Wagoneer (Zamac)
 - 2 Jet Z (Treasure Hunt)
 - 20 Dodge Charger Hellcat
+- 20 Jeep Gladiator
 - 2002 Pontiac Firebird
 - 2008 Mercedes-Benz CLK 63 AMG
 - 2015 Toyota Alphard
 - 2017 Camaro ZL1
 - 2019 Audi R8 Spyder
+- 2019 Audi TT Safari
 - 2019 Chevrolet Silverado Trail Boss LT
 - 2019 Ford Ranger Raptor
 - 2019 Jeep Grand Cherokee Trackhawk
@@ -29,7 +34,6 @@
 - 2020 RAM 1500 Rebel
 - 2020 Toyota Tacoma
 - 2021 Toyota GR Supra
-- 2021 Toyota GR Supra (Silver)
 - 2023 Nissan Z
 - 2024 Aston Martin Vantage GT3
 - 21 Ford Bronco
@@ -43,6 +47,7 @@
 - 62 Corvette Gasser
 - 65 Lincoln Continental
 - 65 Mustang 2+2 Fastback
+- 66 Buick Riviera
 - 66 Mercury Comet Cyclone
 - 67 Austin Mini Van
 - 67 Camaro
@@ -57,8 +62,7 @@
 - 71 Chevy Camaro RS
 - 71 Dodge Hemi Challenger
 - 71 Ford Escort RS1600
-- 71 Porsche 911 (Top Gun)
-- 71 Porsche 911 (Vintage Silver)
+- 73 Jeep Jio
 - 75 Ford Bronco
 - 77 Packin Pacer
 - 84 Mustang SVO
@@ -113,11 +117,11 @@
 - Chevy Blazer 4X4
 - Chevy Super Volt
 - Chop N Bloc
+- Chrysler Pacifica
 - Classic 55 Nomad
 - Classic TV Series Batmobile
 - Click Shift
 - Cobra H.I.S.S
-- Combat Jet Skystriker
 - Combat Medic
 - Cone Shaker (Treasure Hunt)
 - Cool-One
@@ -159,6 +163,7 @@
 - Erikenstein Rod
 - Feline Lucky
 - Ferrari 365 GTB4 Competizione
+- Ferrari 365 GTB4 Competizione
 - Ferrari Dino 206 GT
 - Ferrari SF90 Stradale
 - Fiat 500C
@@ -175,6 +180,7 @@
 - Formula E Gen 3
 - Futurismo
 - GMC Hummer EV
+- Gone Mad
 - Gone Mad
 - Gordon Murray Automotive T.33
 - Gordon Murray Automotive T.50s
@@ -202,11 +208,13 @@
 - Hoto Roto (Black)
 - Hoto Roto (White)
 - Hover Storm
+- Humvee
 - Hyper Rocker
 - Instant Boost
 - Jaded
 - Jaguar MK1
 - Jaguar XJC V12 Coupe
+- Jeep Scrambler
 - K.I.T.T.
 - Kei Swap (Pink)
 - Kei Swap (Red)
@@ -214,8 +222,6 @@
 - Kick Sauber F1 Team
 - King Kuda
 - Koenigsegg CC850
-- Kool Kombi
-- Kool Kombi
 - Kowloon’D Hypervan
 - LB Works Lamborghini Huracan Coupe
 - La Liebre
@@ -223,13 +229,17 @@
 - Lamborghini Huracan Sterrato
 - Lamborghini Reventon
 - Land Rover Defender 90
+- Land Rover Series II
 - Later Crater
+- Layin Lowrider
 - Lil Mad
 - Lil Roar
 - Limited Grip
+- Lolux
 - Long Bloc
 - Loopster
 - Lotus Cortina
+- Lotus Sport Elise
 - Lotus Sport Elise
 - Lucid Air
 - MBK Van
@@ -249,7 +259,6 @@
 - Mazda RX-2
 - Mazda RX-3 Tooned
 - McLaren F1 Red
-- McLaren Solus GT
 - McLaren Speedtail
 - McLaren W1
 - Mercedes Benz Unimog 1300L
@@ -257,10 +266,12 @@
 - Meyers Manx
 - Mid Mill
 - Minecraft Cart
+- Mitsubishi Pajero Evolution
 - Mo-Stash
 - Mod Mill
 - Mod Mill (Black / Red)
 - Mod Rod
+- Mod Rod (Art Car)
 - Mod Speeder
 - Monster Dairy Delivery
 - Monster High Ghoul Mobile
@@ -288,6 +299,7 @@
 - Porsche 911 Carrera T
 - Porsche 911 Turbo Cabriolet
 - Power Rocket
+- Project Twin Mill
 - Prototype H-24
 - Punk Rod
 - Purple Passion
@@ -346,6 +358,7 @@
 - Twin Dorado
 - Twin Tags
 - Uncertain-T
+- Uncertain-T
 - VW ID Buzz Bomb
 - Vairstrike
 - Vespa 90 SS Super Sprint
@@ -359,3 +372,61 @@
 - Volvo 240 Drift Wagon
 - Wattzup
 - X-Steam
+
+# Hot Wheels Premium
+
+- 71 Porsche 911 (Top Gun)
+- Audi 90 Quattro (Forza)
+- Combat Jet Skystriker
+- Combat Jet Skystriker
+- Kool Kombi
+- Kool Kombi
+- Kool Kombi (Dracula)
+- Lamborghini Gallardo
+- Masters Of The Universe Wind Raider
+- McLaren Solus GT
+- RC Car
+
+# Hot Wheels Silver Series
+
+- 2021 Toyota GR Supra (Silver)
+- 71 Porsche 911 (Vintage Silver)
+
+# Matchbox
+
+- 2024 Mercedes Benz Sprinter Ambulance
+- Blaze Blaster III
+- Bucket Tipper
+- Ford F-350 Stake Bed Truck
+- Freightliner M2 106 Plus
+- Garbage King
+- Ground Grinder
+- MBX EV Trash Truck
+- MBX Excavator
+- MBX Gritter King
+- MBX Lil Dumper
+- MBX Load Lifter
+- Plowverizer
+- Road Roller
+- Skidster
+
+# Matchbox Skybusters
+
+- Air Blade
+- Air Blade
+- Backdraft
+- Boeing 747-400
+- Boeing F/A-18 Super Hornet
+- Boeing F/A-18 Super Hornet
+- Cessna 172 Skyhawk
+- Cirrus SF50 Vision Jet
+- Cirrus SF50 Vision Jet
+- F-35 B Lightning II
+- MBX Enemy Strike Jet
+- MBX Enemy Strike Jet
+- MBX Sky Cruiser
+- MBX Sky Cruiser
+- Sikorsky S-70
+- Skyclone
+- Space Shuttle Orbiter
+- Twin Engine Blaze Buster
