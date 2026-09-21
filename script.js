@@ -167,14 +167,16 @@ function getBrand(carName) {
     return firstWord.charAt(0).toUpperCase() + firstWord.slice(1);
 }
 
-function getWikiUrl(carName, segments = []) {
+function getWikiUrl(carName, segment = '') {
     let wikiName = carName
         .replace(/\s*\([^)]*treasure\s+hunt[^)]*\)/gi, '')
         .trim();
     if (/^\d{2}\s/.test(wikiName)) {
         wikiName = "'" + wikiName;
     }
-    const isMatchbox = segments.some((s) => s.toLowerCase().includes('matchbox'));
+    const isMatchbox = typeof segment === 'string'
+        ? segment.toLowerCase().includes('matchbox')
+        : Array.isArray(segment) && segment.some((s) => s.toLowerCase().includes('matchbox'));
     const domain = isMatchbox ? 'matchbox.fandom.com' : 'hotwheels.fandom.com';
     return `https://${domain}/wiki/${encodeURIComponent(wikiName.replace(/\s+/g, '_'))}`;
 }
@@ -259,7 +261,7 @@ function createCastingGroup(id, baseName, group) {
         isVariant: hasMultipleVariants,
         isTreasureHunt: group.hasTH,
         brand: getBrand(baseName),
-        segments: Array.from(group.segments),
+        segment: group.segment,
         searchString: searchTokens.join(' ')
     };
 }
@@ -269,20 +271,20 @@ function groupCastings(parsedCars) {
 
     parsedCars.forEach((item) => {
         const {baseName, tag} = extractCarNameAndTag(item.name);
+        const groupKey = `${item.segment}:::${baseName}`;
 
-        if (!groupsMap.has(baseName)) {
-            groupsMap.set(baseName, {
+        if (!groupsMap.has(groupKey)) {
+            groupsMap.set(groupKey, {
                 baseName,
+                segment: item.segment,
                 variantsMap: new Map(),
-                segments: new Set(),
                 totalCount: 0,
                 hasTH: false
             });
         }
 
-        const group = groupsMap.get(baseName);
+        const group = groupsMap.get(groupKey);
         group.totalCount += 1;
-        group.segments.add(item.segment);
         if (item.isTreasureHunt) group.hasTH = true;
 
         const tagKey = tag ? tag.toLowerCase() : '__mainline__';
@@ -308,8 +310,8 @@ function groupCastings(parsedCars) {
 
     let idCounter = 1;
     const list = [];
-    groupsMap.forEach((group, baseName) => {
-        list.push(createCastingGroup(idCounter++, baseName, group));
+    groupsMap.forEach((group) => {
+        list.push(createCastingGroup(idCounter++, group.baseName, group));
     });
 
     return list;
@@ -352,7 +354,7 @@ function createCarRowHtml(item, query) {
         score !== null ? `<span class="score">${score}% match</span>` : '';
 
     const displayName = highlightQuery(item.baseName, query);
-    const wikiUrl = getWikiUrl(item.baseName, item.segments);
+    const wikiUrl = getWikiUrl(item.baseName, item.segment);
 
     return `
         <li data-id="${item.id}" tabindex="0">
@@ -458,7 +460,7 @@ function renderBrandChips() {
     if (segments.length > 1) {
         segments.forEach((seg) => {
             const count = state.groupedCars.filter((c) =>
-                c.segments.includes(seg)
+                c.segment === seg
             ).length;
             const label = SEGMENT_SHORT_NAMES[seg] || seg;
             html += `<button class="chip" data-filter="segment" data-val="${escapeHtml(seg)}">${escapeHtml(label)} (${count})</button>`;
@@ -532,7 +534,7 @@ function runSearch() {
         items = items.filter((car) => car.isTreasureHunt);
     } else if (state.currentFilter.type === 'segment') {
         items = items.filter((car) =>
-            car.segments.includes(state.currentFilter.value)
+            car.segment === state.currentFilter.value
         );
     } else if (state.currentFilter.type === 'brand') {
         items = items.filter(
@@ -664,19 +666,7 @@ function initExportDelegation() {
         const items = state.currentlyVisibleItems.length
             ? state.currentlyVisibleItems
             : state.groupedCars;
-        const exportText = items
-            .flatMap((car) => {
-                if (state.currentFilter.type === 'segment') {
-                    const segmentVariants = car.variants.filter(
-                        (v) => v.segment === state.currentFilter.value
-                    );
-                    return segmentVariants.length
-                        ? segmentVariants.flatMap((v) => v.rawLines)
-                        : car.rawLines;
-                }
-                return car.rawLines;
-            })
-            .join('\n');
+        const exportText = items.flatMap((car) => car.rawLines).join('\n');
 
         navigator.clipboard.writeText(exportText).then(() => {
             DOM.copyListBtn.classList.add('copied');
