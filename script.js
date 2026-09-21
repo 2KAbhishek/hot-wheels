@@ -445,10 +445,10 @@ function renderBrandChips() {
     if (!DOM.brandChipsContainer) return;
 
     const {topBrands, brandCounts} = getTopBrands();
-    const totalTH = state.groupedCars.filter((c) => c.isTreasureHunt).length;
-    const totalVariants = state.groupedCars.filter(
-        (c) => c.isVariant || c.isDuplicate
-    ).length;
+    const totalTH = state.rawCars.filter((c) => c.isTreasureHunt).length;
+    const totalVariants = state.groupedCars
+        .filter((c) => c.isVariant || c.isDuplicate)
+        .reduce((sum, c) => sum + c.totalCount, 0);
 
     const segments = Array.from(
         new Set(state.rawCars.map((c) => c.segment).filter(Boolean))
@@ -458,7 +458,7 @@ function renderBrandChips() {
 
     if (segments.length > 1) {
         segments.forEach((seg) => {
-            const count = state.groupedCars.filter((c) =>
+            const count = state.rawCars.filter((c) =>
                 c.segment === seg
             ).length;
             const label = SEGMENT_SHORT_NAMES[seg] || seg;
