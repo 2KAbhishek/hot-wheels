@@ -51,6 +51,7 @@
 - 71 Dodge Hemi Challenger
 - 71 Ford Escort RS1600
 - 73 Jeep J10
+- 8 Crate
 - 85 Honda City Turbo II
 - 87 Dodge D100
 - 88 Mitsubishi Starion
@@ -71,6 +72,7 @@
 - Austin Mini Cooper S
 - BMW 635 CSi
 - Baja Bison T5
+- Baja Bison T5 (Blue)
 - Batman & Robin Batmobile
 - Batman Arkham Asylum Batmobile
 - Batman Arkham Knight Batmobile
@@ -82,11 +84,12 @@
 - Bogzilla
 - Bone Shaker
 - Bone Shaker (Chrome and Pearl)
+- Boom Car
 - Bounce'N Bass
+- Brick and Motor
 - Bugatti Bolide
 - Bullet Proof
 - Bully Goat
-- Czinger 21C
 - Cadillac Celestiq
 - Cadillac Project GTP Hypercar
 - Celero GT
@@ -103,15 +106,17 @@
 - Coupe Clip
 - Crate Racer
 - Crate Racer (Red)
+- Croc Rod
 - Cruise Bruiser
 - Cruise Bruiser
-- Custom 73 Chevy LUV
 - Custom 2020 Honda E
 - Custom 2020 Honda E
 - Custom 66 Toronado
+- Custom 73 Chevy LUV
 - Custom Cadillac Fleetwood
 - Custom Kia EV6
 - Custom Otto
+- Czinger 21C
 - D-Muscle
 - Datsun 240Z
 - Decidedly Go
@@ -122,8 +127,8 @@
 - Disney Steamboat
 - Donut Drifter
 - Draggin' Wagon
-- Drift-Ender
 - Drift'N Break
+- Drift-Ender
 - Dune Daddy
 - Dune It Up
 - Eggshelleracer
@@ -147,11 +152,13 @@
 - Formula E Gen 3
 - Futurismo
 - GMC Hummer EV
+- Glory Chaser
 - Gone Mad
 - Gone Mad
 - Gordon Murray Automotive T.33
 - Gordon Murray Automotive T.50s
 - Gotta Go
+- Grass Chomper
 - Group C Fantasy
 - HW 50 Concept
 - HW Formula Solar
@@ -166,11 +173,13 @@
 - Honda CB750 Cafe
 - Honda Odyssey
 - Honda VFR750 RC30
+- Hot Wheels High
 - Hot Wheengs (Black)
 - Hot Wheengs (Green)
 - Hoto Roto (Black)
 - Hoto Roto (Black)
 - Hoto Roto (White)
+- Hotweiler
 - Hover Storm
 - Humvee
 - Hyper Rocker
@@ -198,6 +207,7 @@
 - Lil Roar
 - Limited Grip
 - Lolux
+- Lolux (Green)
 - Long Bloc
 - Loopster
 - Lotus Cortina
@@ -223,8 +233,8 @@
 - McLaren F1
 - McLaren Speedtail
 - McLaren W1
-- Mercedes-Benz Unimog 1300L
 - Mercedes-Benz CLA
+- Mercedes-Benz Unimog 1300L
 - Mid Mill
 - Minecraft Cart
 - Mitsubishi Pajero Evolution
@@ -237,6 +247,7 @@
 - Monster Dairy Delivery
 - Monster High Ghoul Mobile
 - Monteracer
+- Morgan Super 3
 - Mountain Mauler
 - Mustang NHRA Funny Car
 - Nailed It
@@ -276,10 +287,13 @@
 - Rig Heat
 - Rink Racer
 - Rink Racer (Green)
+- Road Bandit
+- Rockin Railer
 - Rockster (Treasure Hunt)
 - Rodger Dodger 2.0
 - Roller Toaster
 - Rollin Solo
+- Runway Res-Q
 - Salt Shaker
 - Screamliner
 - Silverado
@@ -297,6 +311,7 @@
 - Subaru BRAT
 - Super Twin Mill
 - Supercharged
+- Surfin School Bus
 - Sushi Tuner
 - TV Series Batmobile (Maroon)
 - TV Series Batmobile (Silver)
@@ -322,6 +337,7 @@
 - Voltage Spike
 - Volvo 240 Drift Wagon
 - Wattzup
+- West Coast Flyer
 - X-Steam
 
 # Hot Wheels Silver Series
